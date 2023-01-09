@@ -1,9 +1,7 @@
-Dynamic Compnents: --make this only available to admin users
-
+Dynamic Compnents:
+--make this only available to admin users
 look at the game rules and create react components based on how teams can score
-
 add a page to dynamically add react components to the scouting page (upper: counter, climb: timer)
-
 dynamically configure Firebase schema to fit the the scouting fields (no scripting to calculate scores, that will be
 calculated client side after Firebase queries)
 
@@ -11,3 +9,10 @@ User Management:
 Initialize users with temporary  passwords and let them change their passwords
 Designate admin (Suhas, Justus) roles and Scouter roles
 Be able to delete and add users easily --check for admin user
+
+Firebase Schema:
+After setting compnents - name the schema and set it as active (name it the competition name) -- a Firebase
+collection of the same name will be created.
+
+Admin Page:
+Have an admin page from home where you can configure the schema and add/delete users
