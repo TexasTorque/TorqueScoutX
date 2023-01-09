@@ -9,19 +9,17 @@ import {
   getFirestore,
   getDocs,
   collection,
-  updateDoc,
 } from "firebase/firestore";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyB9au8HLI9Fna7cWqnTr-5TUSMMwMF3HQE",
-    authDomain: "torquescoutx.firebaseapp.com",
-    projectId: "torquescoutx",
-    storageBucket: "torquescoutx.appspot.com",
-    messagingSenderId: "1094938071653",
-    appId: "1:1094938071653:web:37f374cec3196076982c8c"
-  };
+  apiKey: "AIzaSyB9au8HLI9Fna7cWqnTr-5TUSMMwMF3HQE",
+  authDomain: "torquescoutx.firebaseapp.com",
+  projectId: "torquescoutx",
+  storageBucket: "torquescoutx.appspot.com",
+  messagingSenderId: "1094938071653",
+  appId: "1:1094938071653:web:37f374cec3196076982c8c"
+};
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
@@ -31,8 +29,7 @@ export const logInWithEmailAndPassword = async (email, password) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
   } catch (err) {
-    console.error(err);
-    alert(err.message);
+    alert("Wrong Password");
   }
 };
 

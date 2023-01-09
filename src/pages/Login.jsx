@@ -5,7 +5,6 @@ import { auth, logInWithEmailAndPassword } from "../firebase";
 
 import ButtonFull from "../components/ButtonFull";
 import Group from "../components/Group";
-import Loader from "../components/Loader";
 import TextField from "../components/TextField";
 
 
@@ -17,17 +16,14 @@ const Login = ({}) => {
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (loading) {
-      return <Loader />;
-    }
+useEffect(() => {
     if (user) navigate("/" + redirect ?? "/");
   }, [user, loading]);
 
   const login = () => {
     const email = id + "@scout.texastorque.org";
     logInWithEmailAndPassword(email, password);
-    navigate("/login/" + redirect ?? "/");
+    navigate("/login/" + redirect ?? "/dashboard");
   };
 
   return (
