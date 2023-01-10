@@ -11,7 +11,7 @@ const NotFound = () => {
     <div className="home">
       <div className="container mt-4">
         <Group name="Page Not Found">
-          <ButtonFull name="Back to home" callback={() => navigate("/")} />
+          <ButtonFull name="Back to home" callback={() => navigate("/dashboard")} />
         </Group>
       </div>
     </div>

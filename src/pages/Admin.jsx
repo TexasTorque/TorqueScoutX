@@ -8,7 +8,7 @@ import ButtonFull from "../components/ButtonFull";
 import Empty from "../components/Empty";
 import { signOut } from "firebase/auth";
 
-const Dashboard = () => {
+const Admin = () => {
     const navigate = useNavigate();
     const [user, loading, error] = useAuthState(auth);
     
@@ -16,20 +16,16 @@ const Dashboard = () => {
         if (!user) return navigate("/login");
       }, [user, loading]);
 
-    let admin = (user && user.email.split("@")[0] === "admin") ? <ButtonFull name="Admin" callback={() => navigate("/admin")} /> : <Empty/>;
-
     return (
-        <div className="home">
+        <div className="admin">
           <div className="container mt-4">
             <Group name="Torque Scout">
-              <ButtonFull name="Scout" callback={() => navigate("/scout")} />
-              <ButtonFull name="Analysis" callback={() => navigate("/analysis")} />
-              <ButtonFull name="Sign Out" callback={() => signOut(auth)} />
-              {admin}
+              <ButtonFull name="Configure Schema" callback={() => navigate("/schema")} />
+              <ButtonFull name="Manage Users" callback={() => navigate("/user-management")} />
             </Group>
           </div>
         </div>
       );
 }
 
-export default Dashboard;
+export default Admin;

@@ -16,3 +16,6 @@ collection of the same name will be created.
 
 Admin Page:
 Have an admin page from home where you can configure the schema and add/delete users
+
+
+disregard zero climb times and certain calculations

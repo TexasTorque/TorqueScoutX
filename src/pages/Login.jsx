@@ -7,30 +7,27 @@ import ButtonFull from "../components/ButtonFull";
 import Group from "../components/Group";
 import TextField from "../components/TextField";
 
-
-const Login = ({}) => {
-  const { redirect } = useParams();
-
+const Login = () => {
   const [id, setID] = useState("");
   const [password, setPassword] = useState("");
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
 
 useEffect(() => {
-    if (user) navigate("/" + redirect ?? "/");
+    if (user) navigate("/dashboard");
+    console.log(user);
   }, [user, loading]);
 
   const login = () => {
     const email = id + "@scout.texastorque.org";
     logInWithEmailAndPassword(email, password);
-    navigate("/login/" + redirect ?? "/dashboard");
+    navigate("/login");
   };
 
   return (
     <div className="login">
       <div className="container mt-4">
         <Group name="Login">
-          <ButtonFull name="Back to home" callback={() => navigate("/")} />
           <TextField name="Username" callback={(e) => setID(e)} />
           <TextField
             name="Password"
