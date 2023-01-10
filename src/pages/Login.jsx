@@ -15,7 +15,6 @@ const Login = () => {
 
 useEffect(() => {
     if (user) navigate("/dashboard");
-    console.log(user);
   }, [user, loading]);
 
   const login = () => {

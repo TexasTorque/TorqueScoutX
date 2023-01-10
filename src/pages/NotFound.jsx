@@ -8,7 +8,7 @@ const NotFound = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="home">
+    <div className="notfound">
       <div className="container mt-4">
         <Group name="Page Not Found">
           <ButtonFull name="Back to home" callback={() => navigate("/dashboard")} />

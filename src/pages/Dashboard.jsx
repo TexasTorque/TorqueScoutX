@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
@@ -9,27 +8,31 @@ import Empty from "../components/Empty";
 import { signOut } from "firebase/auth";
 
 const Dashboard = () => {
-    const navigate = useNavigate();
-    const [user, loading, error] = useAuthState(auth);
-    
-    useEffect(() => {
-        if (!user) return navigate("/login");
-      }, [user, loading]);
+  const navigate = useNavigate();
+  const [user, loading, error] = useAuthState(auth);
 
-    let admin = (user && user.email.split("@")[0] === "admin") ? <ButtonFull name="Admin" callback={() => navigate("/admin")} /> : <Empty/>;
+  useEffect(() => {
+    if (!user) return navigate("/login");
+  }, [user, loading]);
 
-    return (
-        <div className="home">
-          <div className="container mt-4">
-            <Group name="Torque Scout">
-              <ButtonFull name="Scout" callback={() => navigate("/scout")} />
-              <ButtonFull name="Analysis" callback={() => navigate("/analysis")} />
-              <ButtonFull name="Sign Out" callback={() => signOut(auth)} />
-              {admin}
-            </Group>
-          </div>
-        </div>
-      );
-}
+  let admin = (user && checkAdmin(user)) ? <ButtonFull name="Admin" callback={() => navigate("/admin")} /> : <Empty />;
+
+  return (
+    <div className="home">
+      <div className="container mt-4">
+        <Group name="Torque Scout">
+          <ButtonFull name="Scout" callback={() => navigate("/scout")} />
+          <ButtonFull name="Analysis" callback={() => navigate("/analysis")} />
+          {admin}
+          <ButtonFull name="Sign Out" callback={() => signOut(auth)} />
+        </Group>
+      </div>
+    </div>
+  );
+};
+
+export const checkAdmin = (user) => {
+  return user.email.split("@")[0] === "admin";
+};
 
 export default Dashboard;
