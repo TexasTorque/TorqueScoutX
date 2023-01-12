@@ -51,11 +51,11 @@ export const getMatchesPerTeam = async (team) => {
 
 export const registerWithEmailAndPassword = async (email, password) => {
   try {
-      const res = await createUserWithEmailAndPassword(auth, email, password);
-      return res.user.uid;
+    const res = await createUserWithEmailAndPassword(auth, email, password);
+    return res.user.uid;
   } catch (err) {
-      alert(err.message);
-      return null;
+    alert(err.message);
+    return null;
   }
 };
 

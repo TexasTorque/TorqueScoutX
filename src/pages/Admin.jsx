@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Group from "../components/Group";
 import ButtonFull from "../components/ButtonFull";
 import Empty from "../components/Empty";
-import { signOut } from "firebase/auth"; { }
+import { signOut } from "firebase/auth";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const Admin = () => {
     <div className="admin">
       <div className="container mt-4">
         <Group name="Torque Scout">
-          <ButtonFull name="Configure Schema" callback={() => navigate("/schema")} />
+          <ButtonFull name="Configure Schema" callback={() => navigate("/admin/schema")} />
           <ButtonFull name="Manage Users" callback={() => navigate("/admin/manageusers")} />
           <ButtonFull name="Back to Home" callback={() => navigate("/dashboard")} />
         </Group>
