@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 
-import PauseIcon from "@mui/icons-material/Pause";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import ReplayIcon from "@mui/icons-material/Replay";
+import PauseIcon from '@mui/icons-material/Pause';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import ReplayIcon from '@mui/icons-material/Replay';
 
 import Null from "./Null";
 
@@ -61,6 +61,12 @@ const Stopwatch = ({ name, callback }) => {
       </div>
     </div>
   );
+};
+
+export const StopwatchWidget = {
+  schemaFields: ["name"],
+  schemaFieldsTypes: ["s"],
+  toggle: Stopwatch,
 };
 
 export default Stopwatch;

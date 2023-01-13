@@ -32,4 +32,10 @@ const TextField = ({
   );
 };
 
+export const TextFieldWidget = {
+  schemaFields: ["name"],
+  schemaFieldsTypes: ["s"],
+  toggle: TextField,
+};
+
 export default TextField;

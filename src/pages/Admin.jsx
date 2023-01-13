@@ -5,8 +5,6 @@ import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import Group from "../components/Group";
 import ButtonFull from "../components/ButtonFull";
-import Empty from "../components/Empty";
-import { signOut } from "firebase/auth";
 
 const Admin = () => {
   const navigate = useNavigate();

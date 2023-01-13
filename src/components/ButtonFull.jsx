@@ -22,4 +22,10 @@ const ButtonFull = ({ name, callback, variant }) => {
   );
 };
 
+export const ButtonFullWidget = {
+  schemaFields: ["name"],
+  schemaFieldsTypes: ["s"],
+  toggle: ButtonFull,
+};
+
 export default ButtonFull;

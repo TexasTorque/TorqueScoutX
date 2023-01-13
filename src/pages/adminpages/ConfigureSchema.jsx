@@ -4,11 +4,7 @@ import { auth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import Group from "../../components/Group";
 import ButtonFull from "../../components/ButtonFull";
-import Empty from "../../components/Empty";
-import { signOut } from "firebase/auth";
-import { Button } from "react-bootstrap";
 import schemaValidate from "../../Schema";
-import { toggleWidget } from "../../components/Toggle";
 
 const ConfigureSchema = () => {
     const navigate = useNavigate();

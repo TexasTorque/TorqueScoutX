@@ -36,4 +36,10 @@ const MutuallyExclusive = ({ elements, callback }) => {
   );
 };
 
+export const MutuallyExclusiveWidget = {
+  schemaFields: ["name", "options"],
+  schemaFieldsTypes: ["s", [1]],
+  toggle: MutuallyExclusive,
+};
+
 export default MutuallyExclusive;
