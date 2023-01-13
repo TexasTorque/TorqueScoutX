@@ -9,8 +9,8 @@ import {
   getFirestore,
   getDocs,
   collection,
+  doc, setDoc, getDoc
 } from "firebase/firestore";
-import { doc, setDoc, getDoc } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyB9au8HLI9Fna7cWqnTr-5TUSMMwMF3HQE",
@@ -76,4 +76,33 @@ export const deleteUserByName = async (first, last) => deleteUserByID(last.subst
 
 export const deleteUserByID = async (id) => {
   alert("Deleting users from admin not yet implemented.");
+};
+
+const getSchemaDoc = async () => {
+  return await getDoc(doc(db, "schemas", "schema"));
+};
+
+export const pushSchema = async (schema, schemaName) => {
+  let schemaDoc = await (await getSchemaDoc()).data();
+  schemaDoc.storedSchemas.push({ schema: schema, name: schemaName });
+  setDoc(doc(db, "schemas", "schema"), schemaDoc);
+  alert(schemaName + " schema pushed to database.");
+};
+
+export const getStoredSchemas = async () => {
+  let schemaDoc = await (await getSchemaDoc()).data();
+  return schemaDoc.storedSchemas.map((schema) => schema.name);
+};
+
+export const setActiveSchema = async (schemaName) => {
+  let schemaDoc = await (await getSchemaDoc()).data();
+  let requestedSchema = schemaDoc.storedSchemas.find((schema) => schema.name === schemaName);
+  schemaDoc.activeSchema = requestedSchema;
+  setDoc(doc(db, "schemas", "schema"), schemaDoc);
+  alert(schemaName + " schema set as active.");
+};
+
+export const getActiveSchema = async () => {
+  let schemaDoc = await (await getSchemaDoc()).data();
+  return schemaDoc.activeSchema.name;
 };

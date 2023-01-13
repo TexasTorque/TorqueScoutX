@@ -5,7 +5,6 @@ import "./index.css";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Admin from "./pages/Admin";
-import ManageUsers from "./pages/adminpages/ManageUsers";
 import NotFound from "./pages/NotFound";
 import ConfigureSchema from "./pages/adminpages/ConfigureSchema";
 
@@ -18,7 +17,6 @@ ReactDOM.render(
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/admin" element={<Admin />} />
       <Route path="/admin/schema" element={<ConfigureSchema />} />
-      <Route path="/admin/manageusers" element={<ManageUsers />} />
       <Route path="/*" element={<NotFound />} />
     </Routes>
   </Router>,

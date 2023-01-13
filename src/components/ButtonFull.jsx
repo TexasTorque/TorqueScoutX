@@ -25,7 +25,7 @@ const ButtonFull = ({ name, callback, variant }) => {
 export const ButtonFullWidget = {
   schemaFields: ["name"],
   schemaFieldsTypes: ["s"],
-  toggle: ButtonFull,
+  widget: ButtonFull,
 };
 
 export default ButtonFull;

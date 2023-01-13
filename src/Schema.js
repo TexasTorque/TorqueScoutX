@@ -13,7 +13,8 @@ let widgetNames = {
     "Stopwatch": StopwatchWidget,
     "TextField": TextFieldWidget
 };
-var BreakException = {};
+
+let BreakException = {};
 
 export default function schemaValidate(schemaObject) {
     if (!(schemaObject.widgets instanceof Array)) {
@@ -23,7 +24,7 @@ export default function schemaValidate(schemaObject) {
 
     for (let i = 0; i < schemaObject.widgets.length; i++) {
         if (!(Object.keys(widgetNames).includes(schemaObject.widgets[i].widget))) {
-            alert("Widget not found!");
+            alert("Widget " + schemaObject.widgets[i].widget + " not found!");
             throw BreakException;
         }
 
@@ -32,12 +33,20 @@ export default function schemaValidate(schemaObject) {
 
         fields.forEach((field, index) => {
             if (!(Object.keys(schemaObject.widgets[i]).includes(field))) {
-                alert(field + " not found!");
+                alert("The field " + field + " in widget " + schemaObject.widgets[i].widget + " not found!");
                 throw BreakException;
             }
 
             if (!(typeof schemaObject.widgets[i][field] === typeof fieldTypes[index])) {
                 alert("The field " + field + " in widget " + schemaObject.widgets[i].widget + " has to be of " + typeof fieldTypes[index] + " type!");
+                throw BreakException;
+            }
+
+        });
+
+        Object.keys(schemaObject.widgets[i]).filter((field) => {
+            if (!(fields.includes(field)) && !(field === "widget")) {
+                alert("Extra field " + field + " in widget " + schemaObject.widgets[i].widget + "!");
                 throw BreakException;
             }
         });
