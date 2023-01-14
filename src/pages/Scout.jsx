@@ -20,8 +20,6 @@ const Scout = () => {
         setName(user.email.split("@")[0]);
         getActiveSchema().then((schema) => {
             setActiveSchema(schema);
-            console.log("NORMAL SCHEMA: " + JSON.stringify(schema));
-            console.log("ACTIVE SCHEMA: " + JSON.stringify(activeSchema));
         });
     }, [user, loading]);
 
@@ -33,7 +31,11 @@ const Scout = () => {
                     <ButtonFull name="Submit" callback={() => console.log("HELLO")} />
                 </Group>
                 <Group>
-                    <h1>{JSON.stringify(activeSchema.schema.widgets[0].widget)}</h1>
+                    {activeSchema.schema.widgets.map((widget) => {
+                        return (
+                            <h1 key={widget.name}>{widgetNames[widget.widget].widget}</h1>
+                        );
+                    })}
                 </Group>
             </div>
         </div>

@@ -21,7 +21,7 @@ const Dropdown = ({ prompt, options, callback }) => {
 export const DropdownWidget = {
     schemaFields: ["name", "options"],
     schemaFieldsTypes: ["s", [1]],
-    widget: Dropdown,
+    widget: <Dropdown />,
 };
 
 export default Dropdown;

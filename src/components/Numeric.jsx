@@ -44,7 +44,7 @@ const Numeric = ({ name, callback, min, max, init, increment }) => {
 export const NumericWidget = {
   schemaFields: ["name"],
   schemaFieldsTypes: ["s"],
-  widget: Numeric,
+  widget: <Numeric />,
 };
 
 export default Numeric;

@@ -66,7 +66,7 @@ const Stopwatch = ({ name, callback }) => {
 export const StopwatchWidget = {
   schemaFields: ["name"],
   schemaFieldsTypes: ["s"],
-  widget: Stopwatch,
+  widget: <Stopwatch />,
 };
 
 export default Stopwatch;

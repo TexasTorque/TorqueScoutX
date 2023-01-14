@@ -36,7 +36,7 @@ const Toggle = ({ name, callback, init, on, off, id }) => {
 export const ToggleWidget = {
   schemaFields: ["name", "init"],
   schemaFieldsTypes: ["s", false],
-  widget: Toggle,
+  widget: <Toggle />,
 };
 
 export default Toggle;
