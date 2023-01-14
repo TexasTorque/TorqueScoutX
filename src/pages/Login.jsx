@@ -10,10 +10,10 @@ import TextField from "../components/TextField";
 const Login = () => {
   const [id, setID] = useState("");
   const [password, setPassword] = useState("");
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
 
-useEffect(() => {
+  useEffect(() => {
     if (user) navigate("/dashboard");
   }, [user, loading]);
 

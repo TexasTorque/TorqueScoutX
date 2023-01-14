@@ -29,7 +29,7 @@
 // const ManageUsers = () => {
 
 //     const navigate = useNavigate();
-//     const [user, loading, error] = useAuthState(auth);
+//     const [user, loading] = useAuthState(auth);
 
 //     useEffect(() => {
 //         if (!user) return navigate("/login");

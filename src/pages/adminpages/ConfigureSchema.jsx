@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, pushSchema, getStoredSchemas, setActiveSchema } from "../../firebase";
+import { auth, pushSchema, getStoredSchemas, setActiveSchema, getActiveSchema } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import Group from "../../components/Group";
 import ButtonFull from "../../components/ButtonFull";
@@ -17,14 +17,14 @@ const ConfigureSchema = () => {
     const [schemaName, setSchemaName] = useState("");
     const [storedSchemas, setStoredSchemas] = useState([]);
     const [selectedSchema, setSelectedSchema] = useState({});
+    const [currentSchema, setCurrentSchema] = useState({});
 
     useEffect(() => {
         if (!user) return navigate("/login");
         if (user && !(checkAdmin(user))) return navigate("/dashboard");
-    }, [user, loading, storedSchemas]);
+    }, [user, loading]);
 
     useEffect(() => {
-        if (storedSchemas.length > 0) return <Loader />;
         async function waitForSchemas() {
             await getStoredSchemas().then((schemas) => {
                 setStoredSchemas(schemas);
@@ -32,6 +32,16 @@ const ConfigureSchema = () => {
         }
         waitForSchemas();
     }, [storedSchemas]);
+
+    useEffect(() => {
+        if (selectedSchema === {}) return;
+        async function waitForActiveSchema() {
+            await getActiveSchema().then((schema) => {
+                setCurrentSchema(schema);
+            });
+        }
+        waitForActiveSchema();
+    }, [selectedSchema, currentSchema]);
 
     function schemaChange(value) {
         setSchemaText(value.target.value);
@@ -62,10 +72,11 @@ const ConfigureSchema = () => {
                 <textarea rows="100" cols="100" autoCorrect="false" spellCheck="false" wrap="off" onChange={(value) => { schemaChange(value); }} />
                 <ButtonFull name="Save Schema" callback={saveSchema}></ButtonFull>
             </Group>
-            <Group name="Set Active Schemas">
+            <Group name="Set Active Schema">
                 <br />
+                Active Schema: {currentSchema.name}
                 <Dropdown name="Active Schemas" options={storedSchemas} callback={(value) => { setSelectedSchema(value); }}></Dropdown>
-                <ButtonFull name="Set Active" callback={() => { setActiveSchema(selectedSchema); }}></ButtonFull>
+                <ButtonFull name="Set Active" callback={() => { setActiveSchema(selectedSchema); setCurrentSchema(selectedSchema); }}></ButtonFull>
             </Group>
             <div style={{ marginLeft: "33px" }}>
                 <ButtonFull name="Back to Admin" callback={() => navigate("/admin")}></ButtonFull>

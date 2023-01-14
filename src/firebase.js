@@ -104,5 +104,5 @@ export const setActiveSchema = async (schemaName) => {
 
 export const getActiveSchema = async () => {
   let schemaDoc = await (await getSchemaDoc()).data();
-  return schemaDoc.activeSchema.name;
+  return schemaDoc.activeSchema;
 };
