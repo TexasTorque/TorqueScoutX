@@ -6,7 +6,7 @@ import { StopwatchWidget } from "./components/Stopwatch";
 import { TextFieldWidget } from "./components/TextField";
 import { DropdownWidget } from "./components/Dropdown";
 
-let widgetNames = {
+export let widgetNames = {
     "Toggle": ToggleWidget,
     "ButtonFull": ButtonFullWidget,
     "MutuallyExclusive": MutuallyExclusiveWidget,

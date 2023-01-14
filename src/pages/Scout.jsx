@@ -7,6 +7,7 @@ import ButtonFull from "../components/ButtonFull";
 import Loader from "../components/Loader";
 import TextField from "../components/TextField";
 import { getActiveSchema } from "../firebase";
+import { widgetNames } from "../Schema";
 
 const Scout = () => {
     const navigate = useNavigate();
@@ -16,31 +17,27 @@ const Scout = () => {
 
     useEffect(() => {
         if (!user) return navigate("/login");
-        getUserFromID(user.email.split("@")[0]).then(user => {
-            setName(user["first"]);
+        setName(user.email.split("@")[0]);
+        getActiveSchema().then((schema) => {
+            setActiveSchema(schema);
+            console.log("NORMAL SCHEMA: " + JSON.stringify(schema));
+            console.log("ACTIVE SCHEMA: " + JSON.stringify(activeSchema));
         });
     }, [user, loading]);
 
-    useEffect(() => {
-        if (activeSchema === {}) return;
-        async function waitForActiveSchema() {
-            await getActiveSchema().then((schema) => {
-                setActiveSchema(schema);
-            });
-        }
-        waitForActiveSchema();
-    }, [activeSchema]);
-
-    return (
+    return (!(Object.keys(activeSchema).length === 0)) ? (
         <div className="scout">
             <div className="container mt-4">
                 <Group name="Scouting">
                     <TextField name="Scouter" callback={(_) => _} readonly={name ?? ""} />
                     <ButtonFull name="Submit" callback={() => console.log("HELLO")} />
                 </Group>
+                <Group>
+                    <h1>{JSON.stringify(activeSchema.schema.widgets[0].widget)}</h1>
+                </Group>
             </div>
         </div>
-    );
+    ) : <Loader />;
 };
 
 export default Scout;
