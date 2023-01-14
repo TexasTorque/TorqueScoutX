@@ -4,6 +4,7 @@ import { MutuallyExclusiveWidget } from "./components/MutuallyExclusive";
 import { NumericWidget } from "./components/Numeric";
 import { StopwatchWidget } from "./components/Stopwatch";
 import { TextFieldWidget } from "./components/TextField";
+import { DropdownWidget } from "./components/Dropdown";
 
 let widgetNames = {
     "Toggle": ToggleWidget,
@@ -11,7 +12,8 @@ let widgetNames = {
     "MutuallyExclusive": MutuallyExclusiveWidget,
     "Numeric": NumericWidget,
     "Stopwatch": StopwatchWidget,
-    "TextField": TextFieldWidget
+    "TextField": TextFieldWidget,
+    "Dropdown": DropdownWidget
 };
 
 let BreakException = {};
