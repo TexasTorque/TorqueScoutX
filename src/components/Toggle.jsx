@@ -12,6 +12,13 @@ const Toggle = ({ name, callback, init, on, off, id }) => {
     callback(n);
   };
 
+  const getWidgetState = () => {
+    return {
+      value: value,
+      name: name,
+    };
+  };
+
   return (
     <div className="toggle">
       <div className="row mt-4 mr-3">
@@ -36,7 +43,10 @@ const Toggle = ({ name, callback, init, on, off, id }) => {
 export const ToggleWidget = {
   schemaFields: ["name", "init"],
   schemaFieldsTypes: ["s", false],
-  widget: <Toggle />,
+
+  widget: (props) => {
+    return <Toggle {...props} />;
+  }
 };
 
 export default Toggle;

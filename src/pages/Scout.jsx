@@ -33,13 +33,15 @@ const Scout = () => {
                 <Group>
                     {activeSchema.schema.widgets.map((widget) => {
                         return (
-                            <h1 key={widget.name}>{widgetNames[widget.widget].widget}</h1>
+                            <h1 key={widget.name}>{widgetNames[widget.widget].widget(widget)}</h1>
                         );
                     })}
                 </Group>
+                <ButtonFull name="Back To Dashboard" callback={() => navigate("/dashboard")} />
             </div>
         </div>
     ) : <Loader />;
 };
+
 
 export default Scout;

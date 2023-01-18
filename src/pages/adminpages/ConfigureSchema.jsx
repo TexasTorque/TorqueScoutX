@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, pushSchema, getStoredSchemas, setActiveSchema, getActiveSchema } from "../../firebase";
+import { auth, pushSchema, getStoredSchemas, setActiveSchema, getActiveSchema, getSchemaByName } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import Group from "../../components/Group";
 import ButtonFull from "../../components/ButtonFull";
 import TextField from "../../components/TextField";
 import Loader from "../../components/Loader";
 import Dropdown from "../../components/Dropdown";
+import Label from "../../components/Label";
 import schemaValidate from "../../Schema";
 
 const ConfigureSchema = () => {
@@ -47,6 +48,15 @@ const ConfigureSchema = () => {
         setSchemaText(value.target.value);
     }
 
+    function setSchemaByName(name) {
+        async function waitForSchema() {
+            await getSchemaByName(name).then((schema) => {
+                setSchemaText(JSON.stringify(schema));
+            });
+        }
+        return waitForSchema();
+    }
+
     function saveSchema() {
         let schemaObject;
         try {
@@ -69,7 +79,7 @@ const ConfigureSchema = () => {
         <div style={{ marginBottom: "40px" }}>
             <Group name="Configure Schema">
                 <TextField name="Schema Name" callback={(name) => setSchemaName(name)}></TextField>
-                <textarea rows="100" cols="100" autoCorrect="false" spellCheck="false" wrap="off" onChange={(value) => { schemaChange(value); }} />
+                <textarea value={schemaText} rows="100" cols="100" autoCorrect="false" spellCheck="false" wrap="off" onChange={(value) => { schemaChange(value); }} />
                 <ButtonFull name="Save Schema" callback={saveSchema}></ButtonFull>
             </Group>
             <Group name="Set Active Schema">
@@ -77,6 +87,7 @@ const ConfigureSchema = () => {
                 Active Schema: {currentSchema.name}
                 <Dropdown name="Active Schemas" options={storedSchemas} callback={(value) => { setSelectedSchema(value); }}></Dropdown>
                 <ButtonFull name="Set Active" callback={() => { setActiveSchema(selectedSchema); setCurrentSchema(selectedSchema); }}></ButtonFull>
+                <ButtonFull name="View Schema" callback={() => { setSchemaByName(selectedSchema); }}></ButtonFull>
             </Group>
             <div style={{ marginLeft: "33px" }}>
                 <ButtonFull name="Back to Admin" callback={() => navigate("/admin")}></ButtonFull>

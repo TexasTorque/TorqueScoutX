@@ -18,4 +18,12 @@ const Group = ({ name, children }) => {
   );
 };
 
+export const GroupWidget = {
+  schemaFields: ["name"],
+  schemaFieldsTypes: ["s"],
+  widget: (props) => {
+    return <Group {...props} />;
+  }
+};
+
 export default Group;

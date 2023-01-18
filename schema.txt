@@ -1,1 +1,1 @@
-{"widgets":[{"widget":"Toggle","name":"Taxi","init":false}]}
+{"widgets":[{"widget":"Toggle","name":"Taxi","init":false},{"name":"fgdsg","widget":"Label"}]}

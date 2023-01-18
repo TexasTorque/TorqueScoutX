@@ -25,7 +25,10 @@ const ButtonFull = ({ name, callback, variant }) => {
 export const ButtonFullWidget = {
   schemaFields: ["name"],
   schemaFieldsTypes: ["s"],
-  widget: <ButtonFull />,
+  // widget: <ButtonFull />,
+  widget: (props) => {
+    return <ButtonFull {...props} />;
+  }
 };
 
 export default ButtonFull;

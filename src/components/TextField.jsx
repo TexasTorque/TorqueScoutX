@@ -35,7 +35,9 @@ const TextField = ({
 export const TextFieldWidget = {
   schemaFields: ["name"],
   schemaFieldsTypes: ["s"],
-  widget: <TextField />,
+  widget: (props) => {
+    return <TextField {...props} />;
+  }
 };
 
 export default TextField;

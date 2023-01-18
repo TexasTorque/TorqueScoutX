@@ -37,9 +37,11 @@ const MutuallyExclusive = ({ elements, callback }) => {
 };
 
 export const MutuallyExclusiveWidget = {
-  schemaFields: ["name", "options"],
+  schemaFields: ["name", "elements"],
   schemaFieldsTypes: ["s", [1]],
-  widget: <MutuallyExclusive />,
+  widget: (props) => {
+    return <MutuallyExclusive {...props} />;
+  }
 };
 
 export default MutuallyExclusive;

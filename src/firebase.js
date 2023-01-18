@@ -102,6 +102,12 @@ export const setActiveSchema = async (schemaName) => {
   alert(schemaName + " schema set as active.");
 };
 
+export const getSchemaByName = async (schemaName) => {
+  let schemaDoc = await (await getSchemaDoc()).data();
+  let requestedSchema = schemaDoc.storedSchemas.find((schema) => schema.name === schemaName);
+  return requestedSchema.schema;
+};
+
 export const getActiveSchema = async () => {
   let schemaDoc = await (await getSchemaDoc()).data();
   return schemaDoc.activeSchema;
