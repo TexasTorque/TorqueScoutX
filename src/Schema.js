@@ -1,5 +1,5 @@
 import { ToggleWidget } from "./components/Toggle";
-import { ButtonFullWidget } from "./components/ButtonFull";
+// import { ButtonFullWidget } from "./components/ButtonFull";
 import { MutuallyExclusiveWidget } from "./components/MutuallyExclusive";
 import { NumericWidget } from "./components/Numeric";
 import { StopwatchWidget } from "./components/Stopwatch";
@@ -9,7 +9,7 @@ import { LabelWidget } from "./components/Label";
 
 export let widgetNames = {
     "Toggle": ToggleWidget,
-    "ButtonFull": ButtonFullWidget,
+    // "ButtonFull": ButtonFullWidget, this won't ever be a component
     "MutuallyExclusive": MutuallyExclusiveWidget,
     "Numeric": NumericWidget,
     "Stopwatch": StopwatchWidget,

@@ -4,6 +4,14 @@ import { useState } from 'react';
 const Dropdown = ({ name, prompt, options, callback }) => {
 
     const [selected, setSelected] = useState(prompt || "Select an option");
+
+    const getWidgetState = () => {
+        return {
+            name: name,
+            value: selected,
+        };
+    };
+
     return (
         <BootstrapDropdown name={name}> {/* I dont know if this works, will check later */}
             <BootstrapDropdown.Toggle variant="primary" id="dropdown-basic" style={{ width: "18rem" }}>

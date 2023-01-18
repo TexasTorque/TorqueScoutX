@@ -14,8 +14,8 @@ const Toggle = ({ name, callback, init, on, off, id }) => {
 
   const getWidgetState = () => {
     return {
-      value: value,
       name: name,
+      value: value,
     };
   };
 

@@ -17,6 +17,13 @@ const Numeric = ({ name, callback, min, max, init, increment }) => {
     callback(n);
   };
 
+  const getWidgetState = () => {
+    return {
+      name: name,
+      value: count,
+    };
+  };
+
   return (
     <div className="numeric">
       <div className="row mt-4 mr-1">

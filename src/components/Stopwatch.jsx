@@ -33,6 +33,13 @@ const Stopwatch = ({ name, callback }) => {
     setPaused(true);
   };
 
+  const getWidgetState = () => {
+    return {
+      name: name,
+      value: elapsed,
+    };
+  };
+
   return (
     <div className="numeric">
       <div className="row mt-4 mr-1">
