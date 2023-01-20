@@ -31,7 +31,7 @@ export const DropdownWidget = {
     schemaFieldsTypes: ["s", [1]],
     widget: (props) => {
         return <Dropdown {...props} />;
-    }
+    },
 };
 
 export default Dropdown;

@@ -1,0 +1,70 @@
+{
+    "widgets": [
+        {
+            "widget": "Label",
+            "name": "Auto"
+        },
+        {
+            "name": "Taxi",
+            "widget": "Toggle",
+            "init": false
+        },
+        {
+            "widget": "Numeric",
+            "name": "Lower"
+        },
+        {
+            "widget": "Numeric",
+            "name": "Upper"
+        },
+        {
+            "widget": "Numeric",
+            "name": "Missed"
+        },
+        {
+            "widget": "Label",
+            "name": "Teleop"
+        },
+        {
+            "widget": "Numeric",
+            "name": "Lower"
+        },
+        {
+            "widget": "Numeric",
+            "name": "Upper"
+        },
+        {
+            "widget": "Numeric",
+            "name": "Missed"
+        },
+        {
+            "widget": "Toggle",
+            "name": "Defense",
+            "init": false
+        },
+        {
+            "widget": "Toggle",
+            "name": "Broken",
+            "init": false
+        },
+        {
+            "widget": "Label",
+            "name": "Climb"
+        },
+        {
+            "widget": "Stopwatch",
+            "name": "Time"
+        },
+        {
+            "widget": "MutuallyExclusive",
+            "name": "Level",
+            "elements": [
+                "None",
+                "Low",
+                "Mid",
+                "High",
+                "Traverse"
+            ]
+        }
+    ]
+}

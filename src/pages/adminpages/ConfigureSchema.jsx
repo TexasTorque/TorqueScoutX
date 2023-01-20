@@ -59,6 +59,10 @@ const ConfigureSchema = () => {
 
     function saveSchema() {
         let schemaObject;
+        if (schemaName === "" || storedSchemas.includes(schemaName)) {
+            alert("Schema name is invalid or already exists");
+            return;
+        }
         try {
             schemaObject = JSON.parse(schemaText);
         } catch (e) {
@@ -66,10 +70,6 @@ const ConfigureSchema = () => {
             return;
         }
         if (!schemaValidate(schemaObject)) {
-            return;
-        }
-        if (schemaName === "") {
-            alert("Schema name cannot be empty");
             return;
         }
         pushSchema(schemaObject, schemaName);

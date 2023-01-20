@@ -1,23 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Button from "react-bootstrap/Button";
 import Null from "./Null";
 
-const Toggle = ({ name, callback, init, on, off, id }) => {
+const Toggle = ({ name, callback, init, id, widgetCallback, pointsTrue, pointsFalse }) => {
   const [value, setValue] = useState(init ?? false);
+  const [variant, setVariant] = useState(init ? "success" : "danger");
 
   const update = () => {
     const n = !value;
     setValue(n);
-    callback(n);
+    setVariant(value ? "danger" : "success");
+
+    // callback(n);
+    if (callback) {
+      callback(n);
+    }
   };
 
-  const getWidgetState = () => {
-    return {
-      name: name,
-      value: value,
-    };
-  };
+  useEffect(() => {
+    if (widgetCallback) {
+      widgetCallback({ name: name, value: value, });
+    }
+  }, [value]);
+
 
   return (
     <div className="toggle">
@@ -28,9 +34,9 @@ const Toggle = ({ name, callback, init, on, off, id }) => {
         <div className="ml-0 mt-1" style={{ width: "10rem" }}>
           <Button
             className="w-100"
-            variant={value ? on ?? "success" : off ?? "danger"}
+            variant={variant}
             size="md"
-            onClick={() => update()}
+            onClick={() => { update(); }}
           >
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </Button>
@@ -44,9 +50,10 @@ export const ToggleWidget = {
   schemaFields: ["name", "init"],
   schemaFieldsTypes: ["s", false],
 
-  widget: (props) => {
-    return <Toggle {...props} />;
-  }
+  widget: (props, widgetCallback) => {
+    return <Toggle {...{ widgetCallback, ...props }} />;
+  },
+
 };
 
 export default Toggle;

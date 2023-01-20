@@ -20,7 +20,7 @@ const MutuallyExclusive = ({ name, elements, callback }) => {
 
   return (
     <div>
-      {name && <h3>{name}</h3>}
+      {name && <h2 >{name}</h2>}
       {elements.map((element, i) => (
         <div className="MutuallyExclusive">
           <div className="row mt-4 mr-3">
@@ -49,7 +49,7 @@ export const MutuallyExclusiveWidget = {
   schemaFieldsTypes: ["s", [1]],
   widget: (props) => {
     return <MutuallyExclusive {...props} />;
-  }
+  },
 };
 
 export default MutuallyExclusive;

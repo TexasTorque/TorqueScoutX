@@ -5,12 +5,6 @@ const Label = ({ name }) => {
             <h1 style={{ textAlign: "left" }}>{name}</h1>
         </div>
     );
-
-    const getWidgetState = () => {
-        return {
-            name: name,
-        };
-    };
 };
 
 export const LabelWidget = {

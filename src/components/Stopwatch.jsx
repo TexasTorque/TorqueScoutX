@@ -75,7 +75,7 @@ export const StopwatchWidget = {
   schemaFieldsTypes: ["s"],
   widget: (props) => {
     return <Stopwatch {...props} />;
-  }
+  },
 };
 
 export default Stopwatch;
