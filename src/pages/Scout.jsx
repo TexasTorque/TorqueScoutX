@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, getUserFromID } from "../firebase";
+import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import Group from "../components/Group";
+import Toggle from "../components/Toggle";
 import ButtonFull from "../components/ButtonFull";
 import Loader from "../components/Loader";
 import TextField from "../components/TextField";
@@ -15,8 +16,13 @@ const Scout = () => {
     const [user, loading] = useAuthState(auth);
     const [name, setName] = useState("");
     const [checked, setChecked] = useState(false);
+    const [team, setTeam] = useState(0);
+    const [match, setMatch] = useState("");
+    const [alliance, setAlliance] = useState("Red");
 
-    let report = [];
+    // const [report, setReport] = useState([]);
+
+    let report = { "fields": [] };
 
     useEffect(() => {
         if (!user) return navigate("/login");
@@ -27,15 +33,14 @@ const Scout = () => {
     }, [user, loading]);
 
     const modifyReport = (data) => {
-        for (let i = 0; i < report.length; i++) {
-            if (report[i].name === data.name) {
-                report = Object.assign([], report, { [i]: data });
-                console.log(report);
+        for (let i = 0; i < report.fields.length; i++) {
+            if (report.fields[i].name === data.name) {
+                report.fields = Object.assign([], report.fields, { [i]: data });
+                console.log(report); //this works
                 return;
             }
         }
-        report = report.concat(data);
-        console.log(report);
+        report.fields = report.fields.concat(data);
     };
 
     const submit = () => {
@@ -45,15 +50,26 @@ const Scout = () => {
             return;
         }
         if (!window.confirm("Are you sure you want to submit?")) return;
-
-        const report = {}; // use Redux https://stackoverflow.com/a/45534197/15973528
-        activeSchema.schema.widgets.forEach((widget) => {
-            if (widget.name !== "Label") { }
-            // report[widget.name] = widgetNames[widget.widget].value;
-            // console.log(widgetNames[widget.widget].getWidgetState);
+        if (team === 0 || match === "") {
+            alert("Please fill out team and match fields.");
+            return;
         }
-        );
-        // console.log(report);
+
+        //if(user == sarang) alert(ARE YOU SURE YOU WANT TO SUBMIT SARANG)
+
+        // setReport(report.concat({ name: "Team", value: team })
+        //     .concat({ name: "Match", value: match })
+        //     .concat({ name: "Alliance", value: alliance })
+        //     .concat({ name: "Scouter", value: name }),
+        //     () => { console.log("FINAL REPORT: " + report); });
+
+        // setReport(report.concat({ name: "Team", value: team }));
+        // setReport(report.concat({ name: "Match", value: match }));
+        // setReport(report.concat({ name: "Alliance", value: alliance }));
+        // setReport(report.concat({ name: "Scouter", value: name }));
+
+        //big bug, widgets of the same name, lower(auto) and lower(teleop) will overwrite each other, maybe add a unique id to each widget
+        //push(schemaname, report)
     };
 
     return (!(Object.keys(activeSchema).length === 0)) ? (
@@ -63,6 +79,26 @@ const Scout = () => {
                     <TextField name="Scouter" callback={(_) => _} readonly={name ?? ""} />
                     <ButtonFull name="Submit" callback={() => console.log("HELLO")} />
                 </Group>
+
+                {/* <TextField
+                    name="Match"
+                    type="number"
+                    inputMode="decimal"
+                    callback={(match) => setMatch(match)}
+                />
+                <TextField
+                    name="Team"
+                    type="number"
+                    inputMode="decimal"
+                    callback={(team) => setTeam(team)}
+                />
+                <Toggle
+                    name="Alliance"
+                    trueCol="primary"
+                    falseCol="danger"
+                    callback={(alliance) => setAlliance(alliance ? "Blue" : "Red")} //make this blue not green
+                /> */}
+
                 <Group>
                     {activeSchema.schema.widgets.map((widget) => {
                         return (

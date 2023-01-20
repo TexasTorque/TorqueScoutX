@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Null from "./Null";
 
-const Toggle = ({ name, callback, init, id, widgetCallback, pointsTrue, pointsFalse }) => {
+const Toggle = ({ name, callback, init, widgetCallback, pointsTrue, pointsFalse }) => {
   const [value, setValue] = useState(init ?? false);
   const [variant, setVariant] = useState(init ? "success" : "danger");
 
@@ -12,10 +12,7 @@ const Toggle = ({ name, callback, init, id, widgetCallback, pointsTrue, pointsFa
     setValue(n);
     setVariant(value ? "danger" : "success");
 
-    // callback(n);
-    if (callback) {
-      callback(n);
-    }
+    callback && callback(n);
   };
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -9,7 +9,7 @@ import ReplayIcon from '@mui/icons-material/Replay';
 
 import Null from "./Null";
 
-const Stopwatch = ({ name, callback }) => {
+const Stopwatch = ({ name, callback, widgetCallback }) => {
   let [elapsed, setElapsed] = useState(0);
   let [paused, setPaused] = useState(true);
   let [interval, setIntervalVariable] = useState(null);
@@ -24,7 +24,7 @@ const Stopwatch = ({ name, callback }) => {
     else clearInterval(interval);
 
     setPaused(!paused);
-    callback(Math.round(elapsed));
+    callback && callback(Math.round(elapsed));
   };
 
   const reset = () => {
@@ -33,12 +33,11 @@ const Stopwatch = ({ name, callback }) => {
     setPaused(true);
   };
 
-  const getWidgetState = () => {
-    return {
-      name: name,
-      value: elapsed,
-    };
-  };
+  useEffect(() => {
+    if (widgetCallback) {
+      widgetCallback({ name: name, value: elapsed, });
+    }
+  }, [elapsed]);
 
   return (
     <div className="numeric">
@@ -73,8 +72,8 @@ const Stopwatch = ({ name, callback }) => {
 export const StopwatchWidget = {
   schemaFields: ["name"],
   schemaFieldsTypes: ["s"],
-  widget: (props) => {
-    return <Stopwatch {...props} />;
+  widget: (props, widgetCallback) => {
+    return <Stopwatch {...{ widgetCallback, ...props }} />;
   },
 };
 

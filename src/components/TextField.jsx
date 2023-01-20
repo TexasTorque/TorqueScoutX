@@ -1,17 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 
 import Null from "./Null";
 
-const TextField = ({ name, callback, placeholder, readonly, type, inputMode }) => {
+const TextField = ({ name, callback, placeholder, readonly, type, inputMode, widgetCallback }) => {
   const [selected, setSelected] = useState(readonly ?? "");
 
-  const getWidgetState = () => {
-    return {
-      name: name,
-      value: selected,
-    };
-  };
+  // useEffect(() => {
+  //   if (widgetCallback) {
+  //     widgetCallback({ name: name, value: selected, });
+  //   }
+  // }, [selected]);
 
   return (
     <div className="numeric">
@@ -37,8 +36,8 @@ const TextField = ({ name, callback, placeholder, readonly, type, inputMode }) =
 export const TextFieldWidget = {
   schemaFields: ["name"],
   schemaFieldsTypes: ["s"],
-  widget: (props) => {
-    return <TextField {...props} />;
+  widget: (props, widgetCallback) => {
+    return <TextField {...{ widgetCallback, ...props }} />;
   },
 };
 

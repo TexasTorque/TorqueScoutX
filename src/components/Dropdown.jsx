@@ -1,16 +1,15 @@
 import { default as BootstrapDropdown } from 'react-bootstrap/Dropdown';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const Dropdown = ({ name, prompt, options, callback }) => {
+const Dropdown = ({ name, prompt, options, callback, widgetCallback }) => {
 
     const [selected, setSelected] = useState(prompt || "Select an option");
 
-    const getWidgetState = () => {
-        return {
-            name: name,
-            value: selected,
-        };
-    };
+    useEffect(() => {
+        if (widgetCallback) {
+            widgetCallback({ name: name, value: selected, });
+        }
+    }, [selected]);
 
     return (
         <BootstrapDropdown name={name}> {/* I dont know if this works, will check later */}
@@ -29,8 +28,8 @@ const Dropdown = ({ name, prompt, options, callback }) => {
 export const DropdownWidget = {
     schemaFields: ["name", "options"], // add prompt field later
     schemaFieldsTypes: ["s", [1]],
-    widget: (props) => {
-        return <Dropdown {...props} />;
+    widget: (props, widgetCallback) => {
+        return <Dropdown {...{ widgetCallback, ...props }} />;
     },
 };
 

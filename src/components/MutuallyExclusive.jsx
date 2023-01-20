@@ -1,22 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Button from "react-bootstrap/Button";
 import Null from "./Null";
 
-const MutuallyExclusive = ({ name, elements, callback }) => {
+const MutuallyExclusive = ({ name, elements, callback, widgetCallback }) => {
   const [selected, setSelected] = useState(elements[0]);
 
   const update = (element) => {
     setSelected(element);
-    callback(element);
+    callback && callback(element);
   };
 
-  const getWidgetState = () => {
-    return {
-      name: name,
-      value: selected,
-    };
-  };
+  useEffect(() => {
+    if (widgetCallback) {
+      widgetCallback({ name: name, value: selected, });
+    }
+  }, [selected]);
 
   return (
     <div>
@@ -47,8 +46,8 @@ const MutuallyExclusive = ({ name, elements, callback }) => {
 export const MutuallyExclusiveWidget = {
   schemaFields: ["name", "elements"],
   schemaFieldsTypes: ["s", [1]],
-  widget: (props) => {
-    return <MutuallyExclusive {...props} />;
+  widget: (props, widgetCallback) => {
+    return <MutuallyExclusive {...{ widgetCallback, ...props }} />;
   },
 };
 

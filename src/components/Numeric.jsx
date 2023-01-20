@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 
 import Null from "./Null";
 
-const Numeric = ({ name, callback, min, max, init, increment }) => {
+const Numeric = ({ name, callback, min, max, init, increment, widgetCallback }) => {
   const [count, setCount] = useState(init || 0);
 
   const update = (direction) => {
@@ -14,15 +14,14 @@ const Numeric = ({ name, callback, min, max, init, increment }) => {
       max ?? 99
     );
     setCount(n);
-    callback(n);
+    callback && callback(n);
   };
 
-  const getWidgetState = () => {
-    return {
-      name: name,
-      value: count,
-    };
-  };
+  useEffect(() => {
+    if (widgetCallback) {
+      widgetCallback({ name: name, value: count, });
+    }
+  }, [count]);
 
   return (
     <div className="numeric">
@@ -51,8 +50,8 @@ const Numeric = ({ name, callback, min, max, init, increment }) => {
 export const NumericWidget = {
   schemaFields: ["name"],
   schemaFieldsTypes: ["s"],
-  widget: (props) => {
-    return <Numeric {...props} />;
+  widget: (props, widgetCallback) => {
+    return <Numeric {...{ widgetCallback, ...props }} />;
   },
 };
 

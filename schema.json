@@ -1,6 +1,18 @@
 {
     "widgets": [
         {
+            "widget": "TextField",
+            "name": "Team"
+        },
+        {
+            "widget": "TextField",
+            "name": "Match"
+        },
+        {
+            "widget": "Toggle",
+            "name": "Alliance"
+        },
+        {
             "widget": "Label",
             "name": "Auto"
         },
@@ -11,15 +23,15 @@
         },
         {
             "widget": "Numeric",
-            "name": "Lower"
+            "name": "A. Lower"
         },
         {
             "widget": "Numeric",
-            "name": "Upper"
+            "name": "A. Upper"
         },
         {
             "widget": "Numeric",
-            "name": "Missed"
+            "name": "A. Missed"
         },
         {
             "widget": "Label",
@@ -27,15 +39,15 @@
         },
         {
             "widget": "Numeric",
-            "name": "Lower"
+            "name": "T. Lower"
         },
         {
             "widget": "Numeric",
-            "name": "Upper"
+            "name": "T. Upper"
         },
         {
             "widget": "Numeric",
-            "name": "Missed"
+            "name": "T. Missed"
         },
         {
             "widget": "Toggle",
