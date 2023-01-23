@@ -1,6 +1,14 @@
 {
     "widgets": [
         {
+            "widget": "Label",
+            "name": "Info"
+        },
+        {
+            "widget": "TextField",
+            "name": "Name"
+        },
+        {
             "widget": "TextField",
             "name": "Team"
         },
@@ -10,7 +18,8 @@
         },
         {
             "widget": "Toggle",
-            "name": "Alliance"
+            "name": "Alliance",
+            "init": false
         },
         {
             "widget": "Label",

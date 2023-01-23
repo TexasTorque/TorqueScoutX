@@ -6,11 +6,17 @@ import Null from "./Null";
 const TextField = ({ name, callback, placeholder, readonly, type, inputMode, widgetCallback }) => {
   const [selected, setSelected] = useState(readonly ?? "");
 
-  // useEffect(() => {
-  //   if (widgetCallback) {
-  //     widgetCallback({ name: name, value: selected, });
-  //   }
-  // }, [selected]);
+  const update = (element) => {
+    setSelected(element);
+    widgetCallback && widgetCallback({ name: name, value: element, });
+    callback && callback(element);
+  };
+
+  useEffect(() => {
+    if (widgetCallback) {
+      widgetCallback({ name: name, value: selected, });
+    }
+  }, [selected]);
 
   return (
     <div className="numeric">
@@ -21,7 +27,7 @@ const TextField = ({ name, callback, placeholder, readonly, type, inputMode, wid
         <div className="ml-0 mt-1" style={{ width: "10rem" }}>
           <Form.Control
             disabled={readonly != null}
-            onChange={(e) => { callback(e.target.value); setSelected(e.target.value); }}
+            onChange={(e) => { update(e.target.value); }}
             className="w-100"
             type={type ?? "text"}
             placeholder={placeholder ?? readonly ?? ""}

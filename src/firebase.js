@@ -9,7 +9,7 @@ import {
   getFirestore,
   getDocs,
   collection,
-  doc, setDoc, getDoc
+  doc, setDoc, getDoc, updateDoc, arrayUnion
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -83,19 +83,19 @@ const getSchemaDoc = async () => {
 };
 
 export const pushSchema = async (schema, schemaName) => {
-  let schemaDoc = await (await getSchemaDoc()).data();
+  let schemaDoc = (await getSchemaDoc()).data();
   schemaDoc.storedSchemas.push({ schema: schema, name: schemaName });
   setDoc(doc(db, "schemas", "schema"), schemaDoc);
   alert(schemaName + " schema pushed to database.");
 };
 
 export const getStoredSchemas = async () => {
-  let schemaDoc = await (await getSchemaDoc()).data();
+  let schemaDoc = (await getSchemaDoc()).data();
   return schemaDoc.storedSchemas.map((schema) => schema.name);
 };
 
 export const setActiveSchema = async (schemaName) => {
-  let schemaDoc = await (await getSchemaDoc()).data();
+  let schemaDoc = (await getSchemaDoc()).data();
   let requestedSchema = schemaDoc.storedSchemas.find((schema) => schema.name === schemaName);
   schemaDoc.activeSchema = requestedSchema;
   setDoc(doc(db, "schemas", "schema"), schemaDoc);
@@ -103,12 +103,62 @@ export const setActiveSchema = async (schemaName) => {
 };
 
 export const getSchemaByName = async (schemaName) => {
-  let schemaDoc = await (await getSchemaDoc()).data();
+  let schemaDoc = (await getSchemaDoc()).data();
   let requestedSchema = schemaDoc.storedSchemas.find((schema) => schema.name === schemaName);
   return requestedSchema.schema;
 };
 
 export const getActiveSchema = async () => {
-  let schemaDoc = await (await getSchemaDoc()).data();
+  let schemaDoc = (await getSchemaDoc()).data();
   return schemaDoc.activeSchema;
 };
+
+export const pushReport = async (report) => {
+  let active = await getActiveSchema();
+  const col = collection(db, active.name);
+  const docRef = doc(col, report.Team);
+  if ((await getDoc(docRef)).exists()) {
+    await updateDoc(docRef, { reports: arrayUnion(report) });
+  } else {
+    await setDoc(docRef, { reports: [report] });
+  }
+  alert("Report pushed to database.");
+};
+
+const getAnalysisSchemaDoc = async () => {
+  return await getDoc(doc(db, "schemas", "analysisSchema"));
+};
+
+export const pushAnalysisSchema = async (schema, schemaName) => {
+  let schemaDoc = (await getAnalysisSchemaDoc()).data();
+  schemaDoc.storedSchemas.push({ schema: schema, name: schemaName });
+  setDoc(doc(db, "schemas", "analysisSchema"), schemaDoc);
+  alert(schemaName + " analysis schema pushed to database.");
+};
+
+export const getStoredAnalysisSchemas = async () => {
+  let schemaDoc = (await getAnalysisSchemaDoc()).data();
+  return schemaDoc.storedSchemas.map((schema) => schema.name);
+};
+
+export const setActiveAnalysisSchema = async (schemaName) => {
+  let schemaDoc = (await getAnalysisSchemaDoc()).data();
+  let requestedSchema = schemaDoc.storedSchemas.find((schema) => schema.name === schemaName);
+  schemaDoc.activeSchema = requestedSchema;
+  setDoc(doc(db, "schemas", "analysisSchema"), schemaDoc);
+  alert(schemaName + " analysis schema set as active.");
+};
+
+export const getAnalysisSchemaByName = async (schemaName) => {
+  let schemaDoc = (await getAnalysisSchemaDoc()).data();
+  let requestedSchema = schemaDoc.storedSchemas.find((schema) => schema.name === schemaName);
+  return requestedSchema.schema;
+};
+
+export const getActiveAnalysisSchema = async () => {
+  let schemaDoc = (await getAnalysisSchemaDoc()).data();
+  return schemaDoc.activeSchema;
+};
+
+
+
