@@ -61,6 +61,11 @@ const Scout = () => {
         for (let i = 0; i < report.fields.length; i++) {
             finalReport[report.fields[i].name] = report.fields[i].value;
         }
+
+        if (parseInt(finalReport["Team"]) < 148) {
+            if (!window.confirm("Team number is low. Are you sure you want to submit?")) return;
+        }
+        console.log(finalReport);
         pushReport(finalReport);
         //big bug, widgets of the same name, lower(auto) and lower(teleop) will overwrite each other, maybe add a unique id to each widget
     };
