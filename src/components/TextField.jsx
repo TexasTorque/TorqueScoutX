@@ -26,7 +26,7 @@ const TextField = ({ name, callback, placeholder, readonly, type, inputMode, wid
         </h4>
         <div className="ml-0 mt-1" style={{ width: "10rem" }}>
           <Form.Control
-            disabled={readonly != null}
+            disabled={ readonly ?? false }
             onChange={(e) => { update(e.target.value); }}
             className="w-100"
             type={type ?? "text"}

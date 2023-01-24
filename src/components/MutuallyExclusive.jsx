@@ -3,7 +3,14 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Null from "./Null";
 
-const MutuallyExclusive = ({ name, elements, callback, widgetCallback }) => {
+// {"high":1,"low":0"}
+
+const MutuallyExclusive = ({ name, elements, callback, widgetCallback, pointsMap }) => {
+  
+  if (pointsMap) {
+    elements = Object.keys(pointsMap)
+  }
+  
   const [selected, setSelected] = useState(elements[0]);
 
   const update = (element) => {
@@ -13,7 +20,7 @@ const MutuallyExclusive = ({ name, elements, callback, widgetCallback }) => {
 
   useEffect(() => {
     if (widgetCallback) {
-      widgetCallback({ name: name, value: selected, });
+      widgetCallback({ name: name, value: selected, points: pointsMap[selected]});
     }
   }, [selected]);
 
@@ -44,8 +51,8 @@ const MutuallyExclusive = ({ name, elements, callback, widgetCallback }) => {
 };
 
 export const MutuallyExclusiveWidget = {
-  schemaFields: ["name", "elements"],
-  schemaFieldsTypes: ["s", [1]],
+  schemaFields: ["name", "pointsMap"],
+  schemaFieldsTypes: ["s", {"K": "v"}],
   widget: (props, widgetCallback) => {
     return <MutuallyExclusive {...{ widgetCallback, ...props }} />;
   },

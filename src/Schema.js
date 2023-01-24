@@ -1,5 +1,4 @@
 import { ToggleWidget } from "./components/Toggle";
-// import { ButtonFullWidget } from "./components/ButtonFull";
 import { MutuallyExclusiveWidget } from "./components/MutuallyExclusive";
 import { NumericWidget } from "./components/Numeric";
 import { StopwatchWidget } from "./components/Stopwatch";
@@ -9,7 +8,6 @@ import { LabelWidget } from "./components/Label";
 
 export let widgetNames = {
     "Toggle": ToggleWidget,
-    // "ButtonFull": ButtonFullWidget, this won't ever be a component
     "MutuallyExclusive": MutuallyExclusiveWidget,
     "Numeric": NumericWidget,
     "Stopwatch": StopwatchWidget,
@@ -24,6 +22,15 @@ export default function schemaValidate(schemaObject) {
     if (!(schemaObject.widgets instanceof Array)) {
         alert("No widgets array!");
         throw BreakException;
+    }
+
+    let wN = [];
+    for (let i = 0; i < schemaObject.widgets.length; i++) {
+        if (wN.includes(schemaObject.widgets[i].name)) {
+            alert("Widget " + schemaObject.widgets[i].name + " is duplicated!");
+            throw BreakException;
+        }
+        wN.push(schemaObject.widgets[i].name);
     }
 
     for (let i = 0; i < schemaObject.widgets.length; i++) {
@@ -55,5 +62,25 @@ export default function schemaValidate(schemaObject) {
             }
         });
     }
+
+    if (!(schemaObject.analysisGroups instanceof Array)) {
+        alert("No analysis array!");
+        throw BreakException;
+    }
+
+    for (let i = 0; i < schemaObject.analysisGroups.length; i++) {
+
+        if (!(schemaObject.analysisGroups[i].name)) {
+            alert("No name for analysis group at index " + i + "!");
+            throw BreakException;
+        }
+
+        for (let j = 0; j < schemaObject.analysisGroups[i].fields.length; j++) {
+            
+        }
+
+    }
+
     return true;
+
 }

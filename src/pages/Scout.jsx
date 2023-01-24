@@ -71,15 +71,11 @@ const Scout = () => {
             <div className="container mt-4">
                 <Group>
                     <Label name="Info">
-                        {/* <TextField name="Name" value={name} callback={(data) => setName(data)} />
-                        <TextField name="Team" value="" callback={(data) => modifyReport(data)} />
-                        <TextField name="Match" value="" callback={(data) => modifyReport(data)} /> 
-                        <Toggle name="Alliance" options={["Red", "Blue"]} callback={(data) => modifyReport(data)} /> */}
-                        <TextField name="Name" value={name} />
+                    </Label>
+                    <TextField name="Name" readonly={name ?? ""} value={name} widgetCallback={(data) => modifyReport(data)}/>
                         <TextField name="Team" value="" widgetCallback={(data) => modifyReport(data)} />
                         <TextField name="Match" value="" widgetCallback={(data) => modifyReport(data)} />
                         <Toggle name="Alliance" widgetCallback={(data) => modifyReport(data)} />
-                    </Label>
                     {activeSchema.schema.widgets.map((widget) => {
                         return (
                             <h1 key={Math.random() * 1007 % 432}>{widgetNames[widget.widget].widget(widget, modifyReport)}</h1>
