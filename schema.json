@@ -2,27 +2,6 @@
     "widgets": [
         {
             "widget": "Label",
-            "name": "Info"
-        },
-        {
-            "widget": "TextField",
-            "name": "Name"
-        },
-        {
-            "widget": "TextField",
-            "name": "Team"
-        },
-        {
-            "widget": "TextField",
-            "name": "Match"
-        },
-        {
-            "widget": "Toggle",
-            "name": "Alliance",
-            "init": false
-        },
-        {
-            "widget": "Label",
             "name": "Auto"
         },
         {

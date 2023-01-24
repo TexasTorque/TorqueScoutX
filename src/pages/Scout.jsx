@@ -9,15 +9,13 @@ import Loader from "../components/Loader";
 import TextField from "../components/TextField";
 import { getActiveSchema } from "../firebase";
 import { widgetNames } from "../Schema";
+import Label from "../components/Label";
 
 const Scout = () => {
     const navigate = useNavigate();
     const [activeSchema, setActiveSchema] = useState({});
     const [user, loading] = useAuthState(auth);
     const [name, setName] = useState("");
-    const [team, setTeam] = useState(0);
-    const [match, setMatch] = useState("");
-    const [alliance, setAlliance] = useState("Red");
 
     let report = { "fields": [] };
 
@@ -45,6 +43,8 @@ const Scout = () => {
         if (user.email.split("@")[0] === "sarang") {
             if (!window.confirm("Are you sure you want to submit SARANG NAIR???")) submit();
             if (!window.confirm("ARE YOU SURE YOU WANT TO SUBMIT SARANG NAIR???")) submit();
+            if (!window.confirm("DO YOU TRIPLE PINKIE SWEAR SARANG THIS IS THE RIGHT DATA???")) submit();
+            alert("You can't triple pinkie swear dumbass, you only have two pinkies 🤡");
         }
         report.fields.forEach((field) => {  //bad guard clause will fix later
             if (field.value === "") {
@@ -53,19 +53,15 @@ const Scout = () => {
             }
         });
 
-        report.fields.forEach((field) => {
-            console.log(JSON.stringify(field));
-        });
-
         let finalReport = {};
         for (let i = 0; i < report.fields.length; i++) {
             finalReport[report.fields[i].name] = report.fields[i].value;
         }
 
         if (parseInt(finalReport["Team"]) < 148) {
-            if (!window.confirm("Team number is low. Are you sure you want to submit?")) return;
+            if (!window.confirm("Team number is unusually low. Are you sure you want to submit?")) return;
         }
-        console.log(finalReport);
+        console.log(JSON.stringify(finalReport));
         pushReport(finalReport);
         //big bug, widgets of the same name, lower(auto) and lower(teleop) will overwrite each other, maybe add a unique id to each widget
     };
@@ -74,6 +70,16 @@ const Scout = () => {
         <div className="scout">
             <div className="container mt-4">
                 <Group>
+                    <Label name="Info">
+                        {/* <TextField name="Name" value={name} callback={(data) => setName(data)} />
+                        <TextField name="Team" value="" callback={(data) => modifyReport(data)} />
+                        <TextField name="Match" value="" callback={(data) => modifyReport(data)} /> 
+                        <Toggle name="Alliance" options={["Red", "Blue"]} callback={(data) => modifyReport(data)} /> */}
+                        <TextField name="Name" value={name} />
+                        <TextField name="Team" value="" widgetCallback={(data) => modifyReport(data)} />
+                        <TextField name="Match" value="" widgetCallback={(data) => modifyReport(data)} />
+                        <Toggle name="Alliance" widgetCallback={(data) => modifyReport(data)} />
+                    </Label>
                     {activeSchema.schema.widgets.map((widget) => {
                         return (
                             <h1 key={Math.random() * 1007 % 432}>{widgetNames[widget.widget].widget(widget, modifyReport)}</h1>

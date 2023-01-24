@@ -8,7 +8,7 @@ const TextField = ({ name, callback, placeholder, readonly, type, inputMode, wid
 
   const update = (element) => {
     setSelected(element);
-    widgetCallback && widgetCallback({ name: name, value: element, });
+    widgetCallback && widgetCallback({ name: name, value: element });
     callback && callback(element);
   };
 
