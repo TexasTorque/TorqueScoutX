@@ -53,9 +53,15 @@ const Scout = () => {
             }
         });
 
+        console.log(report)
         let finalReport = {};
         for (let i = 0; i < report.fields.length; i++) {
-            finalReport[report.fields[i].name] = report.fields[i].value;
+            console.log(report.fields[i].name)
+            if (["Team","Alliance","Name","Match"].includes(report.fields[i].name)) {
+                finalReport[report.fields[i].name] = report.fields[i].value;
+            } else {
+                finalReport[report.fields[i].name] = {"value":report.fields[i].value, "points":report.fields[i].points}
+            }
         }
 
         if (parseInt(finalReport["Team"]) < 148) {
