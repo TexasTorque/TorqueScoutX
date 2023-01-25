@@ -61,6 +61,18 @@ export default function schemaValidate(schemaObject) {
                 throw BreakException;
             }
         });
+
+        
+
+    }
+
+    if (!(schemaObject.analysisGroups instanceof Array)) {
+        alert("No anal groups!");
+        throw BreakException;
+    }
+
+    for (let i = 0; i < schemaObject.analysisGroups.length; i++) {
+        
     }
 
     if (!(schemaObject.analysisGroups instanceof Array)) {
