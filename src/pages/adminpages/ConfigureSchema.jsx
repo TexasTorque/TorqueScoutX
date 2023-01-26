@@ -85,7 +85,7 @@ const ConfigureSchema = () => {
             <Group name="Set Active Schema">
                 <br />
                 Active Schema: {currentSchema.name}
-                <Dropdown name="Active Schemas" options={storedSchemas} callback={(value) => { setSelectedSchema(value); }}></Dropdown>
+                <Dropdown name="Active Schemas" elements={storedSchemas} callback={(value) => { setSelectedSchema(value); }}></Dropdown>
                 <ButtonFull name="Set Active" callback={() => { setActiveSchema(selectedSchema); setCurrentSchema(selectedSchema); }}></ButtonFull>
                 <ButtonFull name="View Schema" callback={() => { setSchemaByName(selectedSchema); }}></ButtonFull>
             </Group>

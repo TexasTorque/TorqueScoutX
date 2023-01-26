@@ -12,8 +12,8 @@ export let widgetNames = {
     "Numeric": NumericWidget, //done points
     "Stopwatch": StopwatchWidget, // doesn't need
     "TextField": TextFieldWidget, // doesn't need
-    "Dropdown": DropdownWidget, //check this!!!
-    "Label":!! LabelWidget // never used for points
+    "Dropdown": DropdownWidget, //check this!!! 
+    "Label": LabelWidget // never used for points
 };
 
 let BreakException = {};
@@ -55,14 +55,16 @@ export default function schemaValidate(schemaObject) {
 
         });
 
-        Object.keys(schemaObject.widgets[i]).filter((field) => {
-            if (!(fields.includes(field)) && !(field === "widget")) {
-                alert("Extra field " + field + " in widget " + schemaObject.widgets[i].widget + "!");
-                throw BreakException;
-            }
-        });
+        // Object.keys(schemaObject.widgets[i]).filter((field) => {
+        //     if (!(fields.includes(field)) && !(field === "widget")) {
+        //         alert("Extra field " + field + " in widget " + schemaObject.widgets[i].widget + "!");
+        //         throw BreakException;
+        //     }
+        // });
 
-        
+        // letting people pass in their own props from now on
+
+
 
     }
 
@@ -72,7 +74,7 @@ export default function schemaValidate(schemaObject) {
     }
 
     for (let i = 0; i < schemaObject.analysisGroups.length; i++) {
-        
+
     }
 
     if (!(schemaObject.analysisGroups instanceof Array)) {
@@ -88,7 +90,7 @@ export default function schemaValidate(schemaObject) {
         }
 
         for (let j = 0; j < schemaObject.analysisGroups[i].fields.length; j++) {
-            
+
         }
 
     }

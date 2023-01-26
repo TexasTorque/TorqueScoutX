@@ -3,28 +3,42 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Null from "./Null";
 
-const Toggle = ({ name, callback, init, widgetCallback, pointsTrue, pointsFalse }) => {
+const Toggle = ({ name, callback, init, widgetCallback, pointsTrue, pointsFalse, colorTrue, colorFalse }) => {
   const [value, setValue] = useState(init ?? false);
-  const [variant, setVariant] = useState(init ? "success" : "danger");
+  let isCustomColors = (colorTrue != null && colorFalse != null);
 
   const update = () => {
     const n = !value;
     setValue(n);
-    setVariant(value ? "danger" : "success");
-
-    callback && callback(n);
   };
 
+  if (isCustomColors) {
+    console.log("Custom colors detected");
+    console.log("True: " + colorTrue);
+    console.log("False: " + colorFalse);
+  }
+
   useEffect(() => {
-    
     if (widgetCallback) {
       widgetCallback({ name: name, value: value, points: value ? (pointsTrue ?? 1) : (pointsFalse ?? 0) });
     }
+    callback && callback(value);
   }, [value]);
 
-
   return (
+
+
     <div className="toggle">
+      <style>
+        {`
+      .btn-false${name} {
+        background-color: ${(colorFalse != null) ? colorFalse : "rgb(255,0,0)"};
+      }
+      .btn-true${name} {
+        background-color: ${(colorTrue != null) ? colorTrue : "rgb(0,255,0)"};
+      }
+      `}
+      </style>
       <div className="row mt-4 mr-3">
         <h4 className="name-field ml-3 mt-2" style={{ width: "8rem" }}>
           {name || <Null />}
@@ -32,7 +46,7 @@ const Toggle = ({ name, callback, init, widgetCallback, pointsTrue, pointsFalse 
         <div className="ml-0 mt-1" style={{ width: "10rem" }}>
           <Button
             className="w-100"
-            variant={variant}
+            variant={value ? ("true" + name) : ("false" + name)}
             size="md"
             onClick={() => { update(); }}
           >

@@ -18,7 +18,6 @@ const Scout = () => {
     const [name, setName] = useState("");
 
     let report = { "fields": [] };
-
     useEffect(() => {
         if (!user) return navigate("/login");
         setName(user.email.split("@")[0]);
@@ -53,14 +52,14 @@ const Scout = () => {
             }
         });
 
-        console.log(report)
+        console.log(report);
         let finalReport = {};
         for (let i = 0; i < report.fields.length; i++) {
-            console.log(report.fields[i].name)
-            if (["Team","Alliance","Name","Match"].includes(report.fields[i].name)) {
+            console.log(report.fields[i].name);
+            if (["Team", "Alliance", "Name", "Match"].includes(report.fields[i].name)) {
                 finalReport[report.fields[i].name] = report.fields[i].value;
             } else {
-                finalReport[report.fields[i].name] = {"value":report.fields[i].value, "points":report.fields[i].points}
+                finalReport[report.fields[i].name] = { "value": report.fields[i].value, "points": report.fields[i].points };
             }
         }
 
@@ -68,7 +67,10 @@ const Scout = () => {
             if (!window.confirm("Team number is unusually low. Are you sure you want to submit?")) return;
         }
         console.log(JSON.stringify(finalReport));
-        pushReport(finalReport);
+        finalReport.Alliance = finalReport.Alliance === "true" ? "red" : "blue";
+        pushReport(finalReport).then(() => {
+            navigate("/dashboard");
+        });
         //big bug, widgets of the same name, lower(auto) and lower(teleop) will overwrite each other, maybe add a unique id to each widget
     };
 
@@ -78,11 +80,12 @@ const Scout = () => {
                 <Group>
                     <Label name="Info">
                     </Label>
-                    <TextField name="Name" readonly={name ?? ""} value={name} widgetCallback={(data) => modifyReport(data)}/>
-                        <TextField name="Team" value="" widgetCallback={(data) => modifyReport(data)} />
-                        <TextField name="Match" value="" widgetCallback={(data) => modifyReport(data)} />
-                        <Toggle name="Alliance" widgetCallback={(data) => modifyReport(data)} />
+                    <TextField name="Name" readonly={name ?? ""} value={name} widgetCallback={(data) => modifyReport(data)} />
+                    <TextField name="Team" value="" widgetCallback={(data) => modifyReport(data)} />
+                    <TextField name="Match" value="" widgetCallback={(data) => modifyReport(data)} />
+                    <Toggle name="Alliance" colorTrue="rgb(0,0,255)" colorFalse="rgb(255,0,0)" widgetCallback={(data) => modifyReport(data)} />
                     {activeSchema.schema.widgets.map((widget) => {
+                        console.log(widgetNames[widget.widget]);
                         return (
                             <h1 key={Math.random() * 1007 % 432}>{widgetNames[widget.widget].widget(widget, modifyReport)}</h1>
                         );
