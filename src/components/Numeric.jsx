@@ -5,8 +5,10 @@ import Col from "react-bootstrap/Col";
 
 import Null from "./Null";
 
-const Numeric = ({ name, callback, min, max, init, increment, widgetCallback }) => {
+const Numeric = ({ name, callback, min, max, init, increment, widgetCallback, multiplier }) => {
   const [count, setCount] = useState(init || 0);
+
+  !multiplier && (multiplier = 1);
 
   const update = (direction) => {
     const n = Math.min(
@@ -19,7 +21,7 @@ const Numeric = ({ name, callback, min, max, init, increment, widgetCallback }) 
 
   useEffect(() => {
     if (widgetCallback) {
-      widgetCallback({ name: name, value: count, });
+      widgetCallback({ name: name, value: count, points: count * multiplier});
     }
   }, [count]);
 
@@ -48,8 +50,8 @@ const Numeric = ({ name, callback, min, max, init, increment, widgetCallback }) 
 };
 
 export const NumericWidget = {
-  schemaFields: ["name"],
-  schemaFieldsTypes: ["s"],
+  schemaFields: ["name", "multiplier"],
+  schemaFieldsTypes: ["s", 1],
   widget: (props, widgetCallback) => {
     return <Numeric {...{ widgetCallback, ...props }} />;
   },

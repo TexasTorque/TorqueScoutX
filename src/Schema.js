@@ -7,13 +7,13 @@ import { DropdownWidget } from "./components/Dropdown";
 import { LabelWidget } from "./components/Label";
 
 export let widgetNames = {
-    "Toggle": ToggleWidget,
-    "MutuallyExclusive": MutuallyExclusiveWidget,
-    "Numeric": NumericWidget,
-    "Stopwatch": StopwatchWidget,
-    "TextField": TextFieldWidget,
-    "Dropdown": DropdownWidget,
-    "Label": LabelWidget
+    "Toggle": ToggleWidget, //done points
+    "MutuallyExclusive": MutuallyExclusiveWidget, //done points
+    "Numeric": NumericWidget, //done points
+    "Stopwatch": StopwatchWidget, // doesn't need
+    "TextField": TextFieldWidget, // doesn't need
+    "Dropdown": DropdownWidget, //check this!!!
+    "Label":!! LabelWidget // never used for points
 };
 
 let BreakException = {};
@@ -61,6 +61,18 @@ export default function schemaValidate(schemaObject) {
                 throw BreakException;
             }
         });
+
+        
+
+    }
+
+    if (!(schemaObject.analysisGroups instanceof Array)) {
+        alert("No anal groups!");
+        throw BreakException;
+    }
+
+    for (let i = 0; i < schemaObject.analysisGroups.length; i++) {
+        
     }
 
     if (!(schemaObject.analysisGroups instanceof Array)) {
