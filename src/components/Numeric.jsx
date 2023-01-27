@@ -5,7 +5,9 @@ import Col from "react-bootstrap/Col";
 
 import Null from "./Null";
 
-const Numeric = ({ name, callback, min, max, init, increment, widgetCallback, multiplier }) => {
+const Numeric = ({ name, callback, min, max, init, increment, widgetCallback, multiplier, alias }) => {
+
+
   const [count, setCount] = useState(init || 0);
 
   !multiplier && (multiplier = 1);
@@ -21,7 +23,7 @@ const Numeric = ({ name, callback, min, max, init, increment, widgetCallback, mu
 
   useEffect(() => {
     if (widgetCallback) {
-      widgetCallback({ name: name, value: count, points: count * multiplier});
+      widgetCallback({ name: name, value: count, points: count * multiplier });
     }
   }, [count]);
 
@@ -29,7 +31,7 @@ const Numeric = ({ name, callback, min, max, init, increment, widgetCallback, mu
     <div className="numeric">
       <div className="row mt-4 mr-1">
         <Col className="ml-0 mt-2">
-          <h4 className="name-field">{name || <Null />}</h4>
+          <h4 className="name-field">{(alias ?? name) || <Null />}</h4>
         </Col>
         <Col className="ml-0 mt-1">
           <Button variant="danger" size="md" onClick={() => update(-1)}>

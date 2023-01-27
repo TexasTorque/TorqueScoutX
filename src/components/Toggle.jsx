@@ -32,10 +32,10 @@ const Toggle = ({ name, callback, init, widgetCallback, pointsTrue, pointsFalse,
       <style>
         {`
       .btn-false${name} {
-        background-color: ${(colorFalse != null) ? colorFalse : "rgb(255,0,0)"};
+        background-color: ${(colorFalse != null) ? colorFalse : "rgb(220,53,69)"};
       }
       .btn-true${name} {
-        background-color: ${(colorTrue != null) ? colorTrue : "rgb(0,255,0)"};
+        background-color: ${(colorTrue != null) ? colorTrue : "rgb(40,167,69)"};
       }
       `}
       </style>
