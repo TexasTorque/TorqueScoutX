@@ -4,23 +4,14 @@ import Button from "react-bootstrap/Button";
 import Null from "./Null";
 
 // {"high":1,"low":0"}
-// [{"high":1},{"low":0}]
-
 
 const MutuallyExclusive = ({ name, elements, callback, widgetCallback, pointsMap }) => {
   
-  // if (pointsMap) {
-  //   elements = Object.keys(pointsMap)
-  // }
-
   if (pointsMap) {
-    elements = pointsMap.map((e) => {
-      return Object.keys(e)[0]
-    })
+    elements = Object.keys(pointsMap)
   }
-  // const [selected, setSelected] = useState(elements[0]);
-  const [selected, setSelected] = useState(Object.keys(pointsMap[0])[0]);
-  // const [selected, setSelected] = useState(elements[0]);
+  
+  const [selected, setSelected] = useState(elements[0]);
 
   const update = (element) => {
     setSelected(element);
@@ -28,14 +19,8 @@ const MutuallyExclusive = ({ name, elements, callback, widgetCallback, pointsMap
   };
 
   useEffect(() => {
-    let points = 0;
-    for (let i = 0; i < pointsMap.length; i++) {
-      if (Object.keys(pointsMap[i])[0] === selected) {
-        points = Object.values(pointsMap[i])[0];
-      }
-    }
     if (widgetCallback) {
-      widgetCallback({ name: name, value: selected, points: points});
+      widgetCallback({ name: name, value: selected, points: pointsMap[selected]});
     }
   }, [selected]);
 
