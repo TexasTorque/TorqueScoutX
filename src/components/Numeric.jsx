@@ -31,7 +31,7 @@ const Numeric = ({ name, callback, min, max, init, increment, widgetCallback, mu
     <div className="numeric">
       <div className="row mt-4 mr-1">
         <Col className="ml-0 mt-2">
-          <h4 className="name-field">{(alias ?? name) || <Null />}</h4>
+          <h4 className="name-field" style={{ fontSize: "1.3rem" }}>{(alias ?? name) || <Null />}</h4>
         </Col>
         <Col className="ml-0 mt-1">
           <Button variant="danger" size="md" onClick={() => update(-1)}>
@@ -47,7 +47,7 @@ const Numeric = ({ name, callback, min, max, init, increment, widgetCallback, mu
           </Button>
         </Col>
       </div>
-    </div>
+    </div >
   );
 };
 

@@ -9,7 +9,7 @@ import Button from "react-bootstrap/Button";
 import Null from "./Null";
 import Loader from "./Loader";
 
-import {default as BootstrapTable} from 'react-bootstrap/Table'; 
+import { default as BootstrapTable } from 'react-bootstrap/Table';
 // This is to avoid name conflict between the react-bootstrap 
 // table and our table.
 // 
@@ -27,20 +27,6 @@ const Table = ({ json, columns, defaultSortField }) => {
   const [data, setData] = useState(json);
 
   useEffect(() => setData(json), [json, data]);
-
-  const [user, loading] = useAuthState(auth);
-
-  useEffect(() => {
-    if (loading) return <Loader />;
-    if (!user) return navigate("/login/analysis");
-    getUserFromID(user.email.split("@")[0]).then(user => {
-      if (user == null) {
-        alert("User was can not be found (was probably deleted).");
-        logout();
-        return navigate("login/scout");
-      }
-    }); 
-  }, [user, loading]);
 
   const handleSort = (field) => {
     setSortField(field);
@@ -63,7 +49,7 @@ const Table = ({ json, columns, defaultSortField }) => {
           <tr>
             {columns.map(({ label, accessor, sortable }) => (
               <th>
-                { sortable ? (
+                {sortable ? (
                   <Button
                     variant="link"
                     className=""
@@ -71,36 +57,37 @@ const Table = ({ json, columns, defaultSortField }) => {
                   >
                     {label}
                   </Button>
-                ) : label }
+                ) : label}
               </th>
             ))}
           </tr>
         </thead>
-        { data == null ? <Null /> : (
+        {/* {data == null ? <Null /> : (
           <tbody className="tbl">
             {data.map(row => (
               <tr>
                 {columns.map(({ accessor }) => {
-                  if(accessor === "teamName") {
+                  if (accessor === "Team") {
                     return (
                       <td>
                         <Button
                           variant="link"
                           style={{ color: "blue" }}
-                          onClick={() => navigate(`/team/${row["teamName"]}`)}
+                          onClick={() => navigate(`/team/${row["Team"]}`)}
                         >
                           {row[accessor]}
                         </Button>
                       </td>
                     );
                   } else {
-                  const cell = row[accessor];
-                  return <td>{cell == null ? "N/A" : cell}</td>;
-                }})}
+                    const cell = row[accessor];
+                    return <td>{cell == null ? "N/A" : cell}</td>;
+                  }
+                })}
               </tr>
             ))}
           </tbody>
-        )}
+        )} */}
       </BootstrapTable>
     </>
   );

@@ -37,10 +37,12 @@ const Toggle = ({ name, callback, init, widgetCallback, pointsTrue, pointsFalse,
       .btn-true${name} {
         background-color: ${(colorTrue != null) ? colorTrue : "rgb(40,167,69)"};
       }
+
+      
       `}
       </style>
-      <div className="row mt-4 mr-3">
-        <h4 className="name-field ml-3 mt-2" style={{ width: "8rem" }}>
+      <div className="row mt-4 mr-3 fontChanger">
+        <h4 className="name-field ml-3 mt-2" style={{ width: "8rem", fontSize: "1.3rem" }}>
           {name || <Null />}
         </h4>
         <div className="ml-0 mt-1" style={{ width: "10rem" }}>

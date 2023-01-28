@@ -81,8 +81,8 @@ const Scout = () => {
                     <Label name="Info">
                     </Label>
                     <TextField name="Name" readonly={name ?? ""} value={name} widgetCallback={(data) => modifyReport(data)} />
-                    <TextField name="Team" value="" widgetCallback={(data) => modifyReport(data)} />
-                    <TextField name="Match" value="" widgetCallback={(data) => modifyReport(data)} />
+                    <TextField name="Team" value="" type="number" inputMode="decimal" widgetCallback={(data) => modifyReport(data)} />
+                    <TextField name="Match" value="" type="number" inputMode="decimal" widgetCallback={(data) => modifyReport(data)} />
                     <Toggle name="Alliance" colorTrue="rgb(0,101,179)" colorFalse="rgb(220,53,69)" widgetCallback={(data) => modifyReport(data)} />
                     {activeSchema.schema.widgets.map((widget) => {
                         console.log(widgetNames[widget.widget]);

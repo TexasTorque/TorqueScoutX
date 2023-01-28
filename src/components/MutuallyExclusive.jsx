@@ -8,15 +8,15 @@ import Null from "./Null";
 
 
 const MutuallyExclusive = ({ name, elements, callback, widgetCallback, pointsMap }) => {
-  
+
   // if (pointsMap) {
   //   elements = Object.keys(pointsMap)
   // }
 
   if (pointsMap) {
     elements = pointsMap.map((e) => {
-      return Object.keys(e)[0]
-    })
+      return Object.keys(e)[0];
+    });
   }
   // const [selected, setSelected] = useState(elements[0]);
   const [selected, setSelected] = useState(Object.keys(pointsMap[0])[0]);
@@ -35,17 +35,17 @@ const MutuallyExclusive = ({ name, elements, callback, widgetCallback, pointsMap
       }
     }
     if (widgetCallback) {
-      widgetCallback({ name: name, value: selected, points: points});
+      widgetCallback({ name: name, value: selected, points: points });
     }
   }, [selected]);
 
   return (
     <div>
       {name && <h2 >{name}</h2>}
-      {elements.map((element, i) => (
+      {elements.map((element) => (
         <div className="MutuallyExclusive">
           <div className="row mt-4 mr-3">
-            <h4 className="name-field ml-3 mt-2" style={{ width: "8rem" }}>
+            <h4 className="name-field ml-3 mt-2" style={{ width: "8rem", fontSize: "1.3rem" }}>
               {element || <Null />}
             </h4>
             <div className="ml-0 mt-1" style={{ width: "10rem" }}>
@@ -67,7 +67,7 @@ const MutuallyExclusive = ({ name, elements, callback, widgetCallback, pointsMap
 
 export const MutuallyExclusiveWidget = {
   schemaFields: ["name", "pointsMap"],
-  schemaFieldsTypes: ["s", {"K": "v"}],
+  schemaFieldsTypes: ["s", { "K": "v" }],
   widget: (props, widgetCallback) => {
     return <MutuallyExclusive {...{ widgetCallback, ...props }} />;
   },

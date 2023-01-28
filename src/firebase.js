@@ -42,13 +42,6 @@ export const getUserFromID = async (id) => {
   return user.data() ?? null;
 };
 
-export const getMatchesPerTeam = async (team) => {
-  let matches = [];
-  const docs = await getDocs(collection(db, "team-" + team));
-  docs.forEach((doc) => matches.push(doc.data()));
-  return matches;
-};
-
 export const registerWithEmailAndPassword = async (email, password) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
@@ -160,5 +153,15 @@ export const getActiveAnalysisSchema = async () => {
   return schemaDoc.activeSchema;
 };
 
+export const getMatchesPerTeam = async (team) => {
+  let active = await getActiveSchema();
+  const col = collection(db, active.name);
+  const docRef = doc(col, team);
+  if ((await getDoc(docRef)).exists()) {
+    return (await getDoc(docRef)).data().reports;
+  } else {
+    alert("Team not found in database.");
+  }
+}
 
 

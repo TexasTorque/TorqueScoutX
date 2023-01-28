@@ -8,7 +8,8 @@ import Scout from "./pages/Scout";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 import ConfigureSchema from "./pages/adminpages/ConfigureSchema";
-import AnalysisSchema from "./pages/adminpages/ConfigureAnalysis";
+import AnalysisIndex from "./pages/analysispages/AnalysisIndex";
+import TeamAnalysis from "./pages/analysispages/TeamAnalysis";
 
 ReactDOM.render(
   <Router>
@@ -20,7 +21,8 @@ ReactDOM.render(
       <Route path="/scout" element={<Scout />} />
       <Route path="/admin" element={<Admin />} />
       <Route path="/admin/schema" element={<ConfigureSchema />} />
-      <Route path="/admin/configure-analysis" element={<AnalysisSchema />} />
+      <Route path="/analysis/analysis-index" element={<AnalysisIndex />} />
+      <Route path="/analysis/team/:team" element={<TeamAnalysis />} />
       <Route path="/*" element={<NotFound />} />
     </Routes>
   </Router>,
