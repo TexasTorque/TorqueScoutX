@@ -63,7 +63,7 @@ const Table = ({ json, columns, defaultSortField }) => {
             {data.map(row => (
               <tr>
                 {columns.map(({ accessor }) => {
-                  // if (accessor === "Team") {
+                  // if (accessor === "teamName") {
                   //   return (
                   //     <td>
                   //       <Button
