@@ -26,18 +26,14 @@ const Table = ({ json, columns, defaultSortField }) => {
   const [sortField, setSortField] = useState(defaultSortField);
   const [data, setData] = useState(json);
 
-  useEffect(() => setData(json), [json, data]);
+  useEffect(() => setData(json), [json]);
 
   const handleSort = (field) => {
     setSortField(field);
 
     if (field == null) return;
 
-    const sorted = data.sort((a, b) => {
-      if (a[field] < b[field]) return 1;
-      if (a[field] > b[field]) return -1;
-      return 0;
-    });
+    const sorted = data.sort((a, b) => { return b[field] - a[field]; });
 
     setData(sorted);
   };
@@ -62,32 +58,33 @@ const Table = ({ json, columns, defaultSortField }) => {
             ))}
           </tr>
         </thead>
-        {/* {data == null ? <Null /> : (
+        {data && Object.keys(data).length !== 0 ?
           <tbody className="tbl">
             {data.map(row => (
               <tr>
                 {columns.map(({ accessor }) => {
-                  if (accessor === "Team") {
-                    return (
-                      <td>
-                        <Button
-                          variant="link"
-                          style={{ color: "blue" }}
-                          onClick={() => navigate(`/team/${row["Team"]}`)}
-                        >
-                          {row[accessor]}
-                        </Button>
-                      </td>
-                    );
-                  } else {
-                    const cell = row[accessor];
-                    return <td>{cell == null ? "N/A" : cell}</td>;
-                  }
+                  // if (accessor === "Team") {
+                  //   return (
+                  //     <td>
+                  //       <Button
+                  //         variant="link"
+                  //         style={{ color: "blue" }}
+                  //         onClick={() => navigate(`/team/${row["Team"]}`)}
+                  //       >
+                  //         {row[accessor]}
+                  //       </Button>
+                  //     </td>
+                  //   );
+                  // } else {
+                  const cell = row[accessor];
+                  return <td>{cell === null ? "N/A" : cell}</td>;
+                  // return <td>{"MATCH: " + row["Match"] + "\nACCESSOR: " + JSON.stringify(columns)}</td>;
+                  //}
                 })}
               </tr>
             ))}
           </tbody>
-        )} */}
+          : <Null />}
       </BootstrapTable>
     </>
   );

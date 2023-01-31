@@ -12,12 +12,6 @@ const Toggle = ({ name, callback, init, widgetCallback, pointsTrue, pointsFalse,
     setValue(n);
   };
 
-  if (isCustomColors) {
-    console.log("Custom colors detected");
-    console.log("True: " + colorTrue);
-    console.log("False: " + colorFalse);
-  }
-
   useEffect(() => {
     if (widgetCallback) {
       widgetCallback({ name: name, value: value, points: value ? (pointsTrue ?? 1) : (pointsFalse ?? 0) });

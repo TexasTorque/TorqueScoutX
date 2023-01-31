@@ -5,12 +5,14 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import Table, { makeColumn } from "../../components/Table";
 import ButtonFull from "../../components/ButtonFull";
 import Group from "../../components/Group";
+import Null from "../../components/Null";
 
 const AnalysisIndex = () => {
     const navigate = useNavigate();
     const [user, loading] = useAuthState(auth);
     const { team } = useParams();
     const [teamData, setTeamData] = useState(null);
+    const [columns, setColumns] = useState([]);
 
     useEffect(() => {
         if (!user) return navigate("/login");
@@ -20,23 +22,25 @@ const AnalysisIndex = () => {
         getMatchesPerTeam(team).then((data) => {
             populateColumns(data);
             setTeamData(processData(data));
+
+            console.log("COLUMNS BICT: ");
             columns.forEach((column) => {
-                console.log(JSON.stringify(column));
+                console.log(column);
             });
         });
     }, [team]);
 
-    const columns = [];
-    const populateColumns = (data) => {
-        Object.keys(data[0]).forEach((key) => {
-            columns.push(makeColumn(key, key.replace(/\s/g, '').replaceAll('.', ''), false));
-
-        });
-    };
-
     useEffect(() => {
         console.log("TEAM DATA BITCHES: " + JSON.stringify(teamData));
     }, [teamData]);
+
+    const populateColumns = (data) => {
+        let clmTemp = [];
+        Object.keys(data[0]).forEach((key) => {
+            clmTemp = [...clmTemp, makeColumn(key, key.replace(/\s/g, '').replaceAll('.', ''), false)];
+        });
+        setColumns(clmTemp);
+    };
 
     const processData = (data) => {
         return data.map((row) => {
@@ -50,17 +54,18 @@ const AnalysisIndex = () => {
     };
 
     return (
-        <div className="home">
-            <div className="mt-4" style={{ width: "100rem" }}>
-                <Group name={"Data for Team " + team} style={{ width: "100%" }}>
-                    <ButtonFull name="Back to Analysis" callback={() => navigate("/analysis")} />
-                    <br></br>
-                    <div className="table-container">
-                        <Table columns={columns} /> {/*// add default sortfield later*/}
-                    </div>
-                </Group>
-            </div>
-        </div>
+        columns.length > 5 && teamData && Object.keys(teamData).length !== 0 ?
+            <div className="home">
+                <div className="mt-4" style={{ width: "100rem" }}>
+                    <Group name={"Data for Team " + team} style={{ width: "100%" }}>
+                        <ButtonFull name="Back to Analysis" callback={() => navigate("/analysis/analysis-index")} />
+                        <br></br>
+                        <div className="table-container">
+                            <Table json={teamData} columns={columns} style={{ width: "100%" }} /> {/*// add default sortfield later*/}
+                        </div>
+                    </Group>
+                </div>
+            </div> : <Null />
     );
 
 

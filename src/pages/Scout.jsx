@@ -55,7 +55,6 @@ const Scout = () => {
         console.log(report);
         let finalReport = {};
         for (let i = 0; i < report.fields.length; i++) {
-            console.log(report.fields[i].name);
             if (["Team", "Alliance", "Name", "Match"].includes(report.fields[i].name)) {
                 finalReport[report.fields[i].name] = report.fields[i].value;
             } else {
@@ -66,8 +65,7 @@ const Scout = () => {
         if (parseInt(finalReport["Team"]) < 148) {
             if (!window.confirm("Team number is unusually low. Are you sure you want to submit?")) return;
         }
-        console.log(JSON.stringify(finalReport));
-        finalReport.Alliance = finalReport.Alliance === "true" ? "red" : "blue";
+        finalReport.Alliance = finalReport.Alliance === "true" ? "Red" : "Blue";
         pushReport(finalReport).then(() => {
             navigate("/dashboard");
         });
