@@ -7,13 +7,13 @@ import { DropdownWidget } from "./components/Dropdown";
 import { LabelWidget } from "./components/Label";
 
 export let widgetNames = {
-    "Toggle": ToggleWidget, //done points
-    "MutuallyExclusive": MutuallyExclusiveWidget, //done points
-    "Numeric": NumericWidget, //done points
-    "Stopwatch": StopwatchWidget, // doesn't need
-    "TextField": TextFieldWidget, // doesn't need
-    "Dropdown": DropdownWidget, //check this!!! 
-    "Label": LabelWidget // never used for points
+    "Toggle": ToggleWidget,
+    "MutuallyExclusive": MutuallyExclusiveWidget,
+    "Numeric": NumericWidget,
+    "Stopwatch": StopwatchWidget,
+    "TextField": TextFieldWidget,
+    "Dropdown": DropdownWidget,
+    "Label": LabelWidget
 };
 
 let BreakException = {};

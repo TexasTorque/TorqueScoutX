@@ -3,24 +3,14 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Null from "./Null";
 
-// {"high":1,"low":0"}
-// [{"high":1},{"low":0}]
-
-
 const MutuallyExclusive = ({ name, elements, callback, widgetCallback, pointsMap }) => {
-
-  // if (pointsMap) {
-  //   elements = Object.keys(pointsMap)
-  // }
 
   if (pointsMap) {
     elements = pointsMap.map((e) => {
       return Object.keys(e)[0];
     });
   }
-  // const [selected, setSelected] = useState(elements[0]);
   const [selected, setSelected] = useState(Object.keys(pointsMap[0])[0]);
-  // const [selected, setSelected] = useState(elements[0]);
 
   const update = (element) => {
     setSelected(element);

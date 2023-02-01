@@ -11,7 +11,7 @@ import { auth, getStoredAnalysisSchemas, getActiveAnalysisSchema, getAnalysisSch
 
 const ConfigureAnalysis = () => {
     const navigate = useNavigate();
-    const [user, loading, error] = useAuthState(auth);
+    const [user, loading] = useAuthState(auth);
 
     const [schemaText, setSchemaText] = useState("");
     const [schemaName, setSchemaName] = useState("");

@@ -7,7 +7,6 @@ import {
 } from "firebase/auth";
 import {
   getFirestore,
-  getDocs,
   collection,
   doc, setDoc, getDoc, updateDoc, arrayUnion
 } from "firebase/firestore";

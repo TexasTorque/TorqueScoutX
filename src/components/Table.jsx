@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react";
 
-import { auth, logout, getUserFromID } from "../firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useNavigate } from "react-router-dom";
-
 import Button from "react-bootstrap/Button";
 
 import Null from "./Null";
-import Loader from "./Loader";
+import { useNavigate } from "react-router-dom";
 
 import { default as BootstrapTable } from 'react-bootstrap/Table';
 // This is to avoid name conflict between the react-bootstrap 
@@ -15,16 +11,11 @@ import { default as BootstrapTable } from 'react-bootstrap/Table';
 // 
 // This is like "import this as that" in Python
 
-
-export const makeColumn = (label, accessor, sortable = true) => {
-  return { label: label, accessor: accessor, sortable: sortable };
-};
-
-const Table = ({ json, columns, defaultSortField }) => {
-  const navigate = useNavigate();
-
+const Table = ({ json, columns, defaultSortField, excludingAccessorsArray }) => {
   const [sortField, setSortField] = useState(defaultSortField);
   const [data, setData] = useState(json);
+  const navigate = useNavigate();
+  const [excludingAccessors] = useState(excludingAccessorsArray ?? []); //excluding accessors will ideally be replaced when custom columns are implemented
 
   useEffect(() => setData(json), [json]);
 
@@ -44,17 +35,18 @@ const Table = ({ json, columns, defaultSortField }) => {
         <thead className="tbl">
           <tr>
             {columns.map(({ label, accessor, sortable }) => (
-              <th>
-                {sortable ? (
-                  <Button
-                    variant="link"
-                    className=""
-                    onClick={() => handleSort(accessor)}
-                  >
-                    {label}
-                  </Button>
-                ) : label}
-              </th>
+              excludingAccessors.includes(accessor) ? null :
+                <th>
+                  {sortable ? (
+                    <Button
+                      variant="link"
+                      className=""
+                      onClick={() => handleSort(accessor)}
+                    >
+                      {label}
+                    </Button>
+                  ) : label}
+                </th>
             ))}
           </tr>
         </thead>
@@ -63,23 +55,23 @@ const Table = ({ json, columns, defaultSortField }) => {
             {data.map(row => (
               <tr>
                 {columns.map(({ accessor }) => {
-                  // if (accessor === "teamName") {
-                  //   return (
-                  //     <td>
-                  //       <Button
-                  //         variant="link"
-                  //         style={{ color: "blue" }}
-                  //         onClick={() => navigate(`/team/${row["Team"]}`)}
-                  //       >
-                  //         {row[accessor]}
-                  //       </Button>
-                  //     </td>
-                  //   );
-                  // } else {
-                  const cell = row[accessor];
-                  return <td>{cell === null ? "N/A" : cell}</td>;
-                  // return <td>{"MATCH: " + row["Match"] + "\nACCESSOR: " + JSON.stringify(columns)}</td>;
-                  //}
+                  if (excludingAccessors.includes(accessor)) return null;
+                  else if (accessor === "teamName") {
+                    return (
+                      <td>
+                        <Button
+                          variant="link"
+                          style={{ color: "blue" }}
+                          onClick={() => navigate(`/team/${row["Team"]}`)}
+                        >
+                          {row[accessor]}
+                        </Button>
+                      </td>
+                    );
+                  } else {
+                    const cell = row[accessor];
+                    return <td>{cell === null ? "N/A" : (typeof cell === "boolean" ? cell.toString() : cell)}</td>;
+                  }
                 })}
               </tr>
             ))}
@@ -91,3 +83,7 @@ const Table = ({ json, columns, defaultSortField }) => {
 };
 
 export default Table;
+
+export const makeColumn = (label, accessor, sortable = true) => {
+  return { label: label, accessor: accessor, sortable: sortable };
+};

@@ -5,7 +5,6 @@ import Null from "./Null";
 
 const Toggle = ({ name, callback, init, widgetCallback, pointsTrue, pointsFalse, colorTrue, colorFalse }) => {
   const [value, setValue] = useState(init ?? false);
-  let isCustomColors = (colorTrue != null && colorFalse != null);
 
   const update = () => {
     const n = !value;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { json, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { auth, getMatchesPerTeam } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Table, { makeColumn } from "../../components/Table";
@@ -61,7 +61,7 @@ const AnalysisIndex = () => {
                         <ButtonFull name="Back to Analysis" callback={() => navigate("/analysis/analysis-index")} />
                         <br></br>
                         <div className="table-container">
-                            <Table json={teamData} columns={columns} style={{ width: "100%" }} /> {/*// add default sortfield later*/}
+                            <Table json={teamData} columns={columns} style={{ width: "100%" }} excludingAccessorsArray={["Team"]} /> {/*// add default sortfield later*/}
                         </div>
                     </Group>
                 </div>

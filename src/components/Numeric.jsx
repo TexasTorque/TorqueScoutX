@@ -14,7 +14,7 @@ const Numeric = ({ name, callback, min, max, init, increment, widgetCallback, mu
 
   const update = (direction) => {
     const n = Math.min(
-      Math.max(count + direction * (increment ?? 1), min ?? 0), //maybe min should be -99;
+      Math.max(count + direction * (increment ?? 1), min ?? 0),
       max ?? 99
     );
     setCount(n);
