@@ -23,7 +23,7 @@ const AnalysisIndex = () => {
             populateColumns(data);
             setTeamData(processData(data));
 
-            console.log("COLUMNS BICT: ");
+            console.log("COLUMNS ");
             columns.forEach((column) => {
                 console.log(column);
             });
@@ -37,8 +37,9 @@ const AnalysisIndex = () => {
     const populateColumns = (data) => {
         let clmTemp = [];
         Object.keys(data[0]).forEach((key) => {
-            clmTemp = [...clmTemp, makeColumn(key, key.replace(/\s/g, '').replaceAll('.', ''), false)];
+            clmTemp = [...clmTemp, makeColumn(key, key.replace(/\s/g, '').replaceAll('.', ''), true)];
         });
+        clmTemp = [...clmTemp, makeColumn("Points", "Points", false)];
         setColumns(clmTemp);
     };
 
@@ -46,9 +47,14 @@ const AnalysisIndex = () => {
         return data.map((row) => {
             let toReturn = {};
 
+            let points = 0;
+
             Object.keys(row).forEach((name) => {
                 toReturn[name.replace(/\s/g, '').replaceAll('.', '')] = row[name].value ?? row[name];
+                points += row[name].points ? row[name].points : 0; // remove undefines
+                console.log(row[name].points);
             });
+            toReturn["Points"] = points;
             return toReturn;
         });
     };
@@ -61,7 +67,7 @@ const AnalysisIndex = () => {
                         <ButtonFull name="Back to Analysis" callback={() => navigate("/analysis/analysis-index")} />
                         <br></br>
                         <div className="table-container">
-                            <Table json={teamData} columns={columns} style={{ width: "100%" }} excludingAccessorsArray={["Team"]} /> {/*// add default sortfield later*/}
+                            <Table json={teamData} columns={columns} style={{ width: "100%" }} excludingAccessorsArray={["Team"]} defaultSortField="Match" /> {/*// add default sortfield later*/}
                         </div>
                     </Group>
                 </div>

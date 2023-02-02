@@ -13,7 +13,7 @@ const Toggle = ({ name, callback, init, widgetCallback, pointsTrue, pointsFalse,
 
   useEffect(() => {
     if (widgetCallback) {
-      widgetCallback({ name: name, value: value, points: value ? (pointsTrue ?? 1) : (pointsFalse ?? 0) });
+      widgetCallback({ name: name, value: value, points: value ? (pointsTrue ?? 0) : (pointsFalse ?? 0) });
     }
     callback && callback(value);
   }, [value]);
