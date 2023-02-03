@@ -64,6 +64,11 @@ const Scout = () => {
             if (!window.confirm("Team number is unusually low. Are you sure you want to submit?")) return;
         }
         finalReport.Alliance = finalReport.Alliance === "true" ? "Red" : "Blue";
+        let points = 0;
+        Object.keys(finalReport).forEach((field) => {
+            points += (finalReport[field].points != null) ? finalReport[field].points : 0;
+        });
+        finalReport["Points"] = points;
         pushReport(finalReport).then(() => {
             navigate("/dashboard");
         });

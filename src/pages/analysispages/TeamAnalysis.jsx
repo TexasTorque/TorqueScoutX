@@ -39,14 +39,9 @@ const AnalysisIndex = () => {
     const processData = (data) => {
         return data.map((row) => {
             let toReturn = {};
-
-            let points = 0;
-
             Object.keys(row).forEach((name) => {
                 toReturn[name.replace(/\s/g, '').replaceAll('.', '')] = row[name].value ?? row[name];
-                points += row[name].points ? row[name].points : 0; // removes undefines
             });
-            toReturn["Points"] = points;
             return toReturn;
         });
     };

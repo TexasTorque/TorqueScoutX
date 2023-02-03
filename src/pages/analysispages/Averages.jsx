@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { auth, getActiveSchema, getMatchesPerTeam, getTeamReports } from "../../firebase";
+import { useNavigate } from "react-router-dom";
+import { auth, getTeamReports } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Table, { makeColumn } from "../../components/Table";
 import ButtonFull from "../../components/ButtonFull";
@@ -24,21 +24,19 @@ const Averages = () => {
             processData(data);
 
         });
-    }, [allData]); //maybe remove this lmao
+    }, [allData]);
 
     const populateColumns = (data) => {
         let clmTemp = [];
         Object.keys(data[0]).forEach((key) => {
             clmTemp = [...clmTemp, makeColumn(key, key.replace(/\s/g, '').replaceAll('.', ''), true)];
         });
-        clmTemp = [...clmTemp, makeColumn("Points", "Points", true)];
         setColumns(clmTemp);
     };
 
     const processData = (data) => {
         for (let i = 0; i < data.length; i++) {
             for (const [key, value] of Object.entries(data[i])) {
-                console.log(JSON.stringify(data[i]));
                 let teamAvgObj = {};
                 for (let j = 0; j < value.reports.length; j++) {
                     for (const [key2, value2] of Object.entries(value.reports[j])) {
@@ -47,6 +45,12 @@ const Averages = () => {
                                 teamAvgObj[key2] += value2.value;
                             } else {
                                 teamAvgObj[key2] = value2.value;
+                            }
+                        } else if (typeof value2 === 'number') {
+                            if (teamAvgObj[key2]) {
+                                teamAvgObj[key2] += value2;
+                            } else {
+                                teamAvgObj[key2] = value2;
                             }
                         }
                     }
@@ -59,11 +63,9 @@ const Averages = () => {
                 for (const [key4, value4] of Object.entries(teamAvgObj)) {
                     teamAvgObjTrimmed[key4.replace(/\s/g, '').replaceAll('.', '')] = value4;
                 }
-                console.log("teamAvgObjTrimmed: " + JSON.stringify(teamAvgObjTrimmed));
                 allData.push(teamAvgObjTrimmed);
             }
         }
-        console.log("allData: " + JSON.stringify(allData));
         populateColumns(allData);
     };
 
@@ -75,7 +77,7 @@ const Averages = () => {
                         <ButtonFull name="Back to Analysis" callback={() => navigate("/analysis/analysis-index")} />
                         <br></br>
                         <div className="table-container">
-                            <Table json={allData} defaultSortField="Team" columns={columns} />
+                            <Table json={allData} defaultSortField="Points" columns={columns} />
                         </div>
                     </Group>
                 </div>
