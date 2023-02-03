@@ -8,7 +8,7 @@ import {
 import {
   getFirestore,
   collection,
-  doc, setDoc, getDoc, updateDoc, arrayUnion
+  doc, setDoc, getDoc, updateDoc, arrayUnion, getDocs
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -161,6 +161,17 @@ export const getMatchesPerTeam = async (team) => {
   } else {
     alert("Team not found in database.");
   }
-}
+};
 
+export const getTeamReports = async () => {
+  let active = await getActiveSchema();
+  const col = collection(db, active.name);
+  const querySnapshot = await getDocs(col);
+  const documents = [];
+  querySnapshot.forEach(doc => {
+    const document = { [doc.id]: doc.data() };
+    documents.push(document);
+  });
+  return documents;
+}
 

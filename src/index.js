@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound";
 import ConfigureSchema from "./pages/adminpages/ConfigureSchema";
 import AnalysisIndex from "./pages/analysispages/AnalysisIndex";
 import TeamAnalysis from "./pages/analysispages/TeamAnalysis";
+import Averages from "./pages/analysispages/Averages";
 
 ReactDOM.render(
   <Router>
@@ -23,6 +24,7 @@ ReactDOM.render(
       <Route path="/admin/schema" element={<ConfigureSchema />} />
       <Route path="/analysis/analysis-index" element={<AnalysisIndex />} />
       <Route path="/analysis/team/:team" element={<TeamAnalysis />} />
+      <Route path="/analysis/averages" element={<Averages />} />
       <Route path="/*" element={<NotFound />} />
     </Routes>
   </Router>,
