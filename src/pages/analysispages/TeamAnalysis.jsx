@@ -25,9 +25,7 @@ const AnalysisIndex = () => {
         });
     }, [team]);
 
-    useEffect(() => {
-        console.log("teamData: " + JSON.stringify(teamData));
-    }, [teamData]);
+    useEffect(() => { }, [teamData]);
 
     const populateColumns = (data) => {
         let clmTemp = [];

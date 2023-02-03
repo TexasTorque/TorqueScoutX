@@ -69,6 +69,7 @@ const Table = ({ json, columns, defaultSortField, excludingAccessorsArray }) => 
                       </td>
                     );
                   } else {
+                    console.log(row["Team"] + "." + accessor + " = " + row[accessor] + "\n");
                     const cell = row[accessor];
                     return <td>{cell === null ? "N/A" : (typeof cell === "boolean" ? cell.toString() : cell)}</td>;
                   }

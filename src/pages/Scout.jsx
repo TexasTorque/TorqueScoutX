@@ -30,7 +30,6 @@ const Scout = () => {
         for (let i = 0; i < report.fields.length; i++) {
             if (report.fields[i].name === data.name) {
                 report.fields = Object.assign([], report.fields, { [i]: data });
-                console.log(report); //this works
                 return;
             }
         }
@@ -52,7 +51,6 @@ const Scout = () => {
             }
         });
 
-        console.log(report);
         let finalReport = {};
         for (let i = 0; i < report.fields.length; i++) {
             if (["Team", "Alliance", "Name", "Match"].includes(report.fields[i].name)) {
@@ -83,7 +81,6 @@ const Scout = () => {
                     <TextField name="Match" value="" type="number" inputMode="decimal" widgetCallback={(data) => modifyReport(data)} />
                     <Toggle name="Alliance" colorTrue="rgb(0,101,179)" colorFalse="rgb(220,53,69)" widgetCallback={(data) => modifyReport(data)} />
                     {activeSchema.schema.widgets.map((widget) => {
-                        console.log(widgetNames[widget.widget]);
                         return (
                             <h1 key={Math.random() * 1007 % 432}>{widgetNames[widget.widget].widget(widget, modifyReport)}</h1>
                         );

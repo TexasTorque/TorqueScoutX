@@ -13,7 +13,6 @@ const Averages = () => {
     const [user, loading] = useAuthState(auth);
     const [allData, setAllData] = useState([]);
     const [columns, setColumns] = useState([]);
-    const [added, setAdded] = useState(false);
 
     useEffect(() => {
         if (!user) return navigate("/login");
@@ -39,6 +38,7 @@ const Averages = () => {
     const processData = (data) => {
         for (let i = 0; i < data.length; i++) {
             for (const [key, value] of Object.entries(data[i])) {
+                console.log(JSON.stringify(data[i]));
                 let teamAvgObj = {};
                 for (let j = 0; j < value.reports.length; j++) {
                     for (const [key2, value2] of Object.entries(value.reports[j])) {
@@ -55,11 +55,15 @@ const Averages = () => {
                     teamAvgObj[key3] = value3 / value.reports.length;
                 }
                 teamAvgObj["Team"] = key;
-                console.log("teamAvgObj: " + key + "\n " + JSON.stringify(teamAvgObj));
-                allData.push(teamAvgObj);
-                console.log("allData: " + JSON.stringify(allData));
+                let teamAvgObjTrimmed = {};
+                for (const [key4, value4] of Object.entries(teamAvgObj)) {
+                    teamAvgObjTrimmed[key4.replace(/\s/g, '').replaceAll('.', '')] = value4;
+                }
+                console.log("teamAvgObjTrimmed: " + JSON.stringify(teamAvgObjTrimmed));
+                allData.push(teamAvgObjTrimmed);
             }
         }
+        console.log("allData: " + JSON.stringify(allData));
         populateColumns(allData);
     };
 
