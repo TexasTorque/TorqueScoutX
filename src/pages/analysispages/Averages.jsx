@@ -40,23 +40,21 @@ const Averages = () => {
                 let teamAvgObj = {};
                 for (let j = 0; j < value.reports.length; j++) {
                     for (const [key2, value2] of Object.entries(value.reports[j])) {
-                        if (typeof value2.value === 'number') {
+                        let checkVal = value2.value ? value2.value : value2;
+                        checkVal = (typeof checkVal === 'string') ? (value2.points ? value2.points : checkVal) : checkVal;
+                        console.log("KEY: ", key2, "VALUE: ", checkVal, "TYPE: ", typeof checkVal, "\n");
+                        checkVal = (typeof checkVal === 'boolean') ? (checkVal ? 1 : 0) : checkVal;
+                        if (typeof checkVal === 'number') {
                             if (teamAvgObj[key2]) {
-                                teamAvgObj[key2] += value2.value;
+                                teamAvgObj[key2] += checkVal;
                             } else {
-                                teamAvgObj[key2] = value2.value;
-                            }
-                        } else if (typeof value2 === 'number') {
-                            if (teamAvgObj[key2]) {
-                                teamAvgObj[key2] += value2;
-                            } else {
-                                teamAvgObj[key2] = value2;
+                                teamAvgObj[key2] = checkVal;
                             }
                         }
                     }
                 }
                 for (const [key3, value3] of Object.entries(teamAvgObj)) {
-                    teamAvgObj[key3] = value3 / value.reports.length;
+                    teamAvgObj[key3] = (value3 / value.reports.length).toFixed(2);
                 }
                 teamAvgObj["Team"] = key;
                 let teamAvgObjTrimmed = {};
@@ -66,6 +64,7 @@ const Averages = () => {
                 allData.push(teamAvgObjTrimmed);
             }
         }
+        // console.log("allData: \n", allData);
         populateColumns(allData);
     };
 
