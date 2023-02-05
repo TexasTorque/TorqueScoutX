@@ -25,14 +25,11 @@ const AnalysisIndex = () => {
         });
     }, [team]);
 
-    useEffect(() => { }, [teamData]);
-
     const populateColumns = (data) => {
         let clmTemp = [];
         Object.keys(data[0]).forEach((key) => {
             clmTemp = [...clmTemp, makeColumn(key, key.replace(/\s/g, '').replaceAll('.', ''), true)];
         });
-        clmTemp = [...clmTemp, makeColumn("Points", "Points", true)];
         setColumns(clmTemp);
     };
 

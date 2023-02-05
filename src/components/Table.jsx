@@ -56,13 +56,13 @@ const Table = ({ json, columns, defaultSortField, excludingAccessorsArray }) => 
               <tr>
                 {columns.map(({ accessor }) => {
                   if (excludingAccessors.includes(accessor)) return null;
-                  else if (accessor === "teamName") {
+                  else if (accessor === "Team") {
                     return (
                       <td>
                         <Button
                           variant="link"
                           style={{ color: "blue" }}
-                          onClick={() => navigate(`/team/${row["Team"]}`)}
+                          onClick={() => navigate(`/analysis/team/${row["Team"]}`)}
                         >
                           {row[accessor]}
                         </Button>

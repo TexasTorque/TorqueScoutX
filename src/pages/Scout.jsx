@@ -60,13 +60,13 @@ const Scout = () => {
             }
         }
 
-        if (parseInt(finalReport["Team"]) < 148) {
+        if (finalReport["Team"] < 118) {
             if (!window.confirm("Team number is unusually low. Are you sure you want to submit?")) return;
         }
         finalReport.Alliance = finalReport.Alliance === "true" ? "Red" : "Blue";
         let points = 0;
         Object.keys(finalReport).forEach((field) => {
-            points += (finalReport[field].points != null) ? finalReport[field].points : 0;
+            points += finalReport[field].points ?? 0;
         });
         finalReport["Points"] = points;
         pushReport(finalReport).then(() => {
@@ -79,15 +79,14 @@ const Scout = () => {
         <div className="scout">
             <div className="container mt-4">
                 <Group>
-                    <Label name="Info">
-                    </Label>
+                    <Label name="Info" />
                     <TextField name="Name" readonly={name ?? ""} value={name} widgetCallback={(data) => modifyReport(data)} />
                     <TextField name="Team" value="" type="number" inputMode="decimal" widgetCallback={(data) => modifyReport(data)} />
                     <TextField name="Match" value="" type="number" inputMode="decimal" widgetCallback={(data) => modifyReport(data)} />
                     <Toggle name="Alliance" colorTrue="rgb(0,101,179)" colorFalse="rgb(220,53,69)" widgetCallback={(data) => modifyReport(data)} />
                     {activeSchema.schema.widgets.map((widget) => {
                         return (
-                            <h1 key={Math.random() * 1007 % 432}>{widgetNames[widget.widget].widget(widget, modifyReport)}</h1>
+                            <h1>{widgetNames[widget.widget].widget(widget, modifyReport)}</h1>
                         );
                     })}
                 </Group>

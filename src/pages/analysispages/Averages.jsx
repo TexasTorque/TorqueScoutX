@@ -22,9 +22,8 @@ const Averages = () => {
     useEffect(() => {
         getTeamReports().then((data) => {
             processData(data);
-
         });
-    }, [allData]);
+    }, []);
 
     const populateColumns = (data) => {
         let clmTemp = [];
@@ -40,15 +39,14 @@ const Averages = () => {
                 let teamAvgObj = {};
                 for (let j = 0; j < value.reports.length; j++) {
                     for (const [key2, value2] of Object.entries(value.reports[j])) {
-                        let checkVal = value2.value ? value2.value : value2;
-                        checkVal = (typeof checkVal === 'string') ? (value2.points ? value2.points : checkVal) : checkVal;
-                        console.log("KEY: ", key2, "VALUE: ", checkVal, "TYPE: ", typeof checkVal, "\n");
-                        checkVal = (typeof checkVal === 'boolean') ? (checkVal ? 1 : 0) : checkVal;
-                        if (typeof checkVal === 'number') {
+                        let val = value2.value ?? value2;
+                        val = (typeof val === 'string') ? (value2.points ?? val) : val;
+                        val = (typeof val === 'boolean') ? (val ? 1 : 0) : val;
+                        if (typeof val === 'number') {
                             if (teamAvgObj[key2]) {
-                                teamAvgObj[key2] += checkVal;
+                                teamAvgObj[key2] += val;
                             } else {
-                                teamAvgObj[key2] = checkVal;
+                                teamAvgObj[key2] = val;
                             }
                         }
                     }
@@ -64,7 +62,6 @@ const Averages = () => {
                 allData.push(teamAvgObjTrimmed);
             }
         }
-        // console.log("allData: \n", allData);
         populateColumns(allData);
     };
 
