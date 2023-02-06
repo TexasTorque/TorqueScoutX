@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Null from "./Null";
 
-const MutuallyExclusive = ({ name, elements, callback, widgetCallback, pointsMap }) => {
+const MutuallyExclusive = ({ name, elements, callback, widgetCallback, pointsMap, alias }) => {
 
   if (pointsMap) {
     elements = pointsMap.map((e) => {
@@ -31,7 +31,8 @@ const MutuallyExclusive = ({ name, elements, callback, widgetCallback, pointsMap
 
   return (
     <div>
-      {name && <h2 >{name}</h2>}
+      {name && <h2 style={{ fontSize: "1.8rem" }}>{alias ?? name}</h2>}
+      <hr style={{ borderTop: "5px solid light gray" }} />
       {elements.map((element) => (
         <div className="MutuallyExclusive">
           <div className="row mt-4 mr-3">

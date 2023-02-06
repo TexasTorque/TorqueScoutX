@@ -5,6 +5,7 @@ import { StopwatchWidget } from "./components/Stopwatch";
 import { TextFieldWidget } from "./components/TextField";
 import { DropdownWidget } from "./components/Dropdown";
 import { LabelWidget } from "./components/Label";
+import { SubgroupWidget } from "./components/Subgroup";
 
 export let widgetNames = {
     "Toggle": ToggleWidget,
@@ -13,7 +14,8 @@ export let widgetNames = {
     "Stopwatch": StopwatchWidget,
     "TextField": TextFieldWidget,
     "Dropdown": DropdownWidget,
-    "Label": LabelWidget
+    "Label": LabelWidget,
+    "Subgroup": SubgroupWidget
 };
 
 let BreakException = {};
