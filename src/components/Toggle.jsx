@@ -57,8 +57,8 @@ export const ToggleWidget = {
   schemaFields: ["name", "init"],
   schemaFieldsTypes: ["s", false],
 
-  widget: (props, widgetCallback) => {
-    return <Toggle {...{ widgetCallback, ...props }} />;
+  widget: (props) => {
+    return <Toggle {...props} />;
   },
 
 };

@@ -60,7 +60,7 @@ export const MutuallyExclusiveWidget = {
   schemaFields: ["name", "pointsMap"],
   schemaFieldsTypes: ["s", { "K": "v" }],
   widget: (props, widgetCallback) => {
-    return <MutuallyExclusive {...{ widgetCallback, ...props }} />;
+    return <MutuallyExclusive {...props} />;
   },
 };
 

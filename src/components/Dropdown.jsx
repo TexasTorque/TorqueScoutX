@@ -50,7 +50,7 @@ export const DropdownWidget = {
     schemaFields: ["name", "prompt", "pointsMap"],
     schemaFieldsTypes: ["s", "s", { "K": "v" }],
     widget: (props, widgetCallback) => {
-        return <Dropdown {...{ widgetCallback, ...props }} />;
+        return <Dropdown {...props} />;
     },
 };
 

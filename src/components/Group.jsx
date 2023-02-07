@@ -20,7 +20,7 @@ let widgetNames = {
   "Subgroup": SubgroupWidget,
 };
 
-const Group = ({ name, children, manualChildren, onEvent }) => {
+const Group = ({ name, children, manualChildren, widgetCallback }) => {
 
   return (
     <div className="row ml-2 mb-4">
@@ -37,7 +37,7 @@ const Group = ({ name, children, manualChildren, onEvent }) => {
           manualChildren != null ?
             manualChildren.map((widget) => {
               return (
-                <h1>{widgetNames[widget.widget].widget(widget, (data) => { /*new Function(`return modifyReport${data}`); */ /*console.log(data);*/ })}</h1> /*something like this */
+                <h1>{widgetNames[widget.widget].widget({ widgetCallback, ...widget })}</h1>
               );
             }
             ) : children}
@@ -50,9 +50,10 @@ const Group = ({ name, children, manualChildren, onEvent }) => {
 /* When report is initially defined in Scout.jsx, the inner component fields of each Group might not get added when the program loads */
 
 export const GroupWidget = {
-  schemaFields: ["name", "manualChildren", /*"onEvent"*/],
-  schemaFieldsTypes: ["s", [1], /*[1]*/],
+  schemaFields: ["name", "manualChildren"],
+  schemaFieldsTypes: ["s", [1]],
   widget: (props) => {
+    console.log(props);
     return <Group {...props} />;
   }
 };

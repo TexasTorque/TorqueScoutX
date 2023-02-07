@@ -29,10 +29,13 @@ const Scout = () => {
         for (let i = 0; i < report.fields.length; i++) {
             if (report.fields[i].name === data.name) {
                 report.fields = Object.assign([], report.fields, { [i]: data });
+                console.log(report);
                 return;
+
             }
         }
         report.fields = report.fields.concat(data);
+
     };
 
     const submit = () => {
@@ -88,7 +91,8 @@ const Scout = () => {
                 </Group>
                 {activeSchema.schema.widgets.map((widget) => {
                     return (
-                        <h1>{widgetNames[widget.widget].widget(widget, modifyReport)}</h1>
+                        // <h1>{widgetNames[widget.widget].widget(widget, modifyReport)}</h1>
+                        <h1>{widgetNames[widget.widget].widget({ widgetCallback: modifyReport, ...widget })}</h1>
                     );
                 })}
                 <ButtonFull name="Submit Report" callback={() => submit()} />
