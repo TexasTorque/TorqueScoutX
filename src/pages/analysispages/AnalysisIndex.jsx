@@ -22,7 +22,7 @@ const AnalysisIndex = () => {
                     <ButtonFull name="Back to Home" callback={() => navigate("/dashboard")} />
                     <ButtonFull name="View Averages" callback={() => navigate("/analysis/averages")} />
                     <TextField name="Team" callback={(team) => setTeam(team)} type="number" inputMode="decimal" />
-                    <ButtonFull name="View Team" callback={() => navigate("/analysis/team/" + team)} />
+                    <ButtonFull name="View Team" callback={() => navigate("/analysis/team/" + (team ?? "1477"))} />
 
                 </Group>
             </div>

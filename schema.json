@@ -1,5 +1,4 @@
 {
-    "analysisGroups": [],
     "widgets": [
         {
             "name": "Auto",
@@ -7,60 +6,58 @@
         },
         {
             "pointsTrue": 3,
-            "init": false,
+            "pointsFalse": 0,
             "widget": "Toggle",
-            "name": "Mobility",
-            "pointsFalse": 0
+            "init": false,
+            "name": "Mobility"
         },
         {
+            "widget": "Subgroup",
             "name": "A. Cone",
-            "alias": "Cone",
-            "widget": "Subgroup"
+            "alias": "Cone"
         },
         {
-            "name": "A. Lower Cone",
-            "alias": "Lower ",
-            "multiplier": 3,
-            "widget": "Numeric"
-        },
-        {
-            "multiplier": 4,
             "widget": "Numeric",
+            "multiplier": 3,
+            "name": "A. Lower Cone",
+            "alias": "Lower "
+        },
+        {
+            "widget": "Numeric",
+            "multiplier": 4,
             "alias": "Middle",
             "name": "A. Middle Cone"
         },
         {
-            "alias": "Upper",
-            "name": "A. Upper Cone",
-            "multiplier": 6,
-            "widget": "Numeric"
-        },
-        {
-            "name": "A. Cube",
-            "alias": "Cube",
-            "widget": "Subgroup"
-        },
-        {
             "widget": "Numeric",
-            "multiplier": 3,
+            "multiplier": 6,
+            "name": "A. Upper Cone",
+            "alias": "Upper"
+        },
+        {
+            "widget": "Subgroup",
+            "alias": "Cube",
+            "name": "A. Cube"
+        },
+        {
             "alias": "Lower",
+            "multiplier": 3,
+            "widget": "Numeric",
             "name": "A. Lower Cube"
         },
         {
-            "name": "A. Middle Cube",
             "widget": "Numeric",
             "alias": "Middle",
+            "name": "A. Middle Cube",
             "multiplier": 4
         },
         {
+            "multiplier": 6,
             "alias": "Upper",
             "widget": "Numeric",
-            "name": "A. Upper Cube",
-            "multiplier": 6
+            "name": "A. Upper Cube"
         },
         {
-            "name": "A. Dock",
-            "alias": "Dock",
             "pointsMap": [
                 {
                     "None": 0
@@ -72,76 +69,80 @@
                     "Engaged": 12
                 }
             ],
+            "name": "A. Dock",
+            "alias": "Dock",
             "widget": "MutuallyExclusive"
         },
         {
-            "widget": "Label",
-            "name": "Teleop"
+            "name": "Teleop",
+            "widget": "Label"
         },
         {
-            "name": "T. Cone",
+            "widget": "Subgroup",
             "alias": "Cone",
-            "widget": "Subgroup"
+            "name": "T. Cone"
         },
         {
-            "multiplier": 2,
-            "widget": "Numeric",
+            "alias": "Lower",
             "name": "T. Lower Cone",
-            "alias": "Lower"
+            "widget": "Numeric",
+            "multiplier": 2
         },
         {
+            "widget": "Numeric",
             "name": "T. Middle Cone",
-            "multiplier": 3,
             "alias": "Middle",
-            "widget": "Numeric"
+            "multiplier": 3
         },
         {
             "alias": "Upper",
-            "widget": "Numeric",
+            "multiplier": 5,
             "name": "T. Upper Cone",
-            "multiplier": 5
+            "widget": "Numeric"
         },
         {
-            "name": "T. Cube",
             "alias": "Cube",
-            "widget": "Subgroup"
+            "widget": "Subgroup",
+            "name": "T. Cube"
         },
         {
-            "name": "T. Lower Cube",
             "widget": "Numeric",
             "alias": "Lower",
+            "name": "T. Lower Cube",
             "multiplier": 2
         },
         {
             "multiplier": 3,
+            "alias": "Middle",
             "name": "T. Middle Cube",
-            "widget": "Numeric",
-            "alias": "Middle"
-        },
-        {
-            "name": "T. Upper Cube",
-            "widget": "Numeric",
-            "alias": "Upper",
-            "multiplier": 5
-        },
-        {
-            "name": "Links",
-            "multiplier": 5,
             "widget": "Numeric"
         },
         {
-            "name": "Broken Group",
-            "alias": "",
-            "widget": "Subgroup"
+            "multiplier": 5,
+            "alias": "Upper",
+            "name": "T. Upper Cube",
+            "widget": "Numeric"
         },
         {
+            "multiplier": 5,
+            "name": "Links",
+            "widget": "Numeric"
+        },
+        {
+            "name": "Park Group",
+            "widget": "Subgroup",
+            "alias": ""
+        },
+        {
+            "pointsFalse": 0,
             "name": "Park",
             "widget": "Toggle",
-            "pointsTrue": 2,
-            "pointsFalse": 0,
-            "init": false
+            "init": false,
+            "pointsTrue": 2
         },
         {
+            "widget": "MutuallyExclusive",
+            "name": "T. Dock",
             "pointsMap": [
                 {
                     "None": 0
@@ -153,19 +154,18 @@
                     "Engaged": 10
                 }
             ],
-            "widget": "MutuallyExclusive",
-            "name": "T. Dock",
             "alias": "Dock"
         },
         {
             "name": "Broken Group",
-            "alias": "",
-            "widget": "Subgroup"
+            "widget": "Subgroup",
+            "alias": ""
         },
         {
-            "widget": "Toggle",
             "name": "Broken",
+            "widget": "Toggle",
             "init": false
         }
-    ]
+    ],
+    "analysisGroups": []
 }
