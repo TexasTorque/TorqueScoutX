@@ -22,9 +22,6 @@ let widgetNames = {
 
 const Group = ({ name, children, manualChildren, onEvent }) => {
 
-  useEffect(() => {
-    console.log(manualChildren == null);
-  }, [manualChildren]);
   return (
     <div className="row ml-2 mb-4">
       <Card>
@@ -35,22 +32,22 @@ const Group = ({ name, children, manualChildren, onEvent }) => {
         ) : (
           ""
         )}
-        {
-          manualChildren != null
-            ?
-            (<div className="ml-4 mr-4 mb-4">{
-              manualChildren.map((widget) => {
-                return (
-                  <h1>{widgetNames[widget.widget].widget(widget, () => { console.log("Widget Called"); })}</h1>
-                );
-              })}</div>)
-            :
-            (<div className="ml-4 mr-4 mb-4">{children}</div>)
-        }
+        <div style={{ height: "9px" }}>&nbsp;</div>
+        <div className="ml-4 mr-4 mb-4">{
+          manualChildren != null ?
+            manualChildren.map((widget) => {
+              return (
+                <h1>{widgetNames[widget.widget].widget(widget, (data) => { /*new Function(`return modifyReport${data}`); */ /*console.log(data);*/ })}</h1> /*something like this */
+              );
+            }
+            ) : children}
+        </div>
       </Card>
     </div>
   );
 };
+
+/* When report is initially defined in Scout.jsx, the inner component fields of each Group might not get added when the program loads */
 
 export const GroupWidget = {
   schemaFields: ["name", "manualChildren", /*"onEvent"*/],

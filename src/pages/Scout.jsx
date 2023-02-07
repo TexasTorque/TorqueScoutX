@@ -9,7 +9,6 @@ import Loader from "../components/Loader";
 import TextField from "../components/TextField";
 import { getActiveSchema } from "../firebase";
 import { widgetNames } from "../Schema";
-import Label from "../components/Label";
 
 const Scout = () => {
     const navigate = useNavigate();
@@ -69,11 +68,10 @@ const Scout = () => {
             points += finalReport[field].points ?? 0;
         });
         finalReport["Points"] = points;
-        console.log(JSON.stringify(finalReport));
         pushReport(finalReport).then(() => {
+            console.log(JSON.stringify(finalReport));
             navigate("/dashboard");
         });
-        //big bug, widgets of the same name, lower(auto) and lower(teleop) will overwrite each other, maybe add a unique id to each widget
     };
 
     return (!(Object.keys(activeSchema).length === 0)) ? (
