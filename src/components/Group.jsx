@@ -53,7 +53,6 @@ export const GroupWidget = {
   schemaFields: ["name", "manualChildren"],
   schemaFieldsTypes: ["s", [1]],
   widget: (props) => {
-    console.log(props);
     return <Group {...props} />;
   }
 };

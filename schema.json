@@ -167,5 +167,20 @@
             "init": false
         }
     ],
-    "analysisGroups": []
+    "analysisGroups": [
+        {
+            "name": "Auto",
+            "fields": [
+                "Mobility",
+                "A. Lower Cone",
+                "A. Middle Cone",
+                "A. Upper Cone",
+                "A. Lower Cube",
+                "A. Middle Cube",
+                "A. Upper Cube",
+                "A. Dock"
+            ],
+            "mode": "averagePoints"
+        }
+    ]
 }

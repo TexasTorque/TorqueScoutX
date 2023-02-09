@@ -21,6 +21,7 @@ const AnalysisIndex = () => {
                 <Group name="Analysis">
                     <ButtonFull name="Back to Home" callback={() => navigate("/dashboard")} />
                     <ButtonFull name="View Averages" callback={() => navigate("/analysis/averages")} />
+                    <ButtonFull name="Custom Analysis" callback={() => navigate("/analysis/custom")} />
                     <TextField name="Team" callback={(team) => setTeam(team)} type="number" inputMode="decimal" />
                     <ButtonFull name="View Team" callback={() => navigate("/analysis/team/" + (team ?? "1477"))} />
 
