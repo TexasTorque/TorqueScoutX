@@ -9,6 +9,8 @@ import Loader from "../components/Loader";
 import TextField from "../components/TextField";
 import { getActiveSchema } from "../firebase";
 import { widgetNames } from "../Schema";
+import NoHeaderGroup from "../components/NoHeaderGroup";
+import AllianceInfoToggle from "../components/AllianceInfoToggle";
 
 const Scout = () => {
     const navigate = useNavigate();
@@ -83,14 +85,16 @@ const Scout = () => {
                 <Group name="Info">
                     <TextField name="Team" value="" type="number" inputMode="decimal" widgetCallback={(data) => modifyReport(data)} />
                     <TextField name="Match" value="" type="number" inputMode="decimal" widgetCallback={(data) => modifyReport(data)} />
-                    <Toggle name="Alliance" colorTrue="rgb(0,101,179)" colorFalse="rgb(220,53,69)" widgetCallback={(data) => modifyReport(data)} />
+                    <AllianceInfoToggle name="Alliance" colorTrue="rgb(0,101,179)" colorFalse="rgb(220,53,69)" widgetCallback={(data) => modifyReport(data)} />
                 </Group>
                 {activeSchema.schema.widgets.map((widget) => {
                     return (
                         <h1>{widgetNames[widget.widget].widget({ widgetCallback: modifyReport, ...widget })}</h1>
                     );
                 })}
-                <ButtonFull name="Submit Report" callback={() => submit()} />
+                <NoHeaderGroup>
+                    <ButtonFull name="Submit Report" callback={() => submit()} />
+                </NoHeaderGroup>
                 <br />
             </div>
         </div>

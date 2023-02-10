@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Null from "./Null";
 
-const Toggle = ({ name, callback, init, widgetCallback, pointsTrue, pointsFalse, colorTrue, colorFalse }) => {
+const AllianceInfoToggle = ({ name, callback, init, widgetCallback, pointsTrue, pointsFalse, colorTrue, colorFalse }) => {
   const [value, setValue] = useState(init ?? false);
 
   const update = () => {
@@ -34,8 +34,8 @@ const Toggle = ({ name, callback, init, widgetCallback, pointsTrue, pointsFalse,
       
       `}
       </style>
-      <div className="row mt-0 ml-0">
-        <h4 className="name-field ml-0" style={{ width: "8rem", fontSize: "1.3rem", marginTop: "0.85rem" }}>
+      <div className="row mt-4 ml-0">
+        <h4 className="name-field ml-0" style={{ width: "8rem", fontSize: "1.3rem", marginTop: "0.3rem" }}>
           {name || <Null />}
         </h4>
         <div className="ml-0 mt-0" style={{ width: "10rem" }}>
@@ -53,14 +53,4 @@ const Toggle = ({ name, callback, init, widgetCallback, pointsTrue, pointsFalse,
   );
 };
 
-export const ToggleWidget = {
-  schemaFields: ["name", "init"],
-  schemaFieldsTypes: ["s", false],
-
-  widget: (props) => {
-    return <Toggle {...props} />;
-  },
-
-};
-
-export default Toggle;
+export default AllianceInfoToggle;
