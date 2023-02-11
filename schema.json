@@ -134,18 +134,14 @@
             "alias": ""
         },
         {
-            "pointsFalse": 0,
-            "name": "Park",
-            "widget": "Toggle",
-            "init": false,
-            "pointsTrue": 2
-        },
-        {
             "widget": "MutuallyExclusive",
             "name": "T. Dock",
             "pointsMap": [
                 {
                     "None": 0
+                },
+                {
+                    "Park": 2
                 },
                 {
                     "Docked": 6

@@ -27,7 +27,7 @@ const Group = ({ name, children, manualChildren, widgetCallback }) => {
       <Card>
         {name != null ? (
           <Card.Header>
-            <h3>{name}</h3>
+            <h3 style={{ textAlign: "center"}}>{name}</h3>
           </Card.Header>
         ) : (
           ""

@@ -31,7 +31,12 @@ const MutuallyExclusive = ({ name, elements, callback, widgetCallback, pointsMap
 
   return (
     <div>
-      {name && <h2 style={{ fontSize: "1.6rem" }}>{alias ?? name}</h2>}
+      <hr style={{ borderTop: "5px solid light gray" }} />
+      {name && <h2 style={{ fontSize: "1.5rem" }}>{alias ?? name}</h2>}
+      <hr style={{ borderTop: "5px solid light gray" }} />
+
+      {/* <Subgroup name={name} alias={alias} points={}/>; */}
+
       {elements.map((element) => (
         <div className="MutuallyExclusive">
           <div className="row mt-0 ml-0">
