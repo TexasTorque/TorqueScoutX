@@ -75,21 +75,16 @@ const ConfigureSchema = () => {
 
     return (
         <div style={{ marginBottom: "40px" }}>
-            <Group name="Configure Schema">
-                <TextField name="Schema Name" callback={(name) => setSchemaName(name)}></TextField>
-                <textarea value={schemaText} rows="100" cols="100" autoCorrect="false" spellCheck="false" wrap="off" onChange={(value) => { schemaChange(value); }} />
-                <ButtonFull name="Save Schema" callback={saveSchema}></ButtonFull>
-            </Group>
-            <Group name="Set Active Schema">
-                <br />
-                Active Schema: {currentSchema.name}
-                <Dropdown name="Active Schemas" elements={storedSchemas} callback={(value) => { setSelectedSchema(value); }}></Dropdown>
+            <Group name="Configure Scheme">
+                <ButtonFull name="Back to Admin" callback={() => navigate("/admin")}></ButtonFull>
+                <Dropdown name="" elements={storedSchemas} callback={(value) => { setSelectedSchema(value); }}></Dropdown>
                 <ButtonFull name="Set Active" callback={() => { setActiveSchema(selectedSchema); setCurrentSchema(selectedSchema); }}></ButtonFull>
                 <ButtonFull name="View Schema" callback={() => { setSchemaByName(selectedSchema); }}></ButtonFull>
+                <TextField name="Name" callback={(name) => setSchemaName(name)}></TextField>
+                <ButtonFull name="Push Schema" callback={saveSchema}></ButtonFull>
+                <br />
+                <textarea value={schemaText} rows="100" cols="100" autoCorrect="false" spellCheck="false" wrap="off" onChange={(value) => { schemaChange(value); }} />
             </Group>
-            <div style={{ marginLeft: "33px" }}>
-                <ButtonFull name="Back to Admin" callback={() => navigate("/admin")}></ButtonFull>
-            </div>
         </div>
     );
 };
