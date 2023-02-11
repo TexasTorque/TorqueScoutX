@@ -20,19 +20,12 @@ let widgetNames = {
   "Subgroup": SubgroupWidget,
 };
 
-const Group = ({ name, children, manualChildren, widgetCallback }) => {
+const NoHeaderGroup = ({ children, manualChildren, widgetCallback }) => {
 
   return (
     <div className="row ml-2 mb-4">
       <Card>
-        {name != null ? (
-          <Card.Header>
-            <h3 style={{ textAlign: "center"}}>{name}</h3>
-          </Card.Header>
-        ) : (
-          ""
-        )}
-        <div style={{ height: "9px" }}>&nbsp;</div>
+        
         <div className="ml-4 mr-4 mb-4">{
           manualChildren != null ?
             manualChildren.map((widget) => {
@@ -49,12 +42,4 @@ const Group = ({ name, children, manualChildren, widgetCallback }) => {
 
 /* When report is initially defined in Scout.jsx, the inner component fields of each Group might not get added when the program loads */
 
-export const GroupWidget = {
-  schemaFields: ["name", "manualChildren"],
-  schemaFieldsTypes: ["s", [1]],
-  widget: (props) => {
-    return <Group {...props} />;
-  }
-};
-
-export default Group;
+export default NoHeaderGroup;

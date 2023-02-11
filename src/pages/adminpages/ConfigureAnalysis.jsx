@@ -11,7 +11,7 @@ import { auth, getStoredAnalysisSchemas, getActiveAnalysisSchema, getAnalysisSch
 
 const ConfigureAnalysis = () => {
     const navigate = useNavigate();
-    const [user, loading, error] = useAuthState(auth);
+    const [user, loading] = useAuthState(auth);
 
     const [schemaText, setSchemaText] = useState("");
     const [schemaName, setSchemaName] = useState("");
@@ -58,7 +58,7 @@ const ConfigureAnalysis = () => {
 
     function saveSchema() {
         let schemaObject;
-        if (schemaName === "" || storedSchemas.includes(schemaName)) {
+        if (schemaName === "" || storedSchemas.includes(schemaName) || schemaName === "schemas") {
             alert("Schema name is invalid or already exists");
             return;
         }

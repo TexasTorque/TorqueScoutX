@@ -9,7 +9,8 @@ import Loader from "../components/Loader";
 import TextField from "../components/TextField";
 import { getActiveSchema } from "../firebase";
 import { widgetNames } from "../Schema";
-import Label from "../components/Label";
+import NoHeaderGroup from "../components/NoHeaderGroup";
+import AllianceInfoToggle from "../components/AllianceInfoToggle";
 
 const Scout = () => {
     const navigate = useNavigate();
@@ -30,7 +31,6 @@ const Scout = () => {
         for (let i = 0; i < report.fields.length; i++) {
             if (report.fields[i].name === data.name) {
                 report.fields = Object.assign([], report.fields, { [i]: data });
-                console.log(report); //this works
                 return;
             }
         }
@@ -52,47 +52,49 @@ const Scout = () => {
             }
         });
 
-        console.log(report);
         let finalReport = {};
         for (let i = 0; i < report.fields.length; i++) {
-            console.log(report.fields[i].name);
-            if (["Team", "Alliance", "Name", "Match"].includes(report.fields[i].name)) {
+            if (["Team", "Alliance", "Scouter", "Match"].includes(report.fields[i].name)) {
                 finalReport[report.fields[i].name] = report.fields[i].value;
             } else {
                 finalReport[report.fields[i].name] = { "value": report.fields[i].value, "points": report.fields[i].points };
             }
         }
 
-        if (parseInt(finalReport["Team"]) < 148) {
+        if (finalReport["Team"] < 118) {
             if (!window.confirm("Team number is unusually low. Are you sure you want to submit?")) return;
         }
-        console.log(JSON.stringify(finalReport));
-        finalReport.Alliance = finalReport.Alliance === "true" ? "red" : "blue";
+        finalReport.Alliance = finalReport.Alliance === "true" ? "Red" : "Blue";
+        let points = 0;
+        Object.keys(finalReport).forEach((field) => {
+            points += finalReport[field].points ?? 0;
+        });
+        finalReport["Points"] = points;
         pushReport(finalReport).then(() => {
             navigate("/dashboard");
         });
-        //big bug, widgets of the same name, lower(auto) and lower(teleop) will overwrite each other, maybe add a unique id to each widget
     };
 
     return (!(Object.keys(activeSchema).length === 0)) ? (
         <div className="scout">
             <div className="container mt-4">
-                <Group>
-                    <Label name="Info">
-                    </Label>
-                    <TextField name="Name" readonly={name ?? ""} value={name} widgetCallback={(data) => modifyReport(data)} />
+                <Group name="Scouting">
+                    <TextField name="Scouter" readonly={name ?? ""} value={name} widgetCallback={(data) => modifyReport(data)} />
+                    <ButtonFull name="Back" callback={() => navigate("/dashboard")} />
+                </Group>
+                <Group name="Info">
                     <TextField name="Team" value="" type="number" inputMode="decimal" widgetCallback={(data) => modifyReport(data)} />
                     <TextField name="Match" value="" type="number" inputMode="decimal" widgetCallback={(data) => modifyReport(data)} />
-                    <Toggle name="Alliance" colorTrue="rgb(0,101,179)" colorFalse="rgb(220,53,69)" widgetCallback={(data) => modifyReport(data)} />
-                    {activeSchema.schema.widgets.map((widget) => {
-                        console.log(widgetNames[widget.widget]);
-                        return (
-                            <h1 key={Math.random() * 1007 % 432}>{widgetNames[widget.widget].widget(widget, modifyReport)}</h1>
-                        );
-                    })}
+                    <AllianceInfoToggle name="Alliance" colorTrue="rgb(0,101,179)" colorFalse="rgb(220,53,69)" widgetCallback={(data) => modifyReport(data)} />
                 </Group>
-                <ButtonFull name="Submit Report" callback={() => submit()} />
-                <ButtonFull name="Back To Dashboard" callback={() => navigate("/dashboard")} />
+                {activeSchema.schema.widgets.map((widget) => {
+                    return (
+                        <h1>{widgetNames[widget.widget].widget({ widgetCallback: modifyReport, ...widget })}</h1>
+                    );
+                })}
+                <NoHeaderGroup>
+                    <ButtonFull name="Submit Report" callback={() => submit()} />
+                </NoHeaderGroup>
                 <br />
             </div>
         </div>

@@ -47,10 +47,10 @@ const Dropdown = ({ name, prompt, elements, callback, widgetCallback, pointsMap 
 };
 
 export const DropdownWidget = {
-    schemaFields: ["name", "prompt", "pointsMap"], // add prompt field later
+    schemaFields: ["name", "prompt", "pointsMap"],
     schemaFieldsTypes: ["s", "s", { "K": "v" }],
     widget: (props, widgetCallback) => {
-        return <Dropdown {...{ widgetCallback, ...props }} />;
+        return <Dropdown {...props} />;
     },
 };
 

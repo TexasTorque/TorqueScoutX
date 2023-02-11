@@ -5,15 +5,19 @@ import { StopwatchWidget } from "./components/Stopwatch";
 import { TextFieldWidget } from "./components/TextField";
 import { DropdownWidget } from "./components/Dropdown";
 import { LabelWidget } from "./components/Label";
+import { SubgroupWidget } from "./components/Subgroup";
+import { GroupWidget } from "./components/Group";
 
 export let widgetNames = {
-    "Toggle": ToggleWidget, //done points
-    "MutuallyExclusive": MutuallyExclusiveWidget, //done points
-    "Numeric": NumericWidget, //done points
-    "Stopwatch": StopwatchWidget, // doesn't need
-    "TextField": TextFieldWidget, // doesn't need
-    "Dropdown": DropdownWidget, //check this!!! 
-    "Label": LabelWidget // never used for points
+    "Toggle": ToggleWidget,
+    "MutuallyExclusive": MutuallyExclusiveWidget,
+    "Numeric": NumericWidget,
+    "Stopwatch": StopwatchWidget,
+    "TextField": TextFieldWidget,
+    "Dropdown": DropdownWidget,
+    "Label": LabelWidget,
+    "Subgroup": SubgroupWidget,
+    "Group": GroupWidget
 };
 
 let BreakException = {};
@@ -54,18 +58,6 @@ export default function schemaValidate(schemaObject) {
             }
 
         });
-
-        // Object.keys(schemaObject.widgets[i]).filter((field) => {
-        //     if (!(fields.includes(field)) && !(field === "widget")) {
-        //         alert("Extra field " + field + " in widget " + schemaObject.widgets[i].widget + "!");
-        //         throw BreakException;
-        //     }
-        // });
-
-        // letting people pass in their own props from now on
-
-
-
     }
 
     if (!(schemaObject.analysisGroups instanceof Array)) {
@@ -88,11 +80,6 @@ export default function schemaValidate(schemaObject) {
             alert("No name for analysis group at index " + i + "!");
             throw BreakException;
         }
-
-        for (let j = 0; j < schemaObject.analysisGroups[i].fields.length; j++) {
-
-        }
-
     }
 
     return true;

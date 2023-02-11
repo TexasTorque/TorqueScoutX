@@ -21,12 +21,12 @@ const TextField = ({ name, callback, placeholder, readonly, type, inputMode, wid
   return (
     <div className="numeric">
       <div className="row mt-4 mr-3">
-        <h4 className="name-field ml-3 mt-2" style={{ width: "8rem" }}>
+      <h4 className="name-field ml-3 mt-2" style={{ width: "8rem", fontSize: "1.3rem" }}>
           {name || <Null />}
         </h4>
         <div className="ml-0 mt-1" style={{ width: "10rem" }}>
           <Form.Control
-            disabled={ readonly ?? false }
+            disabled={readonly ?? false}
             onChange={(e) => { update(e.target.value); }}
             className="w-100"
             type={type ?? "text"}
@@ -43,7 +43,7 @@ export const TextFieldWidget = {
   schemaFields: ["name"],
   schemaFieldsTypes: ["s"],
   widget: (props, widgetCallback) => {
-    return <TextField {...{ widgetCallback, ...props }} />;
+    return <TextField {...props} />;
   },
 };
 

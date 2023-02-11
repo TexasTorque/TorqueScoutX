@@ -5,14 +5,12 @@ import { useNavigate } from "react-router-dom";
 import Group from "../../components/Group";
 import ButtonFull from "../../components/ButtonFull";
 import TextField from "../../components/TextField";
-import Loader from "../../components/Loader";
 import Dropdown from "../../components/Dropdown";
-import Label from "../../components/Label";
 import schemaValidate from "../../Schema";
 
 const ConfigureSchema = () => {
     const navigate = useNavigate();
-    const [user, loading, error] = useAuthState(auth);
+    const [user, loading] = useAuthState(auth);
 
     const [schemaText, setSchemaText] = useState("");
     const [schemaName, setSchemaName] = useState("");

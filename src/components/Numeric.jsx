@@ -14,7 +14,7 @@ const Numeric = ({ name, callback, min, max, init, increment, widgetCallback, mu
 
   const update = (direction) => {
     const n = Math.min(
-      Math.max(count + direction * (increment ?? 1), min ?? 0), //maybe min should be -99;
+      Math.max(count + direction * (increment ?? 1), min ?? 0),
       max ?? 99
     );
     setCount(n);
@@ -29,19 +29,19 @@ const Numeric = ({ name, callback, min, max, init, increment, widgetCallback, mu
 
   return (
     <div className="numeric">
-      <div className="row mt-4 mr-1">
-        <Col className="ml-0 mt-2">
-          <h4 className="name-field" style={{ fontSize: "1.3rem" }}>{(alias ?? name) || <Null />}</h4>
+      <div className="row mt-0 mr-0">
+        <Col className="ml-0">
+          <h4 className="name-field" style={{ fontSize: "1.3rem", "marginTop":"0.85rem" }}>{(alias ?? name) || <Null />}</h4>
         </Col>
-        <Col className="ml-0 mt-1">
+        <Col className="ml-0 mt-0">
           <Button variant="danger" size="md" onClick={() => update(-1)}>
             -
           </Button>
         </Col>
-        <Col className="ml-0 mt-2">
-          <h4 className="mono-field">{count}</h4>
+        <Col className="ml-0">
+          <h4 className="mono-field" style={{marginTop: "0.85rem"}}>{count}</h4>
         </Col>
-        <Col className="ml-0 mt-1">
+        <Col className="ml-0 mt-0">
           <Button variant="success" size="md" onClick={() => update(1)}>
             +
           </Button>

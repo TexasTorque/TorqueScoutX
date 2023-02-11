@@ -1,70 +1,182 @@
 {
     "widgets": [
         {
-            "widget": "Label",
-            "name": "Auto"
+            "name": "Auto",
+            "widget": "Label"
         },
         {
-            "name": "Taxi",
+            "pointsTrue": 3,
+            "pointsFalse": 0,
             "widget": "Toggle",
-            "init": false
+            "init": false,
+            "name": "Mobility"
+        },
+        {
+            "widget": "Subgroup",
+            "name": "A. Cone",
+            "alias": "Cone"
         },
         {
             "widget": "Numeric",
-            "name": "A. Lower"
+            "multiplier": 3,
+            "name": "A. Lower Cone",
+            "alias": "Lower "
         },
         {
             "widget": "Numeric",
-            "name": "A. Upper"
+            "multiplier": 4,
+            "alias": "Middle",
+            "name": "A. Middle Cone"
         },
         {
             "widget": "Numeric",
-            "name": "A. Missed"
+            "multiplier": 6,
+            "name": "A. Upper Cone",
+            "alias": "Upper"
         },
         {
-            "widget": "Label",
-            "name": "Teleop"
+            "widget": "Subgroup",
+            "alias": "Cube",
+            "name": "A. Cube"
+        },
+        {
+            "alias": "Lower",
+            "multiplier": 3,
+            "widget": "Numeric",
+            "name": "A. Lower Cube"
         },
         {
             "widget": "Numeric",
-            "name": "T. Lower"
+            "alias": "Middle",
+            "name": "A. Middle Cube",
+            "multiplier": 4
+        },
+        {
+            "multiplier": 6,
+            "alias": "Upper",
+            "widget": "Numeric",
+            "name": "A. Upper Cube"
+        },
+        {
+            "pointsMap": [
+                {
+                    "None": 0
+                },
+                {
+                    "Docked": 8
+                },
+                {
+                    "Engaged": 12
+                }
+            ],
+            "name": "A. Dock",
+            "alias": "Dock",
+            "widget": "MutuallyExclusive"
+        },
+        {
+            "name": "Teleop",
+            "widget": "Label"
+        },
+        {
+            "widget": "Subgroup",
+            "alias": "Cone",
+            "name": "T. Cone"
+        },
+        {
+            "alias": "Lower",
+            "name": "T. Lower Cone",
+            "widget": "Numeric",
+            "multiplier": 2
         },
         {
             "widget": "Numeric",
-            "name": "T. Upper"
+            "name": "T. Middle Cone",
+            "alias": "Middle",
+            "multiplier": 3
+        },
+        {
+            "alias": "Upper",
+            "multiplier": 5,
+            "name": "T. Upper Cone",
+            "widget": "Numeric"
+        },
+        {
+            "alias": "Cube",
+            "widget": "Subgroup",
+            "name": "T. Cube"
         },
         {
             "widget": "Numeric",
-            "name": "T. Missed"
+            "alias": "Lower",
+            "name": "T. Lower Cube",
+            "multiplier": 2
         },
         {
-            "widget": "Toggle",
-            "name": "Defense",
-            "init": false
+            "multiplier": 3,
+            "alias": "Middle",
+            "name": "T. Middle Cube",
+            "widget": "Numeric"
         },
         {
-            "widget": "Toggle",
-            "name": "Broken",
-            "init": false
+            "multiplier": 5,
+            "alias": "Upper",
+            "name": "T. Upper Cube",
+            "widget": "Numeric"
         },
         {
-            "widget": "Label",
-            "name": "Climb"
+            "multiplier": 5,
+            "name": "Links",
+            "widget": "Numeric"
         },
         {
-            "widget": "Stopwatch",
-            "name": "Time"
+            "name": "Park Group",
+            "widget": "Subgroup",
+            "alias": ""
         },
         {
             "widget": "MutuallyExclusive",
-            "name": "Level",
-            "elements": [
-                "None",
-                "Low",
-                "Mid",
-                "High",
-                "Traverse"
-            ]
+            "name": "T. Dock",
+            "pointsMap": [
+                {
+                    "None": 0
+                },
+                {
+                    "Park": 2
+                },
+                {
+                    "Docked": 6
+                },
+                {
+                    "Engaged": 10
+                }
+            ],
+            "alias": "Dock"
+        },
+        {
+            "name": "Broken Group",
+            "widget": "Subgroup",
+            "alias": ""
+        },
+        {
+            "name": "Broken",
+            "widget": "Toggle",
+            "init": false
+        }
+    ],
+    "analysisGroups": [
+        {
+            "name": "Auto",
+            "fields": [
+                "Mobility",
+                "A. Lower Cone",
+                "A. Middle Cone",
+                "A. Upper Cone",
+                "A. Lower Cube",
+                "A. Middle Cube",
+                "A. Upper Cube",
+                "A. Dock"
+            ],
+            "mode": "averagePoints"
         }
     ]
 }
