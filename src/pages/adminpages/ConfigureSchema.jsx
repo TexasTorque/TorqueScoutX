@@ -75,7 +75,7 @@ const ConfigureSchema = () => {
 
     return (
         <div style={{ marginBottom: "40px" }}>
-            <Group name="Configure Scheme">
+            <Group name="Configure Schema">
                 <ButtonFull name="Back to Admin" callback={() => navigate("/admin")}></ButtonFull>
                 <Dropdown name="" elements={storedSchemas} callback={(value) => { setSelectedSchema(value); }}></Dropdown>
                 <ButtonFull name="Set Active" callback={() => { setActiveSchema(selectedSchema); setCurrentSchema(selectedSchema); }}></ButtonFull>
