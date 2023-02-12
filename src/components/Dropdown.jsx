@@ -26,9 +26,9 @@ const Dropdown = ({ name, prompt, elements, callback, widgetCallback, pointsMap 
     return (
         <div className="toggle">
             <div className="row mt-4 mr-3">
-                <h4 className="name-field ml-3 mt-2" style={{ width: "7rem" }}>
-                    {name || <Null />}
-                </h4>
+                {name == null ? <h4 className="name-field ml-3 mt-2" style={{ width: "7rem" }}>
+                    {name}
+                </h4> : <div className="ml-3 mt-2"></div>}
                 <div className="ml-0 mt-1" style={{ width: "5rem" }}>
                     <BootstrapDropdown name={name}>
                         <BootstrapDropdown.Toggle variant="primary" id="dropdown-basic" style={{ width: (widgetCallback) ? "12rem" : "18rem" }}>
