@@ -49,6 +49,7 @@ const Averages = () => {
                                 teamAvgObj[key2] = val;
                             }
                         }
+                        console.log(key2, value2);
                     }
                 }
                 for (const [key3, value3] of Object.entries(teamAvgObj)) {
@@ -59,10 +60,12 @@ const Averages = () => {
                 for (const [key4, value4] of Object.entries(teamAvgObj)) {
                     teamAvgObjTrimmed[key4.replace(/\s/g, '').replaceAll('.', '')] = value4;
                 }
+                console.log(teamAvgObjTrimmed);
                 allData.push(teamAvgObjTrimmed);
             }
         }
         populateColumns(allData);
+        console.log(allData);
     };
 
     return (

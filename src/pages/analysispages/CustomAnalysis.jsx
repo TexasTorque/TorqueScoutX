@@ -45,10 +45,12 @@ const CustomAnalysis = () => {
     };
 
     const processData = (data) => {
-        console.log(data);
+        // console.log(data);
 
         let analysisGroups = activeSchema.schema.analysisGroups;
-        console.log(analysisGroups);
+        // console.log(analysisGroups);
+
+        let allData = [];
 
         for (let i = 0; i < analysisGroups.length; i++) {
             CUFS[analysisGroups[i].mode](data, analysisGroups[i]);
