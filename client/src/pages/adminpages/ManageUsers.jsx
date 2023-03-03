@@ -35,7 +35,7 @@ const ManageUsers = () => {
     }, []);
 
     const getUsers = () => {
-        axios.get("http://localhost:3001/listUsers").then((res) => {
+        axios.get("https://tsbackend.onrender.com/listUsers").then((res) => {
 
             setUsers(res.data.users)
         })
@@ -51,7 +51,7 @@ const ManageUsers = () => {
             password: CUPW
         });
         
-        axios.post("http://localhost:3001/createUser", json, {
+        axios.post("https://tsbackend.onrender.com/createUser", json, {
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*'
@@ -66,7 +66,7 @@ const ManageUsers = () => {
             uid: viewedUser.uid
         });
         
-        axios.post("http://localhost:3001/deleteUser", json, {
+        axios.post("https://tsbackend.onrender.com/deleteUser", json, {
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*'
