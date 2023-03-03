@@ -57,10 +57,10 @@ const ConfigureSchema = () => {
 
     function saveSchema() {
         let schemaObject;
-        if (schemaName === "" || storedSchemas.includes(schemaName)) {
-            alert("Schema name is invalid or already exists");
-            return;
-        }
+        // if (schemaName === "" || storedSchemas.includes(schemaName)) {
+        //     alert("Schema name is invalid or already exists");
+        //     return;
+        // }
         try {
             schemaObject = JSON.parse(schemaText);
         } catch (e) {
