@@ -31,9 +31,12 @@ const Scout = () => {
         for (let i = 0; i < report.fields.length; i++) {
             if (report.fields[i].name === data.name) {
                 report.fields = Object.assign([], report.fields, { [i]: data });
+                console.log("data", data);
+                console.log("report", report)
                 return;
             }
         }
+        console.log(data);
         report.fields = report.fields.concat(data);
     };
 
@@ -51,25 +54,36 @@ const Scout = () => {
                 return;
             }
         });
+        console.log(report);
 
-        let finalReport = {};
+        let finalReport = {fields:[]};
         for (let i = 0; i < report.fields.length; i++) {
             if (["Team", "Alliance", "Scouter", "Match"].includes(report.fields[i].name)) {
                 finalReport[report.fields[i].name] = report.fields[i].value;
             } else {
-                finalReport[report.fields[i].name] = { "value": report.fields[i].value, "points": report.fields[i].points };
+                // finalReport[report.fields[i].name] = { "value": report.fields[i].value, "points": report.fields[i].points };
+                finalReport.fields.push(report.fields[i]);
             }
         }
 
-        if (finalReport["Team"] < 118) {
-            if (!window.confirm("Team number is unusually low. Are you sure you want to submit?")) return;
+        console.log("finalReport", finalReport)
+
+        if ((finalReport["Team"] < 118) || (finalReport["Match"] > 150)) {
+            if (!window.confirm("[CHECK] Double check your team and match to make sure they correct...")) return;
         }
         finalReport.Alliance = finalReport.Alliance === "true" ? "Red" : "Blue";
         let points = 0;
-        Object.keys(finalReport).forEach((field) => {
-            points += finalReport[field].points ?? 0;
+
+        finalReport.fields.forEach((field) => {
+            points += field.points ?? 0;
+
         });
         finalReport["Points"] = points;
+        // Object.keys(finalReport).forEach((field) => {
+        //     points += finalReport[field].points ?? 0;
+        // });
+        // finalReport["Points"] = points;
+        // console.log(finalReport)
         pushReport(finalReport).then(() => {
             navigate("/dashboard");
         });

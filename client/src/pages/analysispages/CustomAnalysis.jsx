@@ -7,10 +7,11 @@ import ButtonFull from "../../components/ButtonFull";
 import Group from "../../components/Group";
 import Null from "../../components/Null";
 import { getActiveSchema } from "../../firebase";
-import { averagePoints } from "../../Custom";
+import { averagePoints, averageValue } from "../../Custom";
 
 const CUFS = {
     "averagePoints": averagePoints,
+    "averageValue": averageValue
 };
 
 const CustomAnalysis = () => {
@@ -21,10 +22,29 @@ const CustomAnalysis = () => {
     const [columns, setColumns] = useState([]);
     const [activeSchema, setActiveSchema] = useState({});
 
+    const populateColumns = (data) => {
+        let clmTemp = [makeColumn("Team", "Team", true)];
+        // Object.keys(data[0]).forEach((key) => {
+        //     clmTemp = [...clmTemp, makeColumn(key, key.replace(/\s/g, '').replaceAll('.', ''), true)];
+        // });
+        // console.log("clmTemp", clmTemp)
+
+        // console.log(data[0][Object.keys(data[0])[0]].reports[0])
+
+        // data[0][Object.keys(data[0])[0]].reports[0].fields.forEach((key) => {
+        //     clmTemp = [...clmTemp, makeColumn(key.name, key.name.replace(/\s/g, '').replaceAll('.', ''), true)];
+        // });
+
+        activeSchema.schema.analysisGroups.forEach((group) => {
+            clmTemp = [...clmTemp, makeColumn(group.name, group.name.replace(/\s/g, '').replaceAll('.', ''), true)]
+        });
+
+        setColumns(clmTemp);
+    };
+
     useEffect(() => {
         if (!user) return navigate("/login");
     }, [user, loading]);
-
 
     useEffect(() => {
         getActiveSchema().then((schema) => {
@@ -40,20 +60,35 @@ const CustomAnalysis = () => {
         });
     }, [activeSchema]);
 
-    const populateColumns = (data) => {
-
-    };
-
     const processData = (data) => {
-        console.log(data);
+        populateColumns(data);
 
         let analysisGroups = activeSchema.schema.analysisGroups;
-        console.log(analysisGroups);
+        console.log(analysisGroups)
+
+        let allData = [];
+
+    
+        data.forEach((tm) => {
+            const team = Object.keys(tm)[0];
+            allData.push({ "Team": team });
+        });
 
         for (let i = 0; i < analysisGroups.length; i++) {
-            CUFS[analysisGroups[i].mode](data, analysisGroups[i]);
-
+            let temp = CUFS[analysisGroups[i].mode](data, analysisGroups[i]);
+            for (let i = 0; i < temp.length; i++) {
+                for (let j =0; j < allData.length; j++) {
+                    if (allData[j].Team == temp[i].Team) {
+                        allData[j] = {...allData[j], ...temp[i]};
+                    }
+                }
+            }
         }
+        console.log("allData", allData)
+
+        
+        setAllData(allData);
+
 
     };
 
@@ -61,7 +96,7 @@ const CustomAnalysis = () => {
         columns.length > 0 ?
             <div className="home">
                 <div className="mt-4" style={{ width: "200%" }}>
-                    <Group name="Custom Averages">
+                    <Group name="Custom Analysis">
                         <ButtonFull name="Back to Analysis" callback={() => navigate("/analysis/analysis-index")} />
                         <br></br>
                         <div className="table-container">
