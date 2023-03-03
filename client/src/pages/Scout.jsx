@@ -91,7 +91,7 @@ const Scout = () => {
 
     return (!(Object.keys(activeSchema).length === 0)) ? (
         <div className="scout">
-            <div className="container mt-4">
+            <div className="container mt-1">
                 <Group name="Scouting">
                     <TextField name="Scouter" readonly={name ?? ""} value={name} widgetCallback={(data) => modifyReport(data)} />
                     <ButtonFull name="Back" callback={() => navigate("/dashboard")} />
