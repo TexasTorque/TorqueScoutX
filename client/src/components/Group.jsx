@@ -33,7 +33,7 @@ const Group = ({ name, children, manualChildren, widgetCallback }) => {
           ""
         )}
         <div style={{ height: "9px" }}>&nbsp;</div>
-        <div className="ml-4 mr-4 mb-4">{
+        <div className="ml-3 mr-0 mb-4">{
           manualChildren != null ?
             manualChildren.map((widget) => {
               return (
