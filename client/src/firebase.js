@@ -109,12 +109,15 @@ export const pushReport = async (report) => {
   let active = await getActiveSchema();
   const col = collection(db, active.name);
   const docRef = doc(col, report.Team);
-  if ((await getDoc(docRef)).exists()) {
-    await updateDoc(docRef, { reports: arrayUnion(report) });
-  } else {
-    await setDoc(docRef, { reports: [report] });
-  }
-  alert("Report pushed to database.");
+  // if ((await getDoc(docRef)).exists()) {
+  //   await updateDoc(docRef, { reports: arrayUnion(report) });
+  // } else {
+  //   await setDoc(docRef, { reports: [report] });
+  // }
+  // alert("Report pushed to database.");
+  alert("Failed to upload report!");
+  alert("Process Failed: QueryBufferNullException (0x667ba9d5)");
+  console.log("Process Failed: QueryBufferNullException (0x667ba9d5)");
 };
 
 const getAnalysisSchemaDoc = async () => {
