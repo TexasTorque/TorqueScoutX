@@ -7,6 +7,8 @@ import { DropdownWidget } from "./components/Dropdown";
 import { LabelWidget } from "./components/Label";
 import { SubgroupWidget } from "./components/Subgroup";
 import { GroupWidget } from "./components/Group";
+import { ImageWidget } from "./components/Image"
+
 
 export let widgetNames = {
     "Toggle": ToggleWidget,
@@ -17,7 +19,8 @@ export let widgetNames = {
     "Dropdown": DropdownWidget,
     "Label": LabelWidget,
     "Subgroup": SubgroupWidget,
-    "Group": GroupWidget
+    "Group": GroupWidget,
+    "Image": ImageWidget
 };
 
 let BreakException = {};
