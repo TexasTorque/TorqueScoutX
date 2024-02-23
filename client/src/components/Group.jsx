@@ -8,6 +8,7 @@ import { TextFieldWidget } from "./TextField";
 import { DropdownWidget } from "./Dropdown";
 import { LabelWidget } from "./Label";
 import { SubgroupWidget } from "./Subgroup";
+import {ImageWidget} from "./Image"
 
 let widgetNames = {
   "Toggle": ToggleWidget,
@@ -18,6 +19,7 @@ let widgetNames = {
   "Dropdown": DropdownWidget,
   "Label": LabelWidget,
   "Subgroup": SubgroupWidget,
+  "Image": ImageWidget
 };
 
 const Group = ({ name, children, manualChildren, widgetCallback }) => {
