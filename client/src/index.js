@@ -14,6 +14,7 @@ import Averages from "./pages/analysispages/Averages";
 import CustomAnalysis from "./pages/analysispages/CustomAnalysis";
 import ManageUsers from "./pages/adminpages/ManageUsers";
 import Settings from "./pages/Settings";
+import AISummarization from "./pages/adminpages/AISummarization";
 
 ReactDOM.render(
   <Router>
@@ -31,6 +32,7 @@ ReactDOM.render(
       <Route path="/analysis/custom" element={<CustomAnalysis />} />
       <Route path="/*" element={<NotFound />} />
       <Route path="/admin/manageusers" element={<ManageUsers />} />
+      <Route path="/admin/aisummarize" element={<AISummarization />} />
       <Route path="/settings" element={<Settings />} />
     </Routes>
   </Router>,

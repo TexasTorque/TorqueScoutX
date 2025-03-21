@@ -34,7 +34,6 @@ const ConfigureAnalysis = () => {
     }, [storedSchemas]);
 
     useEffect(() => {
-        if (selectedSchema === {}) return;
         async function waitForActiveSchema() {
             await getActiveAnalysisSchema().then((schema) => {
                 setCurrentSchema(schema);

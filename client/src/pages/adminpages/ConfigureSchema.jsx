@@ -33,7 +33,6 @@ const ConfigureSchema = () => {
     }, [storedSchemas]);
 
     useEffect(() => {
-        if (selectedSchema === {}) return;
         async function waitForActiveSchema() {
             await getActiveSchema().then((schema) => {
                 setCurrentSchema(schema);

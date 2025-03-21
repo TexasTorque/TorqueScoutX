@@ -121,6 +121,11 @@ const getAnalysisSchemaDoc = async () => {
   return await getDoc(doc(db, "schemas", "analysisSchema"));
 };
 
+export const doesSchemaExist = async (schemaName) => {
+  let schemaDoc = (await getSchemaDoc()).data();
+  return schemaDoc.storedSchemas.some((schema) => schema.name === schemaName);
+};
+
 export const pushAnalysisSchema = async (schema, schemaName) => {
   let schemaDoc = (await getAnalysisSchemaDoc()).data();
   schemaDoc.storedSchemas.push({ schema: schema, name: schemaName });
@@ -163,9 +168,9 @@ export const getMatchesPerTeam = async (team) => {
   }
 };
 
-export const getTeamReports = async () => {
-  let active = await getActiveSchema();
-  const col = collection(db, active.name);
+export const getTeamReports = async (schema = null) => {
+  const active = schema ? schema : (await getActiveSchema()).name;
+  const col = collection(db, active);
   const querySnapshot = await getDocs(col);
   const documents = [];
   querySnapshot.forEach(doc => {
