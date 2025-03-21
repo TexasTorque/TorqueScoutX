@@ -22,6 +22,7 @@ const Admin = () => {
           <ButtonFull name="Configure Schema" callback={() => navigate("/admin/schema")} />
           <ButtonFull name="Manage Users" callback={() => navigate("/admin/manageusers")} />
           <ButtonFull name="Scout" callback={() => navigate("/scout")} />
+          <ButtonFull name="AI Summarize" callback={() => navigate("/admin/aisummarize")} />
           <ButtonFull name="Back to Home" callback={() => navigate("/dashboard")} />
         </Group>
       </div>
