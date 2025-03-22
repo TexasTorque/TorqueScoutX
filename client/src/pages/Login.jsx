@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { auth, logInWithEmailAndPassword } from "../firebase";
 
 import ButtonFull from "../components/ButtonFull";
@@ -15,7 +15,7 @@ const Login = () => {
 
   useEffect(() => {
     if (user) navigate("/dashboard");
-  }, [user, loading]);
+  }, [user, loading, navigate]);
 
   const login = () => {
     const email = id + "@scout.texastorque.org";

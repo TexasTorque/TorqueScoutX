@@ -12,7 +12,6 @@ import { default as BootstrapTable } from 'react-bootstrap/Table';
 // This is like "import this as that" in Python
 
 const Table = ({ json, columns, defaultSortField, excludingAccessorsArray }) => {
-  const [sortField, setSortField] = useState(defaultSortField);
   const [data, setData] = useState(json);
   const navigate = useNavigate();
   const [excludingAccessors] = useState(excludingAccessorsArray ?? []); //excluding accessors will ideally be replaced when custom columns are implemented
@@ -20,8 +19,6 @@ const Table = ({ json, columns, defaultSortField, excludingAccessorsArray }) => 
   useEffect(() => setData(json), [json]);
 
   const handleSort = (field) => {
-    setSortField(field);
-
     if (field == null) return;
 
     const sorted = data.sort((a, b) => { return b[field] - a[field]; });

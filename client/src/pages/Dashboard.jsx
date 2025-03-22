@@ -13,7 +13,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (!user) return navigate("/login");
-  }, [user, loading]);
+  }, [user, loading, navigate]);
 
   let admin = (user && checkAdmin(user)) ? <ButtonFull name="Admin" callback={() => navigate("/admin")} /> : <Empty />;
 
@@ -22,6 +22,7 @@ const Dashboard = () => {
       <div className="container mt-4">
         <Group name="Torque Scout">
           <ButtonFull name="Scout" callback={() => navigate("/scout")} />
+          <ButtonFull name="Summaries" callback={() => navigate("/summaries")} />
           <ButtonFull name="Analysis" callback={() => navigate("/analysis/analysis-index")} />
           <ButtonFull name="Settings" callback={() => navigate("/settings")} />
           {admin}

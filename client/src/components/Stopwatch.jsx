@@ -37,7 +37,7 @@ const Stopwatch = ({ name, callback, widgetCallback }) => {
     if (widgetCallback) {
       widgetCallback({ name: name, value: elapsed, });
     }
-  }, [elapsed]);
+  }, [elapsed, name, widgetCallback]);
 
   return (
     <div className="numeric">

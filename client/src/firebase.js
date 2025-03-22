@@ -12,12 +12,12 @@ import {
 } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB9au8HLI9Fna7cWqnTr-5TUSMMwMF3HQE",
-  authDomain: "torquescoutx.firebaseapp.com",
-  projectId: "torquescoutx",
-  storageBucket: "torquescoutx.appspot.com",
-  messagingSenderId: "1094938071653",
-  appId: "1:1094938071653:web:37f374cec3196076982c8c"
+  apiKey: "AIzaSyCceCKgnEn3VwJJGb8xqYkHcShdD7ij65I",
+  authDomain: "torque-scout-x.firebaseapp.com",
+  projectId: "torque-scout-x",
+  storageBucket: "torque-scout-x.firebasestorage.app",
+  messagingSenderId: "385562728881",
+  appId: "1:385562728881:web:5d74597680a0f380a74590"
 };
 
 export const app = initializeApp(firebaseConfig);
@@ -54,7 +54,7 @@ export const registerWithEmailAndPassword = async (email, password) => {
 export const createUser = async (first, last, password, admin) => {
   const id = (last.substring(0, 5) + first.substring(0, 3)).toLowerCase();
   const email = id + "@torquescout.com";
-  const uid = registerWithEmailAndPassword(email, password);
+  registerWithEmailAndPassword(email, password);
   setDoc(doc(db, "users", id), {
     id: id,
     admin: admin,
@@ -167,6 +167,28 @@ export const getMatchesPerTeam = async (team) => {
     alert("Team not found in database.");
   }
 };
+
+export const updateTeamAISummarize = async (summarizedData, team, schema) => {
+  const col = collection(db, schema);
+  const docRef = doc(col, team);
+  await updateDoc(docRef, { aiSummarize: summarizedData });
+}
+
+export const listTeams = async (schema) => {
+  const col = collection(db, schema);
+  const querySnapshot = await getDocs(col);
+  const documents = [];
+  querySnapshot.forEach(doc => {
+    documents.push(doc.id);
+  });
+  return documents;
+}
+
+export const getCachedTeamAISummarize = async (team, schema) => {
+  const col = collection(db, schema);
+  const docRef = doc(col, team);
+  return (await getDoc(docRef)).data().aiSummarize;
+}
 
 export const getTeamReports = async (schema = null) => {
   const active = schema ? schema : (await getActiveSchema()).name;

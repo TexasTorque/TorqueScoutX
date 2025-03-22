@@ -27,7 +27,7 @@ const MutuallyExclusive = ({ name, elements, callback, widgetCallback, pointsMap
     if (widgetCallback) {
       widgetCallback({ name: name, value: selected, points: points });
     }
-  }, [selected]);
+  }, [selected, name, pointsMap, widgetCallback]);
 
   return (
     <div>

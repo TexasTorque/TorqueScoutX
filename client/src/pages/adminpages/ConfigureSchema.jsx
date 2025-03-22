@@ -21,7 +21,7 @@ const ConfigureSchema = () => {
     useEffect(() => {
         if (!user) return navigate("/login");
         if (user && !(checkAdmin(user))) return navigate("/dashboard");
-    }, [user, loading]);
+    }, [user, loading, navigate]);
 
     useEffect(() => {
         async function waitForSchemas() {

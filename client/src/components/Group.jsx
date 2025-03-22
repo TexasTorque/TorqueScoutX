@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Card from "react-bootstrap/Card";
 import { ToggleWidget } from "./Toggle";
 import { MutuallyExclusiveWidget } from "./MutuallyExclusive";

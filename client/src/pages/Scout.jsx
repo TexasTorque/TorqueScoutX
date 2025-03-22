@@ -3,7 +3,6 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, pushReport } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import Group from "../components/Group";
-import Toggle from "../components/Toggle";
 import ButtonFull from "../components/ButtonFull";
 import Loader from "../components/Loader";
 import TextField from "../components/TextField";
@@ -25,7 +24,7 @@ const Scout = () => {
         getActiveSchema().then((schema) => {
             setActiveSchema(schema);
         });
-    }, [user, loading]);
+    }, [user, loading, navigate]);
 
     const modifyReport = (data) => {
         for (let i = 0; i < report.fields.length; i++) {

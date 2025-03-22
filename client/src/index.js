@@ -15,6 +15,7 @@ import CustomAnalysis from "./pages/analysispages/CustomAnalysis";
 import ManageUsers from "./pages/adminpages/ManageUsers";
 import Settings from "./pages/Settings";
 import AISummarization from "./pages/adminpages/AISummarization";
+import Summaries from "./pages/Summaries";
 
 ReactDOM.render(
   <Router>
@@ -34,6 +35,7 @@ ReactDOM.render(
       <Route path="/admin/manageusers" element={<ManageUsers />} />
       <Route path="/admin/aisummarize" element={<AISummarization />} />
       <Route path="/settings" element={<Settings />} />
+      <Route path="/summaries" element={<Summaries />} />
     </Routes>
   </Router>,
 

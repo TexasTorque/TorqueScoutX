@@ -20,7 +20,7 @@ const AnalysisIndex = () => {
 
   useEffect(() => {
     if (!user) return navigate("/login");
-  }, [user, loading]);
+  }, [user, loading, navigate]);
 
   useEffect(() => {
     getMatchesPerTeam(team).then((data) => {

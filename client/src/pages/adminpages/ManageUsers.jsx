@@ -8,7 +8,6 @@ import axios from "axios";
 
 import Group from "../../components/Group";
 import Button from "../../components/ButtonFull";
-import { signOut } from "firebase/auth";
 
 import TextField from "../../components/TextField";
 import { Link } from "react-router-dom";
@@ -24,7 +23,7 @@ const ManageUsers = () => {
   useEffect(() => {
     if (!user) return navigate("/login");
     if (!checkAdmin(user)) return navigate("/dashboard");
-  }, [user, loading]);
+  }, [user, loading, navigate]);
 
   useEffect(() => {
     getUsers();
