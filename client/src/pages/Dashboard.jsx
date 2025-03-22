@@ -22,6 +22,7 @@ const Dashboard = () => {
       <div className="container mt-4">
         <Group name="Torque Scout">
           <ButtonFull name="Scout" callback={() => navigate("/scout")} />
+          <ButtonFull name="Summaries" callback={() => navigate("/summaries")} />
           <ButtonFull name="Analysis" callback={() => navigate("/analysis/analysis-index")} />
           <ButtonFull name="Settings" callback={() => navigate("/settings")} />
           {admin}

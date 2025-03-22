@@ -19,11 +19,6 @@ import Papa from "papaparse";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import Button from "react-bootstrap/Button";
 
-const apiKey = fetch('/.netlify/functions/getSecret').then(response => response.json()).then(data => data.apiKey);
-
-const genAI = new GoogleGenerativeAI(apiKey);
-const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-
 const AISummarization = () => {
   const navigate = useNavigate();
   const [user, loading] = useAuthState(auth);
@@ -37,12 +32,28 @@ const AISummarization = () => {
   const [reasoning, setReasoning] = useState("");
   const [allTeamSummary, setAllTeamSummary] = useState([]);
 
+  const [model, setModel] = useState(null);
+  const [teams, setTeams] = useState([]);
+
   const shouldStopRef = useRef(false);
 
   const [search, setSearch] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
   const [allTeamProgress, setAllTeamProgress] = useState(0);
+
+  const [lastLoadedPosition, setLastLoadedPosition] = useState(-1);
+
+  useEffect(() => {
+    async function initGenAI() {
+      const response = await fetch('/.netlify/functions/getSecret');
+      const data = await response.json();
+      const genAI = new GoogleGenerativeAI(data.apiKey);
+      setModel(genAI.getGenerativeModel({ model: "gemini-2.0-flash" }));
+    }
+
+    initGenAI();
+  }, []);
 
   const summarize = async (data) => {
     const notes = data.map((item) => item.fields[18].value);
@@ -104,7 +115,7 @@ Example Output:
 
 Include in your reasoning if they would be a good pick for an alliance and why.
 
-Use this structure and generate an appropriate response. You must use this structure only
+Use this structure and generate an appropriate response. You MUST use this structure only. You are only allowed to reply in proper json
 
 This is the data from the scouters: 
 `;
@@ -215,10 +226,8 @@ No climb: ${none}
       pointsString +
       preloadString;
     console.log(prompt.length);
-    console.log(prompt);
 
     const result = await model.generateContent(prompt);
-    console.log(result.response.text());
 
     return JSON.parse(
       result.response.text().replace("```json", "").replace("```", "")
@@ -255,6 +264,8 @@ No climb: ${none}
   const start_summarize_all = async () => {
     console.log("Summarizing all...");
 
+    setAllTeamSummary([]);
+
     if (await doesSchemaExist(await getActiveSchema().name)) {
       console.log("Schema exists");
     } else {
@@ -265,36 +276,77 @@ No climb: ${none}
 
     setAllTeamProgress(0);
 
-    for (let i = 0; i < documents.length; i++) {
-      let team = Object.keys(documents[i])[0];
-      let reports = documents[i][team].reports;
-      let summarized = await summarize(reports);
-      // dummy data
-      // let summarized = {
-      //   autonomous_period: "Performed well, scoring multiple points.",
-      //   teleop_period: "Struggled with accuracy and speed.",
-      //   defense: "No defense data available.",
-      //   endgame: "Successfully completed the endgame objective.",
-      //   overall_rating: "5/10",
-      //   reasoning:
-      //     "Strong autonomous, weak teleop, and good endgame, leading to an average rating.",
-      // };
+    if (lastLoadedPosition === -1) {
+      console.log("Starting from the beginning");
+      for (let i = 0; i < documents.length; i++) {
+        let team = Object.keys(documents[i])[0];
+        let reports = documents[i][team].reports;
+        let summarized = ""
 
-      summarized.overall_rating = parseInt(
-        summarized.overall_rating.split("/")[0]
-      );
+        try {
+          summarized = await summarize(reports);
+        } catch (e) {
+          console.log(e);
+          setLastLoadedPosition(i);
+          break;
+        }
 
-      allTeamSummary.push({ team: team, summary: summarized });
-      updateTeamAISummarize(summarized, team, await getActiveSchema().name);
-      setAllTeamProgress(((i + 1) / documents.length) * 100);
+        summarized.overall_rating = parseInt(
+          summarized.overall_rating.split("/")[0]
+        );
+  
+        let schema = await getActiveSchema().then((schema) => schema.name);
+  
+        setAllTeamSummary((prev) => [
+          ...prev,
+          { team: team, summary: summarized },
+        ]);
+        updateTeamAISummarize(summarized, team, schema);
+        setAllTeamProgress(((i + 1) / documents.length) * 100);
+  
+        if (shouldStopRef.current) {
+          setAllTeamProgress(0);
+          shouldStopRef.current = false;
+          return;
+        }
+      }
+    } else {
+      // continue from last loaded position
+      console.log("Continuing from last loaded position");
+      for (let i = lastLoadedPosition; i < documents.length; i++) {
+        let team = Object.keys(documents[i])[0];
+        let reports = documents[i][team].reports;
+        let summarized = ""
 
-      if (shouldStopRef.current) {
-        setAllTeamProgress(0);
-        shouldStopRef.current = false;
-        return;
+        try {
+          summarized = await summarize(reports);
+        } catch (e) {
+          console.log(e);
+          setLastLoadedPosition(i);
+          break;
+        }
+  
+        summarized.overall_rating = parseInt(
+          summarized.overall_rating.split("/")[0]
+        );
+  
+        let schema = await getActiveSchema().then((schema) => schema.name);
+  
+        setAllTeamSummary((prev) => [
+          ...prev,
+          { team: team, summary: summarized },
+        ]);
+        updateTeamAISummarize(summarized, team, schema);
+        setAllTeamProgress(((i + 1) / documents.length) * 100);
+  
+        if (shouldStopRef.current) {
+          setAllTeamProgress(0);
+          shouldStopRef.current = false;
+          return;
+        }
       }
     }
-
+    
     setAllTeamProgress(100);
   };
 
@@ -330,6 +382,7 @@ No climb: ${none}
     const loadCachedData = async () => {
       let schema = await getActiveSchema().then((schema) => schema.name);
       let teams = await listTeams(schema);
+      setTeams(teams);
 
       for (const team of teams) {
         let summarized = await getCachedTeamAISummarize(
@@ -390,7 +443,7 @@ No climb: ${none}
                     disabled={isLoading}
                   />
                   <ButtonFull
-                    name="Summarize All"
+                    name={"Summarize All" + (lastLoadedPosition === -1 ? "" : ` (${lastLoadedPosition + 1} - ${teams.length})`)}
                     callback={() => {
                       setIsLoading(true);
                       start_summarize_all().finally(() => setIsLoading(false));

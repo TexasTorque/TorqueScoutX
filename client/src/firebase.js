@@ -12,12 +12,12 @@ import {
 } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB9au8HLI9Fna7cWqnTr-5TUSMMwMF3HQE",
-  authDomain: "torquescoutx.firebaseapp.com",
-  projectId: "torquescoutx",
-  storageBucket: "torquescoutx.appspot.com",
-  messagingSenderId: "1094938071653",
-  appId: "1:1094938071653:web:37f374cec3196076982c8c"
+  apiKey: "AIzaSyCceCKgnEn3VwJJGb8xqYkHcShdD7ij65I",
+  authDomain: "torque-scout-x.firebaseapp.com",
+  projectId: "torque-scout-x",
+  storageBucket: "torque-scout-x.firebasestorage.app",
+  messagingSenderId: "385562728881",
+  appId: "1:385562728881:web:5d74597680a0f380a74590"
 };
 
 export const app = initializeApp(firebaseConfig);
