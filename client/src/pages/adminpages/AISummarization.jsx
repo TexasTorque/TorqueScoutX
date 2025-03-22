@@ -19,7 +19,9 @@ import Papa from "papaparse";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import Button from "react-bootstrap/Button";
 
-const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_API_KEY);
+const apiKey = fetch('/.netlify/functions/getSecret').then(response => response.json()).then(data => data.apiKey);
+
+const genAI = new GoogleGenerativeAI(apiKey);
 const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
 const AISummarization = () => {
