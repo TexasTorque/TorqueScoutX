@@ -86,6 +86,8 @@ Notably, no defense is not a bad thing. It just means that the robot did not pla
 
 Generate a robot performance summary in JSON format based on the given input. The JSON should include fields for "autonomous_period", "teleop_period", "defense", "endgame", "overall_rating", and "reasoning". If no defense information is available, use a standardized fallback message: "No defense data available."
 
+The overall rating should be reasonable and not too harsh. The rating should how likely the robot is to be picked by an alliance. 7-10 is a good pick, 4-6 is average, and 0-3 is a bad pick.
+
 Terms you should know:
 Pancake - means a bot that is only a drivebase and no scoring mechanism. These are ONLY good if they are fast and can play defense.
 
@@ -251,6 +253,9 @@ No climb: ${none}
 
     let summarized = await summarize(reports);
 
+    let schema = await getActiveSchema().then((schema) => schema.name);
+    updateTeamAISummarize(summarized, team, schema);
+
     setReasoning(summarized.reasoning);
     setTeleop(summarized.teleop_period);
     setAutos(summarized.autonomous_period);
@@ -380,6 +385,8 @@ No climb: ${none}
   useEffect(() => {
     // Load all cached data
     const loadCachedData = async () => {
+      setAllTeamSummary([]);
+
       let schema = await getActiveSchema().then((schema) => schema.name);
       let teams = await listTeams(schema);
       setTeams(teams);
@@ -389,6 +396,10 @@ No climb: ${none}
           team,
           schema
         );
+
+        if (summarized && summarized.overall_rating) {
+          summarized.overall_rating = parseInt(summarized.overall_rating.split("/")[0]);
+        }
 
         if (summarized) {
           setAllTeamSummary((prev) => [

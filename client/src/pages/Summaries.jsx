@@ -15,11 +15,17 @@ const Summaries = () => {
   useEffect(() => {
     // Load all cached data
     const loadCachedData = async () => {
+      setAllTeamSummary([]);
+
       let schema = await getActiveSchema().then((schema) => schema.name);
       let teams = await listTeams(schema);
 
       for (const team of teams) {
         let summarized = await getCachedTeamAISummarize(team, schema);
+
+        if (summarized && summarized.overall_rating) {
+          summarized.overall_rating = parseInt(summarized.overall_rating.split("/")[0]);
+        }
 
         if (summarized) {
           setAllTeamSummary((prev) => [
@@ -35,18 +41,17 @@ const Summaries = () => {
 
   return (
     <div>
-      {allTeamSummary.length === 0 ? null : (
+      {allTeamSummary.length === 0 ? (
+        <div className="container" style={{ width: "100%" }}>
+          <Group name="All Team Summary" style={{ width: "100%" }}>
+            <h4>No data available</h4>
+            <p>Likely the admins have not yet summarized the data</p>
+          </Group>
+        </div>
+      ) : (
         <div className="container" style={{ width: "100%" }}>
           <Group name="All Team Summary" style={{ width: "100%" }}>
             <div style={{ display: "flex", width: "100%" }}>
-              {/* <Button
-                                name="Export CSV"
-                                onClick={exportToCSV}
-                                style={{ marginRight: "1rem", width: "20%" }}
-                                disabled={isLoading}
-                            >
-                                Export
-                            </Button> */}
               <Form.Control
                 type="text"
                 placeholder="Search"
