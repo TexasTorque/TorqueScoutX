@@ -12,7 +12,7 @@ const AnalysisIndex = () => {
     const [team, setTeam] = useState("");
     useEffect(() => {
         if (!user) return navigate("/login");
-    }, [user, loading]);
+    }, [user, loading, navigate]);
 
 
     return (

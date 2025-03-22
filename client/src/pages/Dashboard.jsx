@@ -13,7 +13,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (!user) return navigate("/login");
-  }, [user, loading]);
+  }, [user, loading, navigate]);
 
   let admin = (user && checkAdmin(user)) ? <ButtonFull name="Admin" callback={() => navigate("/admin")} /> : <Empty />;
 

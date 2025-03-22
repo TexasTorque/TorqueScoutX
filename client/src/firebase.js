@@ -54,7 +54,7 @@ export const registerWithEmailAndPassword = async (email, password) => {
 export const createUser = async (first, last, password, admin) => {
   const id = (last.substring(0, 5) + first.substring(0, 3)).toLowerCase();
   const email = id + "@torquescout.com";
-  const uid = registerWithEmailAndPassword(email, password);
+  registerWithEmailAndPassword(email, password);
   setDoc(doc(db, "users", id), {
     id: id,
     admin: admin,

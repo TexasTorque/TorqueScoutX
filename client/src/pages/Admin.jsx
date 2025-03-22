@@ -13,7 +13,7 @@ const Admin = () => {
   useEffect(() => {
     if (!user) return navigate("/login");
     if (user && !(checkAdmin(user))) return navigate("/dashboard");
-  }, [user, loading]);
+  }, [user, loading, navigate]);
 
   return (
     <div className="admin">

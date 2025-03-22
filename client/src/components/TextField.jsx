@@ -16,7 +16,7 @@ const TextField = ({ name, callback, placeholder, readonly, type, inputMode, wid
     if (widgetCallback) {
       widgetCallback({ name: name, value: selected, });
     }
-  }, [selected]);
+  }, [selected, name, widgetCallback]);
 
   return (
     <div className="numeric">
