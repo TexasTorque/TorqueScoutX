@@ -168,6 +168,28 @@ export const getMatchesPerTeam = async (team) => {
   }
 };
 
+export const updateTeamAISummarize = async (summarizedData, team, schema) => {
+  const col = collection(db, schema);
+  const docRef = doc(col, team);
+  await updateDoc(docRef, { aiSummarize: summarizedData });
+}
+
+export const listTeams = async (schema) => {
+  const col = collection(db, schema);
+  const querySnapshot = await getDocs(col);
+  const documents = [];
+  querySnapshot.forEach(doc => {
+    documents.push(doc.id);
+  });
+  return documents;
+}
+
+export const getCachedTeamAISummarize = async (team, schema) => {
+  const col = collection(db, schema);
+  const docRef = doc(col, team);
+  return (await getDoc(docRef)).data().aiSummarize;
+}
+
 export const getTeamReports = async (schema = null) => {
   const active = schema ? schema : (await getActiveSchema()).name;
   const col = collection(db, active);

@@ -1,7 +1,15 @@
 import React, { useEffect, useState, useRef } from "react";
 
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, doesSchemaExist, getTeamReports } from "../../firebase";
+import {
+  auth,
+  doesSchemaExist,
+  getActiveSchema,
+  getCachedTeamAISummarize,
+  getTeamReports,
+  listTeams,
+  updateTeamAISummarize,
+} from "../../firebase";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
 import Group from "../../components/Group";
@@ -11,13 +19,12 @@ import Papa from "papaparse";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import Button from "react-bootstrap/Button";
 
-const genAI = new GoogleGenerativeAI("AIzaSyDw5xQqjwwhrd5S3mrDTrPBwcO7-lc2EtA");
+const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
 const AISummarization = () => {
   const navigate = useNavigate();
   const [user, loading] = useAuthState(auth);
-  const [schema, setSchema] = useState("");
   const [team, setTeam] = useState("");
 
   const [teleop, setTeleop] = useState("");
@@ -219,13 +226,13 @@ No climb: ${none}
   const start_summarize = async () => {
     console.log("Summarizing...");
 
-    if (await doesSchemaExist(schema)) {
+    if (await doesSchemaExist(await getActiveSchema().name)) {
       console.log("Schema exists");
     } else {
       console.log("Schema does not exist");
     }
 
-    let documents = await getTeamReports(schema);
+    let documents = await getTeamReports(await getActiveSchema().name);
 
     let teamDocs = documents.filter((doc) => Object.keys(doc).includes(team));
 
@@ -246,13 +253,13 @@ No climb: ${none}
   const start_summarize_all = async () => {
     console.log("Summarizing all...");
 
-    if (await doesSchemaExist(schema)) {
+    if (await doesSchemaExist(await getActiveSchema().name)) {
       console.log("Schema exists");
     } else {
       console.log("Schema does not exist");
     }
 
-    let documents = await getTeamReports(schema);
+    let documents = await getTeamReports(await getActiveSchema().name);
 
     setAllTeamProgress(0);
 
@@ -276,7 +283,7 @@ No climb: ${none}
       );
 
       allTeamSummary.push({ team: team, summary: summarized });
-
+      updateTeamAISummarize(summarized, team, await getActiveSchema().name);
       setAllTeamProgress(((i + 1) / documents.length) * 100);
 
       if (shouldStopRef.current) {
@@ -316,19 +323,36 @@ No climb: ${none}
     shouldStopRef.current = true;
   };
 
+  useEffect(() => {
+    // Load all cached data
+    const loadCachedData = async () => {
+      let schema = await getActiveSchema().then((schema) => schema.name);
+      let teams = await listTeams(schema);
+
+      for (const team of teams) {
+        let summarized = await getCachedTeamAISummarize(
+          team,
+          schema
+        );
+
+        if (summarized) {
+          setAllTeamSummary((prev) => [
+            ...prev,
+            { team: team, summary: summarized },
+          ]);
+        }
+      }
+    };
+
+    loadCachedData();
+  }, []);
+
   return (
     <div className="admin">
       <div className="container mt-4">
         <Group name="AI Summarization">
           <div className="row">
             <div className="col-md-6">
-              <Form.Control
-                type="text"
-                placeholder="Schema"
-                onChange={(e) => setSchema(e.target.value)}
-                style={{ marginBottom: "1rem" }}
-                disabled={isLoading}
-              />
               <Form.Control
                 type="text"
                 placeholder="Team"
