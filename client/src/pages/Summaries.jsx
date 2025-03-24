@@ -23,10 +23,6 @@ const Summaries = () => {
       for (const team of teams) {
         let summarized = await getCachedTeamAISummarize(team, schema);
 
-        if (summarized && summarized.overall_rating) {
-          summarized.overall_rating = parseInt(summarized.overall_rating.split("/")[0]);
-        }
-
         if (summarized) {
           setAllTeamSummary((prev) => [
             ...prev,
