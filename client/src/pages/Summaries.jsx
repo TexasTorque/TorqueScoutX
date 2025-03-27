@@ -7,6 +7,7 @@ import {
   getCachedTeamAISummarize,
   listTeams,
 } from "../firebase";
+import ButtonFull from "../components/ButtonFull";
 
 const Summaries = () => {
   const [allTeamSummary, setAllTeamSummary] = useState([]);
@@ -37,6 +38,8 @@ const Summaries = () => {
 
   return (
     <div>
+      <ButtonFull name="Back to Home" callback={() => window.history.back()} />
+
       {allTeamSummary.length === 0 ? (
         <div className="container" style={{ width: "100%" }}>
           <Group name="All Team Summary" style={{ width: "100%" }}>

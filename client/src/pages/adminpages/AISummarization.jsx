@@ -264,8 +264,7 @@ No climb: ${none}
     setDefense(summarized.defense);
     setEndgame(summarized.endgame);
 
-    let rating = summarized.overall_rating;
-    setRanking(parseInt(rating.split("/")[0]));
+    setRanking(summarized.overall_rating);
   };
 
   const start_summarize_all = async () => {
