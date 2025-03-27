@@ -56,7 +56,7 @@ const Averages = () => {
       Object.keys(item).forEach((key) => {
         if (key === "Team") {
           temp[key] = item[key];
-        } else if (key === "StartingPos") {
+        } else if (key === "StartingPos" || key === "Notes") {
           return;
         } else {
           temp[key] = item[key].toString();
