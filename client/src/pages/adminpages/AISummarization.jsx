@@ -253,6 +253,8 @@ No climb: ${none}
 
     let summarized = await summarize(reports);
 
+    summarized.overall_rating = parseInt(summarized.overall_rating.split("/")[0]);
+
     let schema = await getActiveSchema().then((schema) => schema.name);
     updateTeamAISummarize(summarized, team, schema);
 
@@ -583,7 +585,7 @@ No climb: ${none}
 };
 
 const checkAdmin = (user) => {
-  return user.email.split("@")[0] === "admin";
+  return user.email.split("@")[0] === "admin" || user.email.split("@")[0] === "lead";
 };
 
 export default AISummarization;

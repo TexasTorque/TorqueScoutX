@@ -33,8 +33,8 @@ const Dashboard = () => {
   );
 };
 
-export const checkAdmin = (user) => {
-  return user.email.split("@")[0] === "admin";
+const checkAdmin = (user) => {
+  return user.email.split("@")[0] === "admin" || user.email.split("@")[0] === "lead";
 };
 
 export default Dashboard;
