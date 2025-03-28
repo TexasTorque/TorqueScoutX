@@ -9,6 +9,7 @@ import Null from "../../components/Null";
 import { getActiveSchema } from "../../firebase";
 import { averagePoints, averageValue, booleanPercentage } from "../../Custom";
 import Button from "react-bootstrap/Button";
+import Papa from 'papaparse'
 
 const CUFS = {
   averagePoints: averagePoints,
@@ -49,12 +50,39 @@ const Averages = () => {
     });
   }, []);
 
+  const exportToCSV = () => {
+    const transformedData = allData.map((item) => {
+      let temp = {};
+      Object.keys(item).forEach((key) => {
+        if (key === "Team") {
+          temp[key] = item[key];
+        } else if (key === "StartingPos" || key === "Notes") {
+          return;
+        } else {
+          temp[key] = item[key].toString();
+        }
+      });
+      return temp;
+    });
+
+    const csv = Papa.unparse(transformedData);
+
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "data.csv";
+    link.style.display = "none";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   useEffect(() => {
     if (Object.keys(activeSchema).length === 0) return;
 
     const populateColumns = (data) => {
       let clmTemp = [makeColumn("Team", "Team", true)];
-  
+
       activeSchema.schema.analysisGroups.forEach((group) => {
         clmTemp = [
           ...clmTemp,
@@ -65,7 +93,7 @@ const Averages = () => {
           ),
         ];
       });
-  
+
       // Object.keys(data[0]).forEach((key) => {
       //     clmTemp = [...clmTemp, makeColumn(key, key.replace(/\s/g, '').replaceAll('.', ''), true)];
       // });
@@ -156,14 +184,14 @@ const Averages = () => {
     const customProcessData = (data) => {
       let analysisGroups = activeSchema.schema.analysisGroups;
       console.log(analysisGroups);
-  
+
       let allData = [];
-  
+
       data.forEach((tm) => {
         const team = Object.keys(tm)[0];
         allData.push({ Team: team });
       });
-  
+
       for (let i = 0; i < analysisGroups.length; i++) {
         let temp = CUFS[analysisGroups[i].mode](data, analysisGroups[i]);
         for (let i = 0; i < temp.length; i++) {
@@ -174,7 +202,7 @@ const Averages = () => {
           }
         }
       }
-  
+
       console.log("boutta finish custom proces");
       return allData;
     };
@@ -242,6 +270,18 @@ const Averages = () => {
               name="Delete"
             >
               Delete Team
+            </Button>
+            <Button
+              onClick={() => exportToCSV()}
+              style={{
+                marginLeft: "1em",
+                marginRight: "1em",
+                height: "2.1em",
+                marginTop: "1.6em",
+              }}
+              name="Export"
+            >
+              Export to CSV
             </Button>
             <Button
               onClick={() => resetDeletes()}
