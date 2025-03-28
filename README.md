@@ -35,4 +35,4 @@ Name
 
 Name, Manual Children - an array of widget objects
 
-## Authored by [Milan Guddeti](https://github.com/mguddeti/) and [Jacob Daniels](https://github.com/firebanner64)
+## Authored by [Milan Guddeti](https://github.com/mguddeti/) and [Jacob Daniels](https://github.com/firebanner64) with the help of [Tima Gezalov](https://github.com/timagez)

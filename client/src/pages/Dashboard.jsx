@@ -16,12 +16,13 @@ const Dashboard = () => {
   }, [user, loading, navigate]);
 
   let admin = (user && checkAdmin(user)) ? <ButtonFull name="Admin" callback={() => navigate("/admin")} /> : <Empty />;
+  let greeting = (user) ? <h4 className="text-center"><b>Hello, {user.email.split("@")[0]}!</b></h4> : <Empty />;
 
   return (
     <div className="home">
       <div className="container mt-4">
         <Group name="Torque Scout">
-          <h3 className="text-center">Hello, {user.email.split("@")[0]}!</h3>
+          {greeting}
           <h6 className="text-center">Welcome to TorqueScoutX</h6>
           <ButtonFull name="Scout" callback={() => navigate("/scout")} />
           <ButtonFull name="Summaries" callback={() => navigate("/summaries")} />
