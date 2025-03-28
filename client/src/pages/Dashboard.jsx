@@ -21,6 +21,8 @@ const Dashboard = () => {
     <div className="home">
       <div className="container mt-4">
         <Group name="Torque Scout">
+          <h3 className="text-center">Hello, {user.email.split("@")[0]}!</h3>
+          <h6 className="text-center">Welcome to TorqueScoutX</h6>
           <ButtonFull name="Scout" callback={() => navigate("/scout")} />
           <ButtonFull name="Summaries" callback={() => navigate("/summaries")} />
           <ButtonFull name="Analysis" callback={() => navigate("/analysis/analysis-index")} />
