@@ -75,7 +75,7 @@ const Summaries = () => {
                     borderRadius: "5px",
                   }}
                 >
-                  <h4>Team {team.team}</h4>
+                  <h4>Team {team.team} ({team.summary.team_name})</h4>
                   <h4>Autonomous Period</h4>
                   <p>{team.summary.autonomous_period}</p>
                   <h4>Teleop Period</h4>

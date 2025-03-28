@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import Group from "../../components/Group";
 import ButtonFull from "../../components/ButtonFull";
 import Papa from "papaparse";
+import axios from 'axios';
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import Button from "react-bootstrap/Button";
@@ -24,6 +25,7 @@ const AISummarization = () => {
   const [user, loading] = useAuthState(auth);
   const [team, setTeam] = useState("");
 
+  const [teamName, setTeamName] = useState("");
   const [teleop, setTeleop] = useState("");
   const [autos, setAutos] = useState("");
   const [defense, setDefense] = useState("");
@@ -35,6 +37,8 @@ const AISummarization = () => {
   const [model, setModel] = useState(null);
   const [reasoningModel, setReasoningModel] = useState(null);
   const [teams, setTeams] = useState([]);
+
+  const [tba_key, setTbaKey] = useState("");
 
   const shouldStopRef = useRef(false);
 
@@ -48,6 +52,7 @@ const AISummarization = () => {
   useEffect(() => {
     async function initGenAI() {
       const response = await fetch('/.netlify/functions/getSecret');
+      fetch('/.netlify/functions/getTBASecret').then(res => res.json()).then(data => setTbaKey(data.apiKey));
       const data = await response.json();
       const genAI = new GoogleGenerativeAI(data.apiKey);
       setModel(genAI.getGenerativeModel({ model: "gemini-2.0-flash" }));
@@ -136,7 +141,7 @@ This is the data from the scouters:
     let l4_tele_coral = l4tele.reduce((sum, value) => sum + value, 0) / l4tele.length;
 
     const coralString = `
-Coral:
+Amount of Corals scored (not points):
 L1 Auto Coral: ${l1_auto_coral}
 L2 Auto Coral: ${l2_auto_coral}
 L3 Auto Coral: ${l3_auto_coral}
@@ -237,7 +242,6 @@ No climb: ${none}
       penaltyString +
       preloadString;
     console.log(prompt.length);
-    console.log(prompt);
 
     const result = await aimodel.generateContent(prompt);
 
@@ -264,6 +268,9 @@ No climb: ${none}
     }
 
     summarized.overall_rating = parseInt(summarized.overall_rating.split("/")[0]);
+
+    summarized.team_name = await fetchTeamName(team);
+    setTeamName(summarized.team_name);
 
     let schema = await getActiveSchema().then((schema) => schema.name);
     updateTeamAISummarize(summarized, team, schema);
@@ -299,6 +306,8 @@ No climb: ${none}
         let reports = documents[i][team].reports;
         let summarized = ""
 
+        let team_name = fetchTeamName(team);
+
         try {
           summarized = await summarize(reports, model);
         } catch (e) {
@@ -310,6 +319,8 @@ No climb: ${none}
         summarized.overall_rating = parseInt(
           summarized.overall_rating.split("/")[0]
         );
+
+        summarized.team_name = await team_name;
   
         let schema = await getActiveSchema().then((schema) => schema.name);
   
@@ -345,6 +356,9 @@ No climb: ${none}
         summarized.overall_rating = parseInt(
           summarized.overall_rating.split("/")[0]
         );
+
+        let team_name = fetchTeamName(team);
+        summarized.team_name = await team_name;
   
         let schema = await getActiveSchema().then((schema) => schema.name);
   
@@ -422,6 +436,21 @@ No climb: ${none}
     console.log()
   }, []);
 
+  const fetchTeamName = async (team_num = 1477) => {
+    const url = `https://www.thebluealliance.com/api/v3/team/frc${team_num}/simple`;
+    const headers = {
+      'accept': 'application/json',
+      'X-TBA-Auth-Key': `${tba_key}`,
+    };
+
+    try {
+      const response = await axios.get(url, { headers });
+      return response.data.nickname;
+    } catch (err) {
+      return "Unknown";
+    }
+  }
+
   return (
     <div className="admin">
       <div className="container mt-4">
@@ -458,6 +487,7 @@ No climb: ${none}
                     name="Summarize"
                     callback={() => {
                       setIsLoading(true);
+                      fetchTeamName(team).then((name) => { setTeamName(name); });
                       start_summarize().finally(() => setIsLoading(false));
                     }}
                     disabled={isLoading}
@@ -466,6 +496,7 @@ No climb: ${none}
                     name="Summarize with Reasoning"
                     callback={() => {
                       setIsLoading(true);
+                      fetchTeamName(team).then((name) => { setTeamName(name); });
                       start_summarize(true).finally(() => setIsLoading(false));
                     }}
                     disabled={isLoading}
@@ -489,6 +520,7 @@ No climb: ${none}
             <div className="col-md-6">
               {teleop === "" ? null : (
                 <Group name="Summary">
+                  <h4>Team {team} ({teamName})</h4>
                   <h4>Autonomous Period</h4>
                   <p>{autos}</p>
                   <h4>Teleop Period</h4>
@@ -562,7 +594,7 @@ No climb: ${none}
                     borderRadius: "5px",
                   }}
                 >
-                  <h4>Team {team.team}</h4>
+                  <h4>Team {team.team} ({team.summary.team_name})</h4>
                   <h4>Autonomous Period</h4>
                   <p>{team.summary.autonomous_period}</p>
                   <h4>Teleop Period</h4>
