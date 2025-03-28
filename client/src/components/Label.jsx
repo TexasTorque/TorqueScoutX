@@ -1,9 +1,13 @@
 const Label = ({ name }) => {
+    const splitText = name.split(",,").map((line, index) => (
+        <div key={index} style={{ textAlign: "center", wordWrap: "break-word" }}>{line}</div>
+    ));
+
     return (
-        <div className="label">
-            <hr style={{ borderTop: "5px solid light gray" }} />
-            <h1 style={{ textAlign: "center" }}>{name}</h1>
-            <hr style={{ borderTop: "5px solid light gray" }} />
+        <div className="label" style={{ fontSize: "1.3rem", padding: "5px" }}>
+            <hr style={{ borderTop: "3px solid lightgray" }} />
+            {splitText}
+            <hr style={{ borderTop: "3px solid lightgray" }} />
         </div>
     );
 };
@@ -14,9 +18,6 @@ export const LabelWidget = {
     widget: function (props) {
         return <Label {...props} />;
     },
-
 };
 
 export default Label;
-
-
