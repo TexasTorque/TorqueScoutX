@@ -82,7 +82,8 @@ const AISummarization = () => {
     const barge = data.map((item) => item.fields[15].value);
     const park = data.map((item) => item.fields[16].value);
     // const broken = data.map(item => item.Broken);
-    const penalty = data.map((item) => item.fields[19].value);
+    const minor_foul = data.map((item) => item.fields[19].value);
+    const major_foul = data.map((item) => item.fields[20].value);
 
     const system = `
 You are a summarizer ai for a FIRST robotics scouting application. 
@@ -199,14 +200,20 @@ Not parked: ${park_false} (could indicate either no parking or deep/shallow clim
 `;
 
     // format the penalty data into a string avg
-    let averagePenaltyPoints = 0;
-    penalty.forEach((item) => {
-      averagePenaltyPoints += item;
-    })
-
+    let minor_foul_average = 0;
+    let major_foul_average = 0;
+    minor_foul.forEach((item) => {
+      minor_foul_average += item;
+    });
+    minor_foul_average /= minor_foul.length;
+    major_foul.forEach((item) => {
+      major_foul_average += item;
+    });
+    major_foul_average /= major_foul.length;
     const penaltyString = `
-Penalty:
-Average total points: ${averagePenaltyPoints}
+Penalties:
+Average minor fouls: ${minor_foul_average}
+Average major fouls: ${major_foul_average}
 `;
 
 
@@ -432,8 +439,6 @@ No climb: ${none}
     };
 
     loadCachedData();
-
-    console.log()
   }, []);
 
   const fetchTeamName = async (team_num = 1477) => {
