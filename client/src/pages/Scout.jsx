@@ -70,7 +70,7 @@ const Scout = () => {
         if ((finalReport["Team"] < 118) || (finalReport["Match"] > 150)) {
             if (!window.confirm("[CHECK] Double check your team and match to make sure they correct...")) return;
         }
-        finalReport.Alliance = finalReport.Alliance === "true" ? "Red" : "Blue";
+        finalReport.Alliance = finalReport.Alliance === true ? "Blue" : "Red";
         let points = 0;
 
         finalReport.fields.forEach((field) => {
