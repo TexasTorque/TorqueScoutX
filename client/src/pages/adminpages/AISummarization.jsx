@@ -253,7 +253,7 @@ Average major fouls: ${major_foul_average}
     });
     processortele_average /= processortele.length;
     const netString = `
-Average Net Auto and Net Tele:
+Average Algae Scored (Not Points):
 Net Auto: ${netauto_average}
 Net Tele: ${nettele_average}
 Processor Auto: ${processorauto_average}
