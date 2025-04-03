@@ -66,22 +66,22 @@ const AISummarization = () => {
     const notes = data.map((item) => item.fields[18].value);
     const points = data.map((item) => item.Points);
     const preload = data.map((item) => item.fields[1].value);
-    // const leave = data.map(item => item.Leave);
-    // const netauto = data.map(item => item.NetAuto);
-    // const processorauto = data.map(item => item.ProcessorAuto);
+    const leave = data.map(item => item.fields[2].value);
+    const netauto = data.map(item => item.fields[3].value);
+    const processorauto = data.map(item => item.fields[4].value);
     const l1auto = data.map(item => item.fields[5].value);
     const l2auto = data.map(item => item.fields[6].value);
     const l3auto = data.map(item => item.fields[7].value);
     const l4auto = data.map(item => item.fields[8].value);
-    // const nettele = data.map(item => item.NetTele);
-    // const processortele = data.map(item => item.ProcessorTele);
+    const nettele = data.map(item => item.fields[9].value);
+    const processortele = data.map(item => item.fields[10].value);
     const l1tele = data.map(item => item.fields[11].value);
     const l2tele = data.map(item => item.fields[12].value);
     const l3tele = data.map(item => item.fields[13].value);
     const l4tele = data.map(item => item.fields[14].value);
     const barge = data.map((item) => item.fields[15].value);
     const park = data.map((item) => item.fields[16].value);
-    // const broken = data.map(item => item.Broken);
+    const broken = data.map(item => item.fields[17].value);
     const minor_foul = data.map((item) => item.fields[19].value);
     const major_foul = data.map((item) => item.fields[20].value);
 
@@ -198,6 +198,22 @@ Parked: ${park_true}
 Not parked: ${park_false} (could indicate either no parking or deep/shallow climb)
 `;
 
+    // format the broken data into a string
+    let broken_true = 0;
+    let broken_false = 0;
+    broken.forEach((item) => {
+      if (item === true) {
+        broken_true++;
+      } else if (item === false) {
+        broken_false++;
+      }
+    });
+    const brokenString = `
+Matches where the robot was broken:
+Broken: ${broken_true}
+Not broken: ${broken_false}
+`;
+
     // format the penalty data into a string avg
     let minor_foul_average = 0;
     let major_foul_average = 0;
@@ -213,6 +229,51 @@ Not parked: ${park_false} (could indicate either no parking or deep/shallow clim
 Penalties:
 Average minor fouls: ${minor_foul_average}
 Average major fouls: ${major_foul_average}
+`;
+
+    // format netauto net tele processor tele and processor auto into a string
+    let netauto_average = 0;
+    let nettele_average = 0;
+    let processorauto_average = 0;
+    let processortele_average = 0;
+    netauto.forEach((item) => {
+      netauto_average += item;
+    });
+    netauto_average /= netauto.length;
+    nettele.forEach((item) => {
+      nettele_average += item;
+    });
+    nettele_average /= nettele.length;
+    processorauto.forEach((item) => {
+      processorauto_average += item;
+    });
+    processorauto_average /= processorauto.length;
+    processortele.forEach((item) => {
+      processortele_average += item;
+    });
+    processortele_average /= processortele.length;
+    const netString = `
+Average Net Auto and Net Tele:
+Net Auto: ${netauto_average}
+Net Tele: ${nettele_average}
+Processor Auto: ${processorauto_average}
+Processor Tele: ${processortele_average}
+`;
+
+    // format the leave data into a string
+    let leave_true = 0;
+    let leave_false = 0;
+    leave.forEach((item) => {
+      if (item === true) {
+        leave_true++;
+      } else if (item === false) {
+        leave_false++;
+      }
+    });
+    const leaveString = `
+Leave:
+Left: ${leave_true}
+Did not leave: ${leave_false}
 `;
 
     // format the barge data into a string
@@ -244,6 +305,9 @@ No climb: ${none}
       parkString +
       pointsString +
       coralString +
+      brokenString +
+      netString +
+      leaveString +
       penaltyString +
       preloadString;
     console.log(prompt.length);
