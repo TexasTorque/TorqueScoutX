@@ -74,8 +74,9 @@ const Scout = () => {
         let points = 0;
 
         finalReport.fields.forEach((field) => {
-            points += field.points ?? 0;
-
+            if (field.name !== "Minor Foul" && field.name !== "Major Foul") { // ignore penalty fields
+                points += field.points ?? 0;
+            }
         });
         finalReport["Points"] = points;
         // Object.keys(finalReport).forEach((field) => {
