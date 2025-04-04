@@ -460,7 +460,19 @@ No climb: ${none}
       ...item.summary,
     }));
 
-    const csv = Papa.unparse(transformedData);
+    // reorder data to team, team_name, autonomous_period, teleop_period, defense, endgame, overall_rating, reasoning
+    const reorderedData = transformedData.map((item) => ({
+      team: item.team,
+      team_name: item.team_name,
+      autonomous_period: item.autonomous_period,
+      teleop_period: item.teleop_period,
+      defense: item.defense,
+      endgame: item.endgame,
+      overall_rating: item.overall_rating,
+      reasoning: item.reasoning,
+    }));
+
+    const csv = Papa.unparse(reorderedData);
 
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
     const link = document.createElement("a");
