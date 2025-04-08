@@ -107,6 +107,25 @@ const Summaries = () => {
                   </div>
                   <h4>Reasoning</h4>
                   <p>{team.summary.reasoning}</p>
+                  {team.summary.tags && team.summary.tags.length > 0 && (
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginTop: "1rem" }}>
+                      {team.summary.tags.map((tag, index) => (
+                        <span
+                          key={index}
+                          style={{
+                            padding: "0.5rem 1rem",
+                            backgroundColor: "#007bff",
+                            color: "white",
+                            borderRadius: "20px",
+                            fontSize: "0.9rem",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
           </Group>
