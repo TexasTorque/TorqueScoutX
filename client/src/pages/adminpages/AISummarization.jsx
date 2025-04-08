@@ -94,7 +94,8 @@ You should summarize in four categories: Autonomous Period, Teleop Period, Defen
 Also, you should tag the robot. Here are the available tags:
 - "Coral Specialty"
 - "Algae Specialty"
-- "Defense"
+- "Defense Specialty"
+- "Climb Specialty"
 - "Unstable"
 - "Fast"
 - "Stable"
@@ -103,8 +104,9 @@ Also, you should tag the robot. Here are the available tags:
 - "Inconsistent"
 - "High Scorer"
 - "Low Scorer"
-- "Climber"
-- "Non-Climber"
+
+The specialty tags are different as they require a ranking as well as a tag in this format tagname|X X is a number from 0 to 10.
+The other tags are just a tag.
 
 Generate a robot performance summary in JSON format based on the given input. The JSON should include fields for "autonomous_period", "teleop_period", "defense", "endgame", "overall_rating", and "reasoning". If no defense information is available, use a standardized fallback message: "Did not play defense."
 The "overall_rating" should be a string in the format "X/10", where X is a number from 0 to 10. The reasoning should explain the rating and include details about the robot's performance in each category. 0-3 is bad, 4-6 is average, and 7-10 is good.
@@ -135,7 +137,7 @@ Example Output:
   "endgame": "Successfully completed the endgame objective.",
   "overall_rating": "5/10",
   "reasoning": "Strong autonomous, weak teleop, and good endgame, leading to an average rating."
-  "tags": ["Unstable", "Coral Specialty"]
+  "tags": ["Reliable", "Inconsistent", "Coral Specialty|8"]
 }
 
 Include in your reasoning if they would be a good pick for an alliance and why.
@@ -650,21 +652,28 @@ No climb: ${none}
                   <p>{reasoning}</p>
                   {tags && tags.length > 0 && (
                     <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginTop: "1rem" }}>
-                      {tags.map((tag, index) => (
-                        <span
+                      {tags.map((tag, index) => {
+                        const [tagName, rank] = tag.split("|");
+                        const rankValue = parseInt(rank, 10);
+                        const backgroundColor = rankValue
+                          ? `hsl(${(rankValue / 10) * 120}, 70%, 40%)`
+                          : "#007bff";
+                        return (
+                          <span
                           key={index}
                           style={{
                             padding: "0.5rem 1rem",
-                            backgroundColor: "#007bff",
+                            backgroundColor,
                             color: "white",
                             borderRadius: "20px",
                             fontSize: "0.9rem",
                             fontWeight: "bold",
                           }}
-                        >
-                          {tag}
-                        </span>
-                      ))}
+                          >
+                          {tagName}{rankValue ? ` (${rankValue})` : ""}
+                          </span>
+                        );
+                      })}
                     </div>
                   )}
                 </Group>
@@ -744,21 +753,28 @@ No climb: ${none}
                   <p>{team.summary.reasoning}</p>
                   {team.summary.tags && team.summary.tags.length > 0 && (
                     <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginTop: "1rem" }}>
-                      {team.summary.tags.map((tag, index) => (
-                        <span
-                          key={index}
-                          style={{
-                            padding: "0.5rem 1rem",
-                            backgroundColor: "#007bff",
-                            color: "white",
-                            borderRadius: "20px",
-                            fontSize: "0.9rem",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          {tag}
-                        </span>
-                      ))}
+                      {team.summary.tags.map((tag, index) => {
+                        const [tagName, rank] = tag.split("|");
+                        const rankValue = parseInt(rank, 10);
+                        const backgroundColor = rankValue
+                          ? `hsl(${(rankValue / 10) * 120}, 70%, 40%)`
+                          : "#007bff";
+                        return (
+                          <span
+                            key={index}
+                            style={{
+                              padding: "0.5rem 1rem",
+                              backgroundColor,
+                              color: "white",
+                              borderRadius: "20px",
+                              fontSize: "0.9rem",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {tagName}{rankValue ? ` (${rankValue})` : ""}
+                          </span>
+                        );
+                      })}
                     </div>
                   )}
                 </div>

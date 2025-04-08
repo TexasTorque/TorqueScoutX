@@ -109,21 +109,28 @@ const Summaries = () => {
                   <p>{team.summary.reasoning}</p>
                   {team.summary.tags && team.summary.tags.length > 0 && (
                     <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginTop: "1rem" }}>
-                      {team.summary.tags.map((tag, index) => (
-                        <span
-                          key={index}
-                          style={{
-                            padding: "0.5rem 1rem",
-                            backgroundColor: "#007bff",
-                            color: "white",
-                            borderRadius: "20px",
-                            fontSize: "0.9rem",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          {tag}
-                        </span>
-                      ))}
+                      {team.summary.tags.map((tag, index) => {
+                        const [tagName, rank] = tag.split("|");
+                        const rankValue = parseInt(rank, 10);
+                        const backgroundColor = rankValue
+                          ? `hsl(${(rankValue / 10) * 120}, 70%, 40%)`
+                          : "#007bff";
+                        return (
+                          <span
+                            key={index}
+                            style={{
+                              padding: "0.5rem 1rem",
+                              backgroundColor,
+                              color: "white",
+                              borderRadius: "20px",
+                              fontSize: "0.9rem",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {tagName}{rankValue ? ` (${rankValue})` : ""}
+                          </span>
+                        );
+                      })}
                     </div>
                   )}
                 </div>
