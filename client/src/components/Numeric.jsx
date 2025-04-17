@@ -37,27 +37,27 @@ const Numeric = ({
 
   return (
     <div className="numeric">
-      <div className="row mt-0 mr-0">
-        <Col className="ml-0">
+      <div className="row align-items-center" style={{ margin: 0 }}>
+        <Col className="pl-1 pr-1">
           <h4
             className="name-field"
-            style={{ fontSize: "1.3rem", marginTop: "0.85rem" }}
+            style={{ fontSize: "1.1rem", margin: 0 }}
           >
             {(alias ?? name) || <Null />}
           </h4>
         </Col>
-        <Col className="ml-0 mt-0">
-          <Button variant="danger" size="md" onClick={() => update(-1)}>
+        <Col className="pl-1 pr-1" style={{ maxWidth: "60px" }}>
+          <Button variant="danger" size="lg" onClick={() => update(-1)} style={{ padding: "0.2rem 0.5rem", scale: "1.2" }}>
             -
           </Button>
         </Col>
-        <Col className="ml-0">
-          <h4 className="mono-field" style={{ marginTop: "0.85rem" }}>
+        <Col className="pl-1 pr-1" style={{ maxWidth: "60px" }}>
+          <h4 className="mono-field" style={{ margin: 0, fontSize: "1.6rem" }}>
             {count}
           </h4>
         </Col>
-        <Col className="ml-0 mt-0">
-          <Button variant="success" size="md" onClick={() => update(1)}>
+        <Col className="pl-1 pr-1" style={{ maxWidth: "60px" }}>
+          <Button variant="success" size="lg" onClick={() => update(1)} style={{ padding: "0.2rem 0.5rem", scale: "1.2" }}>
             +
           </Button>
         </Col>
