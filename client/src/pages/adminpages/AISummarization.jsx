@@ -64,7 +64,7 @@ const AISummarization = () => {
   }, []);
 
   const summarize = async (data, aimodel) => {
-    const notes = data.map((item) => item.fields[18].value);
+    const notes = data.map((item) => item.fields[17].value);
     const points = data.map((item) => item.Points);
     const preload = data.map((item) => item.fields[1].value);
     const leave = data.map(item => item.fields[2].value);
@@ -81,10 +81,7 @@ const AISummarization = () => {
     const l3tele = data.map(item => item.fields[13].value);
     const l4tele = data.map(item => item.fields[14].value);
     const barge = data.map((item) => item.fields[15].value);
-    const park = data.map((item) => item.fields[16].value);
-    const broken = data.map(item => item.fields[17].value);
-    const minor_foul = data.map((item) => item.fields[19].value);
-    const major_foul = data.map((item) => item.fields[20].value);
+    const broken = data.map(item => item.fields[16].value);
 
     const system = `
 You are a summarizer ai for a FIRST robotics scouting application for the competition REEFSCAPE 2025. 
@@ -201,23 +198,6 @@ Points:
 Average total points: ${averageTotalPoints}
 `;
 
-    // format the park data into a string
-    let park_false = 0;
-    let park_true = 0;
-    park.forEach((item) => {
-      if (item === false) {
-        park_false++;
-      } else if (item === true) {
-        park_true++;
-      }
-    });
-
-    const parkString = `
-Endgame:
-Parked: ${park_true}
-Not parked: ${park_false} (could indicate either no parking or deep/shallow climb)
-`;
-
     // format the broken data into a string
     let broken_true = 0;
     let broken_false = 0;
@@ -232,23 +212,6 @@ Not parked: ${park_false} (could indicate either no parking or deep/shallow clim
 Matches where the robot was broken:
 Broken: ${broken_true}
 Not broken: ${broken_false}
-`;
-
-    // format the penalty data into a string avg
-    let minor_foul_average = 0;
-    let major_foul_average = 0;
-    minor_foul.forEach((item) => {
-      minor_foul_average += item;
-    });
-    minor_foul_average /= minor_foul.length;
-    major_foul.forEach((item) => {
-      major_foul_average += item;
-    });
-    major_foul_average /= major_foul.length;
-    const penaltyString = `
-Penalties:
-Average minor fouls: ${minor_foul_average}
-Average major fouls: ${major_foul_average}
 `;
 
     // format netauto net tele processor tele and processor auto into a string
@@ -299,12 +262,15 @@ Did not leave: ${leave_false}
     // format the barge data into a string
     let deep = 0;
     let shallow = 0;
+    let park = 0;
     let none = 0;
     barge.forEach((item) => {
       if (item === "Deep") {
         deep++;
       } else if (item === "Shallow") {
         shallow++;
+      } else if (item === "Park") {
+        park++
       } else if (item === "No climb") {
         none++;
       }
@@ -314,6 +280,7 @@ Did not leave: ${leave_false}
 Barge:
 Successful deep climbs: ${deep}
 Successful shallow climbs: ${shallow}
+Successful parks: ${park}
 No climb: ${none}
 `;
 
@@ -322,13 +289,11 @@ No climb: ${none}
       system +
       notes.join(" ") +
       bargeString +
-      parkString +
       pointsString +
       coralString +
       brokenString +
       netString +
       leaveString +
-      penaltyString +
       preloadString;
     console.log(prompt.length);
 
@@ -548,6 +513,7 @@ No climb: ${none}
       const response = await axios.get(url, { headers });
       return response.data.nickname;
     } catch (err) {
+      console.log("Encountered unknown team")
       return "Unknown";
     }
   }
@@ -660,17 +626,17 @@ No climb: ${none}
                           : "#007bff";
                         return (
                           <span
-                          key={index}
-                          style={{
-                            padding: "0.5rem 1rem",
-                            backgroundColor,
-                            color: "white",
-                            borderRadius: "20px",
-                            fontSize: "0.9rem",
-                            fontWeight: "bold",
-                          }}
+                            key={index}
+                            style={{
+                              padding: "0.5rem 1rem",
+                              backgroundColor,
+                              color: "white",
+                              borderRadius: "20px",
+                              fontSize: "0.9rem",
+                              fontWeight: "bold",
+                            }}
                           >
-                          {tagName}{rankValue ? ` (${rankValue})` : ""}
+                            {tagName}{rankValue ? ` (${rankValue})` : ""}
                           </span>
                         );
                       })}
