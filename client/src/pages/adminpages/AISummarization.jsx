@@ -106,7 +106,7 @@ The specialty tags are different as they require a ranking as well as a tag in t
 The other tags are just a tag.
 
 Generate a robot performance summary in JSON format based on the given input. The JSON should include fields for "autonomous_period", "teleop_period", "defense", "endgame", "overall_rating", and "reasoning". If no defense information is available, use a standardized fallback message: "Did not play defense."
-The "overall_rating" should be a string in the format "X/10", where X is a number from 0 to 10. The reasoning should explain the rating and include details about the robot's performance in each category. 0-3 is bad, 4-6 is average, and 7-10 is good.
+The "overall_rating" should be a string in the format "X/10", where X is a number from 0 to 10. The reasoning should explain the rating and include details about the robot's performance in each category. 0-3 is bad, 4-6 is average, and 7-10 is good. It is ok to give 10/10 for robots that are near-perfect because you would want to pick a near-perfect robot for your alliance.
 
 Terms you should know:
 Pancake - means a bot that is only a drivebase and no scoring mechanism. These are ONLY good if they are fast and can play defense.
@@ -254,7 +254,7 @@ Processor Tele: ${processortele_average}
       }
     });
     const leaveString = `
-Leave:
+Leave: **Leave refers to leaving during autonomous which is good**
 Left: ${leave_true}
 Did not leave: ${leave_false}
 `;
